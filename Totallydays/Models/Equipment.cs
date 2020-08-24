@@ -17,6 +17,6 @@ namespace Totallydays.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual IEnumerable<Hosting> Hostings { get; set; }
+        public virtual IEnumerable<Hosting_Equipment> Hosting_Equipment { get; set; }
     }
 }

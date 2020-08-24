@@ -54,7 +54,7 @@ namespace Totallydays.Models
         public virtual IEnumerable<Booking> Bookings { get; set; }
         public virtual IEnumerable<Unavailable_date> Unavailables_date { get; set; }
 
-        public virtual IEnumerable<Equipment> Equipments { get; set; }
+        public virtual IEnumerable<Hosting_Equipment> Hosting_Equipment { get; set; }
 
         public virtual IEnumerable<Bedroom> Bedrooms { get; set; }
 
