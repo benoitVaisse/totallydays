@@ -27,6 +27,26 @@ namespace Totallydays.Data
         public DbSet<Bedroom_Bed> Bedroom_Beds { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Unavailable_date> Unavailable_dates { get; set; }
+         
+        public DbSet<Hosting_Equipment> Hosting_Equipment { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User_emmiter)
+                .WithMany(u => u.Comments_emmit);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User_receiver)
+                .WithMany(u => u.Comments_receive);
+
+            modelBuilder.Entity<Hosting_Equipment>()
+                .HasKey(he => new { he.Equipment_id , he.Hosting_id });
+
+        }
 
     }
 }
