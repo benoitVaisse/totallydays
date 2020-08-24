@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/Totallydays
+/Totallydays/bin/Debug/netcoreapp3.1
+*.json
+/Totallydays/obj
