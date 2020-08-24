@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Totallydays.Data;
+using Totallydays.Models;
 
 namespace Totallydays
 {
@@ -23,6 +27,19 @@ namespace Totallydays
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+
+            }).AddEntityFrameworkStores<TotallydaysContext>().AddDefaultTokenProviders();
+
+            services.AddDbContext<TotallydaysContext>(options =>
+            {
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Totallydays"));
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -44,6 +61,7 @@ namespace Totallydays
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
