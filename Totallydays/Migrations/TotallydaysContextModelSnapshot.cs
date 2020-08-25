@@ -355,7 +355,7 @@ namespace Totallydays.Migrations
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Hosting_id1")
+                    b.Property<int?>("Hosting_id")
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
@@ -369,7 +369,7 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Comment_id");
 
-                    b.HasIndex("Hosting_id1");
+                    b.HasIndex("Hosting_id");
 
                     b.HasIndex("User_emmiterId");
 
@@ -429,9 +429,6 @@ namespace Totallydays.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -471,11 +468,14 @@ namespace Totallydays.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Hosting_id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("Hosting_type_id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Hostings");
                 });
@@ -655,9 +655,9 @@ namespace Totallydays.Migrations
 
             modelBuilder.Entity("Totallydays.Models.Comment", b =>
                 {
-                    b.HasOne("Totallydays.Models.Hosting", "Hosting_id")
+                    b.HasOne("Totallydays.Models.Hosting", "Hosting")
                         .WithMany("Comments")
-                        .HasForeignKey("Hosting_id1");
+                        .HasForeignKey("Hosting_id");
 
                     b.HasOne("Totallydays.Models.AppUser", "User_emmiter")
                         .WithMany("Comments_emmit")
@@ -681,14 +681,16 @@ namespace Totallydays.Migrations
 
             modelBuilder.Entity("Totallydays.Models.Hosting", b =>
                 {
-                    b.HasOne("Totallydays.Models.AppUser", null)
-                        .WithMany("Hostings")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Totallydays.Models.Hosting_type", "Hosting_type")
                         .WithMany("Hostings")
                         .HasForeignKey("Hosting_type_id")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Totallydays.Models.AppUser", "User")
+                        .WithMany("Hostings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

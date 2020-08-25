@@ -226,6 +226,7 @@ namespace Totallydays.Migrations
                     Hosting_id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Hosting_type_id = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Resume = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
@@ -237,24 +238,22 @@ namespace Totallydays.Migrations
                     Lng = table.Column<float>(nullable: false),
                     Lat = table.Column<float>(nullable: false),
                     Published = table.Column<bool>(nullable: false),
-                    Active = table.Column<bool>(nullable: false),
-                    AppUserId = table.Column<int>(nullable: true)
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hostings", x => x.Hosting_id);
-                    table.ForeignKey(
-                        name: "FK_Hostings_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hostings_Hosting_Types_Hosting_type_id",
                         column: x => x.Hosting_type_id,
                         principalTable: "Hosting_Types",
                         principalColumn: "Hosting_type_id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Hostings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -320,14 +319,14 @@ namespace Totallydays.Migrations
                     Created_at = table.Column<DateTime>(nullable: false),
                     User_emmiterId = table.Column<int>(nullable: false),
                     User_receiverId = table.Column<int>(nullable: true),
-                    Hosting_id1 = table.Column<int>(nullable: true)
+                    Hosting_id = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Comment_id);
                     table.ForeignKey(
-                        name: "FK_Comments_Hostings_Hosting_id1",
-                        column: x => x.Hosting_id1,
+                        name: "FK_Comments_Hostings_Hosting_id",
+                        column: x => x.Hosting_id,
                         principalTable: "Hostings",
                         principalColumn: "Hosting_id",
                         onDelete: ReferentialAction.Restrict);
@@ -504,9 +503,9 @@ namespace Totallydays.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_Hosting_id1",
+                name: "IX_Comments_Hosting_id",
                 table: "Comments",
-                column: "Hosting_id1");
+                column: "Hosting_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_User_emmiterId",
@@ -534,14 +533,14 @@ namespace Totallydays.Migrations
                 column: "Hosting_id1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hostings_AppUserId",
-                table: "Hostings",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Hostings_Hosting_type_id",
                 table: "Hostings",
                 column: "Hosting_type_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hostings_UserId",
+                table: "Hostings",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_Hosting_id",
@@ -608,10 +607,10 @@ namespace Totallydays.Migrations
                 name: "Equipment_types");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Hosting_Types");
 
             migrationBuilder.DropTable(
-                name: "Hosting_Types");
+                name: "AspNetUsers");
         }
     }
 }

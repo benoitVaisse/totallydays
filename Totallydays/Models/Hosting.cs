@@ -15,6 +15,9 @@ namespace Totallydays.Models
         public virtual Hosting_type Hosting_type { get; set; }
 
         [Required]
+        public virtual AppUser User { get; set; }
+
+        [Required]
         public string Title { get; set; }
 
         [Required]

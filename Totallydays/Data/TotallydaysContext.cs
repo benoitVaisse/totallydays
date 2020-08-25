@@ -46,6 +46,11 @@ namespace Totallydays.Data
             modelBuilder.Entity<Hosting_Equipment>()
                 .HasKey(he => new { he.Equipment_id , he.Hosting_id });
 
+            modelBuilder.Entity<Hosting>()
+                .HasOne(h => h.User)
+                .WithMany(u => u.Hostings)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
     }
