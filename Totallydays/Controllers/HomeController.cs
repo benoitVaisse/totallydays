@@ -18,6 +18,7 @@ namespace Totallydays.Controllers
             _logger = logger;
         }
 
+        [HttpGet("/", Name ="home")]
         public IActionResult Index()
         {
             return View();
