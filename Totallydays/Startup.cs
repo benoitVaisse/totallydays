@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,8 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using Totallydays.Data;
 using Totallydays.Models;
+using Totallydays.Services;
 
 namespace Totallydays
 {
@@ -40,7 +44,15 @@ namespace Totallydays
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Totallydays"));
             });
 
+            MailKitOptions mailKitOption = Configuration.GetSection("Email").Get<MailKitOptions>();
+            services.AddMailKit(config => config.UseMailKit(mailKitOption));
+
+
             services.AddControllersWithViews();
+
+
+            // services
+            services.AddScoped<SendMailService, SendMailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
