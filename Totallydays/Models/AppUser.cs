@@ -16,13 +16,10 @@ namespace Totallydays.Models
         [Required]
         public string Lastname { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
-        [Required]
         public string Picture { get; set; }
 
-        [Required]
         public bool Active { get; set; }
 
         public virtual IEnumerable<Booking> Bookings { get; set; }
