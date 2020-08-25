@@ -125,5 +125,41 @@ namespace Totallydays.Controllers
 
             return BadRequest();
         }
+
+
+        [HttpGet("login", Name = "login_account")]
+        public IActionResult Login()
+        {
+            FormLoginViewModel model = new FormLoginViewModel();
+            return View(model);
+        }
+
+        [HttpPost("ligin-post", Name = "login_account_post")]
+        public async Task<IActionResult> Login(FormLoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                if(User != null)
+                {
+                    var PasswordConfirm = await this._userManager.CheckPasswordAsync(User, model.Password);
+                    // si l'email n'est pas confirmé
+                    if(PasswordConfirm && !User.EmailConfirmed)
+                    {
+                        ModelState.AddModelError(string.Empty, "Email non confirmé");
+                        return View(model);
+                    }
+
+                    var result = await this._signInManager.PasswordSignInAsync(User, model.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToRoute("home");
+                    }
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Email ou password érroné");
+            return View(model);
+        }
     }
 }
