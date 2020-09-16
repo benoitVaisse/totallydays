@@ -11,6 +11,8 @@ namespace Totallydays.Models
         [Key]
         public int Equipment_id { get; set; }
 
+        public  int Equipement_typeEquipment_type_id { get; set; }
+
         [Required]
         public virtual Equipment_type Equipement_type { get; set; }
 

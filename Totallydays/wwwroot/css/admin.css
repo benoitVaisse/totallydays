@@ -1,0 +1,51 @@
+﻿body {
+}
+
+
+.admin-equipement-flex {
+    display: flex;
+    flex-direction : row;
+    width: 100%;
+}
+
+.t-center {
+
+    text-align:center
+}
+.block-equipment{
+    border-right : 1px #bdbdbd solid;
+}
+
+.input-inline-block{
+    
+    display : inline-block;
+}
+
+.w5 {
+    width: 50%;
+}
+
+.w4 {
+    width: 40%;
+}
+
+.w25 {
+    width: 25%;
+}
+
+.btn-create {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    background-color : #00c804;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.e-type-single {
+    cursor: pointer;
+}

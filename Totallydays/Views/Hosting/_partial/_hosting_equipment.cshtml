@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Equipment>;
+@{ 
+
+}
+
+    <div>
+        <h3>Veuillez selectionné vos equipements pésent dans votre hébergement</h3>
+        <a href="#" class="btn btn-primary btn-hosting-creation-previous-image"> précedent </a>
+
+        <form id="hosting-equipment">
+
+            <div class="equipments-add">
+                @foreach (Equipment e in Model)
+                {
+                    bool check = this.ViewBag.listeE.Contains(e.Equipment_id);
+                    <div class="">
+                        <input type="checkbox" value="@e.Equipment_id" name="equipments[]" class="" id="equipment-@e.Equipment_id" @(check ?"checked = \"checked\"":"")/>
+                        <label for="equipment-@e.Equipment_id"> @e.Name </label>
+                    </div>
+                }
+
+            </div>
+            <input type="submit" value="Ajout des Equipments" class="btn btn-primary" />
+        </form>
+
+        <div class="link-return-my-hosting">
+            <a asp-route="my_hostings"> Liste de mes hébergements </a>
+        </div>
+    </div>

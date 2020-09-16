@@ -448,6 +448,9 @@ namespace Totallydays.Migrations
                     b.Property<float>("Lng")
                         .HasColumnType("real");
 
+                    b.Property<bool>("Modified")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Post_code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -462,9 +465,12 @@ namespace Totallydays.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -473,6 +479,9 @@ namespace Totallydays.Migrations
 
                     b.HasIndex("Hosting_type_id");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Hostings");
@@ -480,23 +489,15 @@ namespace Totallydays.Migrations
 
             modelBuilder.Entity("Totallydays.Models.Hosting_Equipment", b =>
                 {
-                    b.Property<int>("Equipment_id")
+                    b.Property<int>("EquipmentEquipment_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Hosting_id")
+                    b.Property<int>("HostingHosting_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Equipment_id1")
-                        .HasColumnType("int");
+                    b.HasKey("EquipmentEquipment_id", "HostingHosting_id");
 
-                    b.Property<int?>("Hosting_id1")
-                        .HasColumnType("int");
-
-                    b.HasKey("Equipment_id", "Hosting_id");
-
-                    b.HasIndex("Equipment_id1");
-
-                    b.HasIndex("Hosting_id1");
+                    b.HasIndex("HostingHosting_id");
 
                     b.ToTable("Hosting_Equipment");
                 });
@@ -696,11 +697,15 @@ namespace Totallydays.Migrations
                 {
                     b.HasOne("Totallydays.Models.Equipment", "Equipment")
                         .WithMany("Hosting_Equipment")
-                        .HasForeignKey("Equipment_id1");
+                        .HasForeignKey("EquipmentEquipment_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Totallydays.Models.Hosting", "Hosting")
                         .WithMany("Hosting_Equipment")
-                        .HasForeignKey("Hosting_id1");
+                        .HasForeignKey("HostingHosting_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Totallydays.Models.Image", b =>

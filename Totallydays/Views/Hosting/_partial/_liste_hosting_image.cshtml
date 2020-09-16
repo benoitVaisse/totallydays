@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Image>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div id="my-images">
+        @foreach (Image i in Model)
+        {
+            <div class="hos-img img-block-edit">
+                <img src="~/img/hosting/img/@i.Hosting.Hosting_id/@i.File" alt="" />
+
+                <div class="remove-image" data-id="@i.Image_id">
+                    <span><i class="far fa-window-close"></i></span>
+                </div>
+            </div>
+        }
+    </div>

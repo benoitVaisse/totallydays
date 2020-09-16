@@ -1,0 +1,92 @@
+﻿@model Hosting
+@{
+    ViewData["Title"] = "SeeHosting";
+    AppUser User = await UserManager.GetUserAsync(this.User);
+    int index = 0;
+    int jindex = 0;
+}
+
+    <div>
+        <div class="ad_title" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+Model.Cover_image)')">
+            <div class="container my-5">
+                <h1>@Model.Title </h1>
+                <p>@Model.Resume </p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    @Model.Description
+                    <div>
+                        <div class="carousel-image">
+                            <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    @foreach (Image i in Model.Images)
+                                    {
+                                        <li data-target="#carouselCaptions" data-slide-to="@index" @(index == 0 ? "class=\"active\"":"" ) ></li>
+                                        index++;
+
+                                    }
+                                </ol>
+                                <div class="carousel-inner">
+                                    @foreach (Image i in Model.Images)
+                                    {
+                                        <div class="carousel-item @(jindex == 0 ? "active":"" )">
+                                            <img src="~/img/hosting/img/@Model.Hosting_id/@i.File" class="d-block w-100">
+                                        </div>
+                                        jindex++;
+                                    }
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4 avatar mb-3">
+                            <img src="" alt="" class="avatar avatar-middle">
+                        </div>
+                        <div class="col">
+                            <a href="#">
+                                <h3>@Model.User.Lastname @Model.User.Firstname</h3>
+                            </a>
+                            <span class="badge badge-primary"> @Model.User.Hostings.Count() Annonce(s) </span>
+                        </div>
+                    </div>
+                    @Model.User.Description
+                </div>
+            </div>
+            <div class="hosting-equipment-block">
+                <h4>Equipements</h4>
+                <div class="hosting-equipments">
+                    @foreach(Hosting_Equipment he in Model.Hosting_Equipment)
+                    {
+                        <div> @he.Equipment.Name </div>
+                    }
+                </div>
+            </div>
+
+            <hr>
+            <partial name="/Views/Hosting/_partial/_hosting_comment.cshtml" model="@Model" />
+        </div>
+    </div>
+@if (User == Model.User)
+{
+    @* faire le formulaire des date indisponible *@
+}
+else
+{
+    @* faire le formulaire de reservation *@
+}
+
+
+
+

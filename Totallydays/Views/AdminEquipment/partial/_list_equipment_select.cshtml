@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Equipment_type>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    
+        @foreach (Equipment_type t in Model)
+        {
+            <option id="option-eq-t-@t.Equipment_type_id" value="@t.Equipment_type_id"> @t.Name </option>
+        }

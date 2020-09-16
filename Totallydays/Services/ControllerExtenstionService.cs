@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Totallydays.Services
 {
-    public class ControllerExtenstionService
+    public static class ControllerExtenstionService
     {
         /// <summary>
         /// Render a partial view to string.
@@ -20,7 +20,7 @@ namespace Totallydays.Services
         /// <param name="viewNamePath"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<string> RenderViewToStringAsync<TModel>(Controller controller, string viewNamePath, TModel model)
+        public static async Task<string> RenderViewToStringAsync<TModel>(this Controller controller, string viewNamePath, TModel model)
         {
             if (string.IsNullOrEmpty(viewNamePath))
                 viewNamePath = controller.ControllerContext.ActionDescriptor.ActionName;
@@ -70,7 +70,7 @@ namespace Totallydays.Services
         /// <param name="controller"></param>
         /// <param name="viewNamePath"></param>
         /// <returns></returns>
-        public async Task<string> RenderViewToStringAsync(Controller controller, string viewNamePath)
+        public static async Task<string> RenderViewToStringAsync(this Controller controller, string viewNamePath)
         {
             if (string.IsNullOrEmpty(viewNamePath))
                 viewNamePath = controller.ControllerContext.ActionDescriptor.ActionName;

@@ -15,6 +15,7 @@ using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using Totallydays.Data;
 using Totallydays.Models;
+using Totallydays.Repositories;
 using Totallydays.Services;
 
 namespace Totallydays
@@ -47,13 +48,33 @@ namespace Totallydays
             MailKitOptions mailKitOption = Configuration.GetSection("Email").Get<MailKitOptions>();
             services.AddMailKit(config => config.UseMailKit(mailKitOption));
 
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = this.Configuration["apis:google:id"];
+                options.ClientSecret = this.Configuration["apis:google:secret"];
+            });
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddAntiforgery(options =>
+            {
+                // Set Cookie properties using CookieBuilder properties†.
+                options.FormFieldName = "AntiforgeryFieldname";
+            });
 
             services.AddControllersWithViews();
 
-
             // services
             services.AddScoped<SendMailService, SendMailService>();
-            services.AddScoped<ControllerExtenstionService, ControllerExtenstionService>();
+            services.AddScoped<HostingService, HostingService>();
+            services.AddScoped<UploadService, UploadService>(); 
+
+            // repository 
+            services.AddScoped<EquipmentRepository, EquipmentRepository>();
+            services.AddScoped<EquipmentTypeRepository, EquipmentTypeRepository>();
+            services.AddScoped<BedRepository, BedRepository>();
+            services.AddScoped<HostingTypeRepository, HostingTypeRepository>();
+            services.AddScoped<HostingRepository, HostingRepository>();
+            services.AddScoped<ImageRepository, ImageRepository>();
+            services.AddTransient<UserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

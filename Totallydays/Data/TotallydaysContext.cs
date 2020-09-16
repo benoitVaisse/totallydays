@@ -44,12 +44,16 @@ namespace Totallydays.Data
                 .WithMany(u => u.Comments_receive);
 
             modelBuilder.Entity<Hosting_Equipment>()
-                .HasKey(he => new { he.Equipment_id , he.Hosting_id });
+                .HasKey(he => new { he.EquipmentEquipment_id , he.HostingHosting_id });
 
             modelBuilder.Entity<Hosting>()
                 .HasOne(h => h.User)
                 .WithMany(u => u.Hostings)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hosting>()
+                .HasIndex(h => h.Title)
+                .IsUnique();
 
         }
 

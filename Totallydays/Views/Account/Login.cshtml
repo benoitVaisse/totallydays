@@ -3,24 +3,49 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Se Connecter</h1>
+<h1>Connexion</h1>
 
-<div>
-    <form asp-route="login_account_post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Email" class="control-label"></label>
-            <input asp-for="Email" class="form-control" required/>
-            <span asp-validation-for="Email" class="text-danger"></span>
+<div class="row">
+
+    <div class="col-md-6 col-sm-12">
+        <h2>Connexion local</h2>
+        <form asp-route="login_account_post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Se Connecter</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.ExternalLogings.Count > 0)
+    {
+        <div class="col-md-6 col-sm-12">
+            <h2>Connexion externe</h2>
+            <form asp-route="login_extern_account_post" asp-route-returnUrl =" @Model.ReturnUrl">
+                <div>
+                    @foreach (var provider in Model.ExternalLogings)
+                    {
+                        <div>
+                            <button type="submit" title="@provider.DisplayName" class="btn btn-danger" name="provider" value="@provider.Name">
+                                @provider.DisplayName
+                            </button>
+                        </div>
+                    }
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label asp-for="Password" class="control-label"></label>
-            <input asp-for="Password" class="form-control" required/>
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Se Connecter</button>
-        </div>
-    </form>
+    }
+
+
 </div>
 

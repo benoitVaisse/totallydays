@@ -1,0 +1,70 @@
+﻿@model Equipment;
+@{
+    ViewData["Title"] = "Equipments";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="jumbotron">
+        <h1 class="text-center">Equipments</h1>
+    </div>
+
+
+    <div class="admin-equipement-flex block-all-equipment">
+
+        <div class="block-equipment block-e w5 t-center">
+            <div>
+                <h2>Equipements</h2>
+                <div class="creation-e">
+                    <div class="form">
+                        <form asp-route="admin_create_equipment_post" id="create_equipment">
+                            <div class="form-group">
+                                <input class="form-control name-type input-inline" type="hidden" value="" asp-for="Equipment_id" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control name-type input-inline-block w4" type="text" value="" asp-for="Name" />
+                                <div class="e-type-e-list input-inline-block w4">
+                                    <select class="form-control" asp-for="Equipement_typeEquipment_type_id">
+                                        <partial name="~/Views/AdminEquipment/partial/_list_equipment_select.cshtml" model="@this.ViewBag.equipments_type_list" />
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-create">Créer</button>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="list-e">
+                    <partial name="~/Views/AdminEquipment/partial/_list_equipment.cshtml" model="@this.ViewBag.equipments_type_list" />
+                </div>
+            </div>
+        </div>
+
+        <div class="block-equipment-type block-e w5 t-center">
+            <div>
+                <h2>Types d'equipements</h2>
+                <div class="creation-e-type">
+                    <partial name="~/Views/AdminEquipment/partial/_create_type.cshtml" model="@this.ViewBag.equipmentType" />
+                </div>
+                <div class="list-e-type">
+                    <partial name="~/Views/AdminEquipment/partial/_list_type.cshtml" model="@this.ViewBag.equipments_type_list" />
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+@section Scripts {
+
+    <script>
+        let urlAjaxCreateEquipmentType = "@Url.RouteUrl("admin_create_equipment_type_post")";
+        let urlAjaxEditEquipmentType = "@Url.RouteUrl("admin_edit_equipment_type_post")";
+        let urlAjaxCreateEquipment = "@Url.RouteUrl("admin_create_equipment_post")";
+        let urlAjaxEditEquipment = "@Url.RouteUrl("admin_edit_equipment_post")";
+        
+    </script>
+    
+    <script src="~/js/Admin/admin_equipment.js"></script>
+}
+
+

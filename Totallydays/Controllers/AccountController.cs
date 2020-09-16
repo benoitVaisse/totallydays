@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MailKit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.MailKit.Core;
+using Totallydays.Data;
 using Totallydays.Models;
 using Totallydays.Services;
 using Totallydays.ViewsModel;
@@ -20,14 +22,21 @@ namespace Totallydays.Controllers
         private readonly IWebHostEnvironment _host;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SendMailService _mailService;
+        private readonly TotallydaysContext context;
 
-        public AccountController(UserManager<AppUser> UserManager, SignInManager<AppUser> SignInManager, IWebHostEnvironment host, RoleManager<AppRole> RoleManager, SendMailService mailService)
+        public AccountController(UserManager<AppUser> UserManager, 
+            SignInManager<AppUser> SignInManager, 
+            IWebHostEnvironment host, 
+            RoleManager<AppRole> RoleManager, 
+            SendMailService mailService,
+            TotallydaysContext context)
         {
             this._userManager = UserManager;
             this._signInManager = SignInManager;
             this._host = host;
             this._roleManager = RoleManager;
             this._mailService = mailService;
+            this.context = context;
         }
 
         /// <summary>
@@ -73,9 +82,9 @@ namespace Totallydays.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser User = new AppUser()
+                AppUser User = new AppUser(this.context)
                 {
-                    UserName = model.Firstname + '_' + model.Lastname,
+                    UserName = model.Email,
                     Email = model.Email,
                     Firstname = model.Firstname,
                     Lastname = model.Lastname
@@ -126,14 +135,27 @@ namespace Totallydays.Controllers
             return BadRequest();
         }
 
-
+        /// <summary>
+        /// action qui affiche la page de login
+        /// </summary>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
         [HttpGet("login", Name = "login_account")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(string ReturnUrl)
         {
-            FormLoginViewModel model = new FormLoginViewModel();
+            FormLoginViewModel model = new FormLoginViewModel()
+            {
+                ReturnUrl = ReturnUrl,
+                ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
             return View(model);
         }
 
+        /// <summary>
+        /// action pour ce logguer manuellement
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("ligin-post", Name = "login_account_post")]
         public async Task<IActionResult> Login(FormLoginViewModel model)
         {
@@ -161,5 +183,104 @@ namespace Totallydays.Controllers
             ModelState.AddModelError(string.Empty, "Email ou password érroné");
             return View(model);
         }
+
+
+        /// <summary>
+        /// action qui nous permet de nous autehtifier avec google ou un autre identifier extern
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [HttpPost("external-login", Name = "login_extern_account_post")]
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var ReturnUrl = Url.RouteUrl("login_external_callback_account", new { returnUrl = returnUrl });
+
+            var properties = this._signInManager.ConfigureExternalAuthenticationProperties(provider, ReturnUrl);
+            return new ChallengeResult(provider, properties);
+        }
+
+        /// <summary>
+        /// action effectuer apres la login via un provider extern
+        /// si on connais deja le user on le log , si on le connais pas on rentre c'est info extern en base
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [HttpGet("external-login-callback", Name = "login_external_callback_account")]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            var ReturnUrl = returnUrl ?? Url.RouteUrl("home");
+
+            // on reconstruit notre FormLoginViewModel
+            FormLoginViewModel model = new FormLoginViewModel()
+            {
+                ReturnUrl = ReturnUrl,
+                ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+
+            // on regarde si il y a des erreurs
+            if(remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Erreur Provonant de {remoteError}");
+            }
+
+            var info = await this._signInManager.GetExternalLoginInfoAsync();
+            if(info == null)
+            {
+                ModelState.AddModelError(string.Empty, $"Erreur Provonant de {remoteError}");
+            }
+
+            var signInResult = await this._signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false, false);
+            if (signInResult.Succeeded)
+            {
+                return LocalRedirect(ReturnUrl);
+            }
+            else
+            {
+                string email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                if (email != null)
+                {
+                    AppUser User = await this._userManager.FindByEmailAsync(email);
+                    if(User == null)
+                    {
+                        User = new AppUser(this.context)
+                        {
+                            UserName = email,
+                            Email = email,
+                            Lastname = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                            Firstname = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                            EmailConfirmed = true
+                        };
+
+                         await this._userManager.CreateAsync(User);
+                         await this._userManager.AddToRoleAsync(User, "user");
+
+
+                    }
+
+                    await this._userManager.AddLoginAsync(User, info);
+                    await this._signInManager.SignInAsync(User, false);
+
+                    return LocalRedirect(ReturnUrl);
+                }
+                
+            }
+
+            return View("login", model);
+        }
+
+
+        /// <summary>
+        /// action pour ce deconnecter
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("logout", Name ="logout_account")]
+        public async Task<IActionResult> Logout()
+        {
+            await this._signInManager.SignOutAsync();
+            return RedirectToRoute("home");
+        }
     }
+
 }

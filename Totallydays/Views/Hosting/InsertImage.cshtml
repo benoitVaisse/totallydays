@@ -1,0 +1,50 @@
+﻿@model Totallydays.ViewsModel.FormImageViewModel
+@{
+    ViewData["Title"] = "Ajout d'image";
+}
+
+    <div class="container">
+        <div class="hosting-creation-image">
+
+            <h1>Mise en avant des images</h1>
+
+            <div>
+                <p>Dans cette section vous pouvez ajouter vos image en liaison avec votre Hébergement</p>
+                <a href="#" class="btn btn-primary btn-hosting-creation-next-equipment"> Suivant </a>
+            </div>
+
+            <div class="form">
+
+                <form id="form-image" action="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label asp-for="Image"></label>
+                        <input asp-for="Image" class="form-control" />
+                    </div>
+                    @Html.AntiForgeryToken()
+
+                </form>
+            </div>
+
+            <div id="liste-image-hebergement-create">
+                <partial name="~/Views/Hosting/_partial/_liste_hosting_image.cshtml"  model="@this.ViewBag.images">
+            </div>
+        </div>
+        <div class="hosting-creation-equipment">
+            <partial name="~/Views/Hosting/_partial/_hosting_equipment.cshtml" model="@this.ViewBag.equipments" />
+        </div>
+    </div>
+
+@section Scripts{ 
+    <script>
+        let urlImage = "@Url.RouteUrl("hosting_images_post", new {id= this.ViewBag.hosting.Hosting_id })";
+        let urlImageDelete = "@Url.RouteUrl("hosting_images_delete_post", new { id = this.ViewBag.hosting.Hosting_id })";
+        let urlLinkEquipment = "@Url.RouteUrl("hosting_equipment_post", new { id = this.ViewBag.hosting.Hosting_id })";
+        
+
+        console.log(urlImage);
+        console.log(urlImageDelete);
+        console.log(urlLinkEquipment);
+    </script>
+    <script src="~/js/hosting.js"></script> 
+}

@@ -6,10 +6,12 @@
     <title>@ViewData["Title"] - Totallydays</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    @RenderSection("Style", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Totallydays</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,10 +30,33 @@
                     <ul class="navbar-nav ml-auto">
                         @if (User.Identity.IsAuthenticated)
                         {
-
+                            if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-area="" asp-route="admin_home">Admin</a>
+                                </li>
+                            }
+                            AppUser user = await UserManager.GetUserAsync(User);
+                            <li class="nav-item dropdown">
+                                <a class="nav-link btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="~/img/avatar/@user.Id/@user.Picture" alt="" class="avatar-min">
+                                    <span>@user.Lastname @user.Firstname</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" asp-route="my_hostings"> Mes Hébergement </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Mes Réservations</a>
+                                    <a class="dropdown-item" href="#">Mon Compte</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="nav-link text-dark" asp-route="logout_account"> Déconnexion </a>
+                                </div>
+                            </li>
                         }
                         else
                         {
+                            <li>
+                                <a class="nav-link text-dark" asp-route="login_account"> Connexion </a>
+                            </li>
                             <li>
                                 <a class="nav-link text-dark" asp-route="account_register"> S'enregistrer </a>
                             </li>
@@ -41,7 +66,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -55,6 +80,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/map.js" asp-append-version="true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7qLV3juiV8GovycHrqtGzeVsD-WWEqto&libraries=places"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

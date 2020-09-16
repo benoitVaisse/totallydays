@@ -1,0 +1,17 @@
+﻿@model Equipment_type;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="form">
+        <form asp-route="admin_create_equipment_type_post" id="create_equipment_type">
+            <div class="form-group">
+                <input class="form-control name-type input-inline" type="hidden" value="" asp-for="Equipment_type_id" />
+            </div>
+            <div class="form-group">
+                <input class="form-control name-type input-inline-block w5" type="text" value="" asp-for="Name" />
+                <button type="submit" class="btn-create">Créer</button>
+            </div>
+
+        </form>
+    </div>

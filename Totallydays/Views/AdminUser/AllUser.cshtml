@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AppUser>
+@{
+    ViewData["Title"] = "AllUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<object> Average = this.ViewBag.average;
+}
+
+    <div class="container">
+        <h1> Tous les utilisateurs </h1>
+
+        <div class="all-user">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nombre d'hebergement</th>
+                        <th scope="col">Nombre de réservation</th>
+                        <th scope="col">Moyenne Commentaire Hébergement</th>
+                        <th scope="col">Nombre Commentaire Hébergement</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AppUser u in Model)
+                    {
+                    <tr>
+                        <td>@u.Id</td>
+                        <td>@u.FullName</td>
+                        <td>@u.Hostings.Count()</td>
+                        <td>@u.Bookings.Count()</td>
+                        <td>@u.TotalAverageHosting</td>
+                        <td>@u.Comments_receive.Select(c=>c).Where(c=>c.Hosting != null).Count()</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">Voir</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
