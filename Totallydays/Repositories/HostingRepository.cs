@@ -118,5 +118,19 @@ namespace Totallydays.Repositories
             this._context.SaveChanges();
             return Hosting;
         }
+
+        /// <summary>
+        /// set publish true or false to hosting
+        /// </summary>
+        /// <param name="h"></param>
+        /// <param name="publish"></param>
+        /// <returns></returns>
+        public Hosting setPublish(Hosting h, bool publish)
+        {
+            h.Published = publish;
+            this._context.Hostings.Update(h);
+            this._context.SaveChanges();
+            return h;
+        }
     }
 }

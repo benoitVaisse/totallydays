@@ -30,9 +30,9 @@
                         <td>@u.Hostings.Count()</td>
                         <td>@u.Bookings.Count()</td>
                         <td>@u.TotalAverageHosting</td>
-                        <td>@u.Comments_receive.Select(c=>c).Where(c=>c.Hosting != null).Count()</td>
+                        <td>@u.Comments_receive.Select(c=>c).Where(c=>c.BookingBooking_id != null).Count()</td>
                         <td>
-                            <a href="#" class="btn btn-primary">Voir</a>
+                            <a href="#" class="btn btn-info">Voir</a>
                         </td>
                     </tr>
                     }

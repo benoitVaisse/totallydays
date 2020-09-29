@@ -1,0 +1,15 @@
+﻿@model Totallydays.ViewsModel.SendMailVariable;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="container">
+
+        <h3>Nouvelle hébergement</h3>
+
+        <p>
+            Un nouvelle hébergement a été créer par @Model.Hosting.User.FullName (@Model.Hosting.User.Email)
+        </p>
+
+        <p>Acceder au site pour le visualiser <a href="@Model.BaseUrl"> Lien du site </a></p>
+    </div>

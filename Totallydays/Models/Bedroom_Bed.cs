@@ -11,9 +11,11 @@ namespace Totallydays.Models
         [Key]
         public int Bedroom_Bed_id { get; set; }
 
+        public int BedBed_id { get; set; }
         [Required]
         public virtual Bed Bed { get; set; }
 
+        public int BedroomBedroom_id { get; set; }
         [Required]
         public virtual Bedroom Bedroom { get; set; }
 

@@ -1,0 +1,20 @@
+﻿@model AppUser;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div id="picture-account">
+        <div class="show-picture text-center">
+            @if (Model.Picture != null)
+            {
+                <img src="~/img/avatar/@Model.Id/@Model.Picture" alt="" />
+            }
+            else
+            {
+                <img src="~/img/avatar/homme.jpg" />
+            }
+        </div>
+        <div class="form-group">
+            <input type="file" name="picture" class="form-control"/>
+        </div>
+    </div>

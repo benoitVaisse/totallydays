@@ -1,0 +1,51 @@
+﻿@model Totallydays.ViewsModel.FormImageViewModel
+@{
+    ViewData["Title"] = "Ajout d'image";
+}
+
+    <div class="container">
+        <div id="hosting-creation-image">
+
+            <h1>Mise en avant des images</h1>
+
+            <div>
+                <p>Dans cette section vous pouvez ajouter vos image en liaison avec votre Hébergement</p>
+                <div class="text-right">
+                    <button type="button" class="btn btn-info hosting-creation" data-target="#hosting-creation-chambre" data-parent="#hosting-creation-image"> Suivant </button>
+                </div>
+            </div>
+
+            <div class="form">
+
+                <form id="form-image" action="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label asp-for="Image"></label>
+                        <input asp-for="Image" class="form-control" />
+                    </div>
+                    @Html.AntiForgeryToken()
+
+                </form>
+            </div>
+
+            <div id="liste-image-hebergement-create">
+                <partial name="~/Views/Hosting/_partial/_liste_hosting_image.cshtml" model="@this.ViewBag.images">
+            </div>
+        </div>
+        <div id="hosting-creation-chambre">
+            <partial name="~/Views/MiddleHosting/_partial/_hosting_bed.cshtml" model="@this.ViewBag.listBed" />
+        </div>
+        <div id="hosting-creation-equipment">
+            <partial name="~/Views/Hosting/_partial/_hosting_equipment.cshtml" model="@this.ViewBag.equipments" />
+        </div>
+    </div>
+
+@section Scripts{ 
+    <script>
+        let urlImage = "@Url.RouteUrl("hosting_images_post", new {id= this.ViewBag.hosting.Hosting_id })";
+        let urlImageDelete = "@Url.RouteUrl("hosting_images_delete_post", new { id = this.ViewBag.hosting.Hosting_id })";
+        let urlLinkEquipment = "@Url.RouteUrl("hosting_equipment_post", new { id = this.ViewBag.hosting.Hosting_id })";
+        
+    </script>
+    <script src="~/js/hosting.js"></script> 
+}

@@ -14,16 +14,17 @@
             </div>
         </div>
         <div class="container">
+            <h2 class="my-4">@Model.Title</h2>
             <div class="row">
                 <div class="col-md-8 mb-3">
-                    @Model.Description
+
                     <div>
                         <div class="carousel-image">
                             <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     @foreach (Image i in Model.Images)
                                     {
-                                        <li data-target="#carouselCaptions" data-slide-to="@index" @(index == 0 ? "class=\"active\"":"" ) ></li>
+                                        <li data-target="#carouselCaptions" data-slide-to="@index" @(index == 0 ? "class=\"active\"" : "" )></li>
                                         index++;
 
                                     }
@@ -49,10 +50,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 my-5">
                     <div class="row">
                         <div class="col-md-4 avatar mb-3">
-                            <img src="" alt="" class="avatar avatar-middle">
+                            @if (User.Picture != null)
+                            {
+                                <img src="~/img/avatar/@User.Id/@User.Picture" class="avatar avatar-middle" />
+                            }
+                            else
+                            {
+                                <img src="~/img/avatar/homme.jpg" class="avatar avatar-middle" />
+                            }
                         </div>
                         <div class="col">
                             <a href="#">
@@ -61,30 +69,129 @@
                             <span class="badge badge-primary"> @Model.User.Hostings.Count() Annonce(s) </span>
                         </div>
                     </div>
-                    @Model.User.Description
+                    @Html.Raw(User.Description != null ? User.DescriptionShow() : "")
                 </div>
             </div>
-            <div class="hosting-equipment-block">
+            <hr />
+            <div>
+                <div class="my-3">
+                    @Html.Raw(Model.ResumeShow());
+                </div>
+                <div class="my-3">
+                    @Html.Raw(Model.DescriptionShow());
+                </div>
+            </div>
+            <hr />
+            <div class="hosting-equipment-block my-3">
                 <h4>Equipements</h4>
                 <div class="hosting-equipments">
-                    @foreach(Hosting_Equipment he in Model.Hosting_Equipment)
+                    @foreach (Hosting_Equipment he in Model.Hosting_Equipment)
                     {
                         <div> @he.Equipment.Name </div>
                     }
                 </div>
             </div>
 
+            <hr />
+            <div class="coordinate-hosting" data-lat="@Model.Lat" data-lng="@Model.Lng"></div>
+            <partial name="/Views/Hosting/_partial/_map_hosting.cshtml" model="@Model" />
             <hr>
             <partial name="/Views/Hosting/_partial/_hosting_comment.cshtml" model="@Model" />
+            @if (User == Model.User)
+            {
+                <div class="booking-block">
+                    <partial name="/Views/Hosting/_partial/_block_unavalaible_date.cshtml" model="@this.ViewBag.unavailable_date" />
+                </div>
+            }
+            else
+            {
+                <div class="booking-block">
+                    <partial name="/Views/Hosting/_partial/_block_booking.cshtml" model="@this.ViewBag.bookingModel" />
+                </div>
+            }
+            
         </div>
+        
     </div>
-@if (User == Model.User)
-{
-    @* faire le formulaire des date indisponible *@
-}
-else
-{
-    @* faire le formulaire de reservation *@
+
+
+
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#booking_startDate, #booking_endDate").datepicker({
+                format: "dd/mm/yyyy",
+                datesDisabled: [
+                    @foreach (DateTime date in Model.getUnavailableDays())
+                    {
+                        @:'@date.ToString("dd/MM/yyyy")',
+                    }
+                ],
+                startDate: new Date()
+            });
+
+            let lat = +"@Model.Lat";
+            let lng = +"@Model.Lng";
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: { lat: lat, lng: lng }
+            });
+
+            $(".coordinate-hosting").each((i, e) => {
+                let lat_hosting = $(e).data("lat");
+                let lng_hosting = $(e).data("lng");
+                var marker = new google.maps.Marker({
+                    position: { lat: lat_hosting, lng: lng_hosting },
+                    map: map,
+                    title: "@Model.Title"
+                })
+            })
+        });
+
+        $("#booking_startDate, #booking_endDate").on("changeDate",function (e) {
+
+            const DAYS_TIME = 24 * 60 * 60 * 1000;
+            const startDate = $("#booking_startDate td.day.active").data("date");
+            const endDate = $("#booking_endDate td.day.active").data("date");
+            let DateStart = new Date(startDate);
+            let Dateend = new Date(endDate);
+            if (DateStart instanceof Date) {
+                $("input#Start_date").val(transformDate(DateStart));
+            }
+            if (Dateend instanceof Date) {
+                $("input#End_date").val(transformDate(Dateend));
+            }
+            days = (endDate - startDate) / DAYS_TIME;
+            amount = days * @Model.Price;
+            if (startDate && endDate && startDate < endDate) {
+                $("#days").text(days);
+                $("#amount").text(amount);
+                $("#error").hide();
+                $("#make_booking").removeAttr("disabled");
+            }
+            else if(!startDate < endDate && startDate && endDate) {
+                $("#days").text("...");
+                $("#amount").text("0");
+                $("#error").show();
+                $("#make_booking").attr("disabled", "disabled");
+            }
+        });
+
+        function transformDate(date) {
+            let day = date.getDate();
+            day = day.length < 2 ? "0" + day : day;
+            let month = date.getMonth()+1;
+            month = month.length < 2 ? "0" + month : month;
+            let year = date.getFullYear();
+
+            return [year, month, day].join("-");
+        }
+
+
+    </script>
 }
 
 

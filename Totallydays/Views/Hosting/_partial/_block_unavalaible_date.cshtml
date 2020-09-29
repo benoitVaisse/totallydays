@@ -1,0 +1,41 @@
+﻿@model Totallydays.ViewsModel.FormUnavailableDateViewModel;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Hosting hosting = this.ViewBag.hosting;
+}
+
+<div class="alert bg-light my-5">
+    <div class="alert alert-info align-items-center text-center">
+        <h4 class="text-center">sélectionner votre tranche de date indisponible </h4>
+    </div>
+    <p id="error" style="color:red; display:none">
+        La date de départ dois être ulterieur a la date d'arrivé pour calculer correctement votre montant à payé !!
+    </p>
+    <form asp-route="make_unavailable_date">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <input type="hidden" asp-for="hosting_id" />
+            <input type="hidden" asp-for="Start_date" />
+            <input type="hidden" asp-for="End_date" />
+        </div>
+
+        <div class="block">
+
+            <div class="form-bookin-input">
+                <div id="booking_startDate" class="date-booking start_date">
+
+                    <span asp-validation-for="Start_date" class="text-danger"></span>
+                </div>
+                <div id="booking_endDate" class="date-booking end-date">
+
+                    <span asp-validation-for="End_date" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <button disabled id="make_booking" type="submit" class="btn btn-outline-info"> Rendre cette periode indisponible </button>
+    </form>
+</div>
+

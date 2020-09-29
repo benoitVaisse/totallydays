@@ -1,0 +1,51 @@
+﻿@model Totallydays.ViewsModel.FormBookingViewModel;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Hosting hosting = this.ViewBag.hosting;
+}
+
+    <div class="alert bg-light my-5">
+        <div class="alert alert-info align-items-center text-center">
+            <h4 class="text-center">Faite Votre réservation </h4>
+        </div>
+        <p id="error" style="color:red; display:none">
+            La date de départ dois être ulterieur a la date d'arrivé pour calculer correctement votre montant à payé !!
+        </p>
+        <form asp-route="hosting_booking_post" asp-route-slug="@hosting.Slug">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <input type="hidden" asp-for="hosting_id" />
+                <input type="hidden" asp-for="Start_date" />
+                <input type="hidden" asp-for="End_date" />
+            </div>
+
+            <div class="block">
+
+                <div class="form-bookin-input">
+                    <div id="booking_startDate" class="date-booking start_date">
+
+                        <span asp-validation-for="Start_date" class="text-danger"></span>
+                    </div>
+                    <div id="booking_endDate" class="date-booking end-date">
+
+                        <span asp-validation-for="End_date" class="text-danger"></span>
+                    </div>
+                    <div class="date-booking block-price">
+
+                        <h4>Montant du séjour : <span id="amount"> ... </span>&euro; </h4>
+                        <span id="days"> 0 </span> nuit(s) à @hosting.Price &euro; / nuit
+                    </div>
+                </div>
+                <div class="comment form-group">
+                    <label asp-for="Comment"></label>
+                    <textarea asp-for="Comment" class="form-control">
+                    </textarea>
+                </div>
+            </div>
+
+            <button disabled id="make_booking" type="submit" class="btn btn-outline-info"> Réservez </button>
+        </form>
+    </div>
+

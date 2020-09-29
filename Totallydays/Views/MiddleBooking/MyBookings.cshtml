@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Booking>
+@{
+    ViewData["Title"] = "MyBookings";
+}
+
+    <div class="container">
+
+        <h1>Mes Réservations</h1>
+
+        @if(Model.Count() > 0)
+        {
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Hébergement</th>
+                            <th scope="col">Date de début</th>
+                            <th scope="col">Date de fin</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Booking b in Model)
+                        {
+                        <tr>
+                            <td>@b.Booking_id</td>
+                            <td>@b.Hosting.Title</td>
+                            <td>@b.Start_date.ToString("dd/MM/yyyy")</td>
+                            <td>@b.End_date.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @if(DateTime.Now < b.End_date)
+                                {
+                                    <span>Vous ne pouvez pas faire encore de commentaire sur ce séjour car la date de fin de séjour n'est pas dépassé</span>
+                                }else if ( b.Rating != null)
+                                {
+                                    <span> Vous avez deja fait un COmmentaire sur ce séjour</span>
+                                }
+                                else
+                                {
+                                    <a asp-route ="make_comment_hosting" asp-route-id="@b.Booking_id" class="btn btn-info"> Laisser un commentaire </a>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p>Aucune résavation effectué</p>
+        }
+    </div>
+

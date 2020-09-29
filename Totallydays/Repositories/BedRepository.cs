@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,9 +31,18 @@ namespace Totallydays.Repositories
             return Bed;
         }
 
+        public async Task<IEnumerable<Bed>> FindAll()
+        {
+            return await this._context.Beds.ToListAsync();
+        }
         public Bed Find(int Id)
         {
             return this._context.Beds.Find(Id);
+        }
+
+        public Bed FindOneById(int idBed)
+        {
+            return this._context.Beds.Find(idBed);
         }
 
         public Bed FindByName(string Name)
@@ -42,5 +52,6 @@ namespace Totallydays.Repositories
                       select b;
             return bed.FirstOrDefault();
         }
+
     }
 }

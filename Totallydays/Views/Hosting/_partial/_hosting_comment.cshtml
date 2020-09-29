@@ -3,41 +3,49 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@if(Model.Comments.Count()> 0)
+@if (@Model.getNumberComment() > 0)
 {
 
-    <h2>Commentaires : </h2>
+
     <div class="alert alert-info">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <h4>Note globale donnée par nos voyageurs !</h4>
             </div>
-            <div class="col-md-6">
-                @*{% include "ratingStar.html.twig" with {"rating" : ad.avgRating } %} <br>*@
-                (Moyenne calculé sur @Model.Comments.Count() note(s) )
+            <div class="col-md-6 text-right">
+                <i class="fas fa-star"></i>
+                @Model.GetAverage()
+                (@Model.getNumberComment())
             </div>
         </div>
     </div>
-    @foreach (Comment c in Model.Comments)
-    {
+    <div>
 
-        <div class="bg-light arrondi mt-3 pt-3 px-3">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="" alt="" class="avatar avatar-middle mt-2 ml-4">
-                </div>
-                <div class="col-md-10">
-                    <strong>@c.User_emmiter.Lastname @c.User_emmiter.Firstname</strong> a dit :
-                    <p>@c.Content</p>
-                    <p>
-                        Note : @c.Rating / 5
-                        
-                    </p>
-                </div>
-            </div>
-        </div>
+        <h2>Commentaires : </h2>
+        @foreach (Booking b in Model.Bookings)
+        {
+            if(b.Rating != null)
+            {
+                Comment c = b.Rating;
+                <div class="bg-light arrondi mt-3 pt-3 px-3">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="" alt="" class="avatar avatar-middle mt-2 ml-4">
+                        </div>
+                        <div class="col-md-10">
+                            <strong>@c.User_emmiter.Lastname @c.User_emmiter.Firstname</strong> a dit :
+                            <p>@c.Content</p>
+                            <p>
+                                Note : @c.Rating / 5
 
-    }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
 
 }
 else

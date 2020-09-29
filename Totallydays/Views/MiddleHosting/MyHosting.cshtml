@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Hosting>;
+@{
+    ViewData["Title"] = "MyHosting";
+}
+
+<div class="container">
+
+    <h1 class="my-3">Mes Hébergements</h1>
+    <div id="requessValidator">
+        @Html.AntiForgeryToken()
+    </div>
+
+    <div>
+        <div class="create-block text-right">
+            <a class="btn btn-info" asp-route="hosting_create"> Créer une annonce </a>
+        </div>
+        <div class="hosting-list my-5">
+
+            @if (Model.Count() > 0)
+            {
+                <div class="my-hostings">
+                    @foreach (Hosting h in Model)
+                    {
+                        <div class="single-hosting-list">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="~/img/hosting/coverImage/@h.Cover_image" alt="image @h.Title">
+                                <div class="card-body">
+                                    <h5 class="card-title">@h.Title</h5>
+                                    <p class="card-text">@h.Resume</p>
+                                    <div>
+                                        <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>
+                                        <a asp-route="hosting_modified" asp-route-id="@h.Hosting_id" class="btn btn-warning">Modifier</a>
+                                        <label for="publish_hosting_@h.Hosting_id"> Publié </label>
+                                        <input data-id="@h.Hosting_id" class="input-published" type="checkbox" id="publish_hosting_@h.Hosting_id" name="publish" @(h.Published == true ? "checked = \"checked\"":"") />
+
+                                    </div>
+                                    @if (h.Active == false)
+                                    {
+                                        <p style="color:#a90f0f">Cette hébergement n'a pas étias validé par l'admin</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Vous n'avez aucun hébergement</p>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        let urlPublished = "@Url.RouteUrl("hosting_publish_post")";
+    </script>
+    <script src="~/js/hosting.js"></script>
+}

@@ -25,6 +25,7 @@ namespace Totallydays.Models
 
         public virtual AppUser User_receiver { get; set; }
 
-        public virtual Hosting Hosting { get; set; }
+        public int BookingBooking_id { get; set; }
+        public virtual Booking Booking { get; set; }
     }
 }

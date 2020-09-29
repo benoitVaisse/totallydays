@@ -2,7 +2,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="all-view w-100 h-75 position-relative" >
+        <div id="carousel-home" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active w-100 hvh-90 image1 image-gb">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="text-shadows">Le dépaysement à deux pas de chez vous</h2>
+                        <p class="text-shadows">Trouvez votre nouveau chez vous. Découvrez des logements à proximité pour vous installer, travailler, ou tout simplement vous détendre.</p>
+                    </div>
+                </div>
+                <div class="carousel-item w-100 hvh-90 image2 image-gb">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="text-shadows">Parlez-nous un peu de votre logement</h2>
+                        <p class="text-shadows">Gagnez de l'argent en tant qu'hôte Totallydays</p>
+                    </div>
+                </div>
+                <div class="carousel-item w-100 hvh-90 image3 image-gb">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="text-shadows">Des logements uniques</h2>
+                        <p class="text-shadows">Des tentes, des cabanes dans les arbres et plus encore : bien plus que de simples logements où passer la nuit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container middle-home"> 
+            <h3 class="text-shadows">Faites votre recherche de Logement</h3>
+            <form method="get" asp-route="hostings-search">
+                <div class="form-group w-50 text-center">
+                    <input type="text" value="" name="City" id="City" class="form-control" placeholder="Où voulez vous partir ?" />
+                </div>
+                <div class="block-flex date-show">
+                    <div class="form-group w-25">
+                        <label for="start_date" class="text-shadows">votre date de début de séjour</label>
+                        <input type="date" value="" id="start_date" class="form-control" placeholder="" />
+                    </div>
+                    <div class="form-group w-25">
+                        <label for="start_end" class="text-shadows">votre date de fin de séjour</label>
+                        <input type="date" value="" id="start_end" class="form-control" placeholder="Votre date de départ" />
+                    </div>
+                </div>
+
+                <div class="">
+                    <button type="submit" class="btn btn-info">Rechercher</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>

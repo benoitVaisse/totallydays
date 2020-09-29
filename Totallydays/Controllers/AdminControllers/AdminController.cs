@@ -13,7 +13,7 @@ namespace Totallydays.Controllers.AdminControllers
 {
     [Authorize(Roles = "admin")]
     [Route("admin")]
-    public class AdminController : Controller
+    public class AdminController : MyController
     {
         
     }

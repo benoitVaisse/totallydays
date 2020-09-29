@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using Totallydays.BackGrounService;
 using Totallydays.Data;
 using Totallydays.Models;
 using Totallydays.Repositories;
@@ -57,7 +58,7 @@ namespace Totallydays
             services.AddAntiforgery(options =>
             {
                 // Set Cookie properties using CookieBuilder properties†.
-                options.FormFieldName = "AntiforgeryFieldname";
+                options.FormFieldName = "__RequestVerificationToken";
             });
 
             services.AddControllersWithViews();
@@ -65,7 +66,10 @@ namespace Totallydays
             // services
             services.AddScoped<SendMailService, SendMailService>();
             services.AddScoped<HostingService, HostingService>();
-            services.AddScoped<UploadService, UploadService>(); 
+            services.AddScoped<UploadService, UploadService>();
+            services.AddScoped<BookingService, BookingService>();
+            services.AddScoped<GoogleMapService, GoogleMapService>();
+            services.AddScoped<BedRoomService, BedRoomService>();
 
             // repository 
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
@@ -74,7 +78,14 @@ namespace Totallydays
             services.AddScoped<HostingTypeRepository, HostingTypeRepository>();
             services.AddScoped<HostingRepository, HostingRepository>();
             services.AddScoped<ImageRepository, ImageRepository>();
-            services.AddTransient<UserRepository, UserRepository>();
+            services.AddScoped<UserRepository, UserRepository>();
+            services.AddScoped<BookingRepository, BookingRepository>();
+            services.AddScoped<UnavailableDateRepository, UnavailableDateRepository>();
+            services.AddScoped<BedRoomRepository, BedRoomRepository>();
+
+
+            // cron job
+            services.AddHostedService<TestBackgroundService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

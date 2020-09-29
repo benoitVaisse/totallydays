@@ -48,7 +48,7 @@ namespace Totallydays.Services
             Hosting.Address = model.Address;
             Hosting.Post_code = model.Post_code;
             Hosting.City = model.City;
-
+            Hosting = this.setModified(Hosting, true);
             Hosting = this._uploadService.UploadHostingCoverImage(Hosting, model, "img/hosting/coverImage");
             Hosting.Hosting_type = this._hostingTypeRepository.Find(model.Hosting_type_id);
             Hosting.User = User;
@@ -103,5 +103,7 @@ namespace Totallydays.Services
 
             return newString;
         }
+
+
     }
 }

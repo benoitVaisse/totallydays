@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Bed>;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ 
+    int iteration = 0;
+    Hosting Hosting = this.ViewBag.hosting;
+    int bedroom = 1;
+}
+
+    <div class="container">
+        <div class="my-5">
+            <h2>Creation des chambres</h2>
+        </div>
+        <p>Cette section vous permez de dire le nombre de chambre que vous possedez ainsi que le nombre de lit dans chambre chambre</p>
+
+        <div class="block-flex flex-between">
+            <div>
+                <a href="#" class="btn btn-info hosting-creation" data-target="#hosting-creation-image" data-parent="#hosting-creation-chambre"> Précedent </a>
+            </div>
+            <div>
+                <a href="#" class="btn btn-info hosting-creation" data-target="#hosting-creation-equipment" data-parent="#hosting-creation-chambre"> Suivant </a>
+            </div>
+        </div>
+
+        <div>
+            <form asp-route="hosting_bed_post" asp-route-id="@Hosting.Hosting_id" class="my-3" id="hosting_bed_form">
+                <p>De combien de chambre disposé vous ?</p>
+                <input id="number_bed"type="number" value="@Hosting.Bedrooms.Count()" class="form-control"/>
+
+                <div id="block-bed" class="block-flex flex-around">
+                    @foreach (Bedroom b in Hosting.Bedrooms)
+                    {
+                    <div class="bed_hosting bed-@bedroom my-4">
+                        @b.Name
+                        @foreach (Bedroom_Bed bb in b.Bedroom_Beds)
+                        {
+                            <div>
+                                @bb.Bed.Name
+                                <img src="~/img/bed/@bb.Bed.Image" alt="" />
+                                <input type="hidden" value="@bb.Bed.Bed_id" name="bedrooms[@(bedroom-1)][Bedroom_Beds][@iteration][BedBed_id]" />
+                                <input type="number" value="@bb.Number" size="3" name="bedrooms[@(bedroom-1)][Bedroom_Beds][@iteration][Number]" />
+                            </div>
+                            iteration++;
+                        }
+                        @{ 
+                            bedroom++;
+                            iteration = 0;
+                         }
+                    </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-info"> Enregistrer </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="prototype" style="display:none">
+
+        <div class="bed_hosting bed-__number__ my-4">
+            Chambre __number__
+            @foreach (Bed b in Model)
+            {
+                <div>
+                    @b.Name
+                    <img src="~/img/bed/@b.Image" alt="" />
+                    <input type="hidden" value="@b.Bed_id" name="bedrooms[__bedroom__][Bedroom_Beds][@iteration][BedBed_id]"  />
+                    <input type="number" value="0" size="3" name="bedrooms[__bedroom__][Bedroom_Beds][@iteration][Number]" />
+                </div>
+                iteration++;
+            }
+
+        </div>
+    </div>

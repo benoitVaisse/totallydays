@@ -1,0 +1,54 @@
+﻿@model AppUser;
+@{
+    ViewData["Title"] = "My-Account";
+}
+
+    <div class="head-profile">
+        <div class="container">
+            <h1>Profil</h1>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+
+        
+
+        <div class="text-right">
+            <a asp-route="my_account_edit" class="btn btn-outline-info">Editer mon Profile</a>
+        </div>
+        <div class="show-profile">
+
+            <div class="card-account block-principal">
+                <div class="show-picture">
+                    @if (Model.Picture != null)
+                    {
+                        <img src="~/img/avatar/@Model.Id/@Model.Picture" />
+                    }
+                    else
+                    {
+                        <img src="~/img/avatar/homme.jpg" />
+                    }
+                </div>
+                <div class="align-items-center">
+                    <h3>@Model.FullName</h3>
+                </div>
+            </div>
+            <div class="card-account block-resume">
+                <h3>A propos de moi</h3>
+                <p>@Model.FullName</p>
+                <p>@Model.Email</p>
+                <p>Description : @Html.Raw(Model.Description != null ? Model.DescriptionShow(): "Pas de description")</p>
+                <p>Téléphone @(Model.PhoneNumber != null ? Model.PhoneNumber : "Pas de téléphone") </p>
+
+            </div>
+            <div class="card-account">
+                <h3>Hébergement</h3>
+                <p>Nombre d'hébergement : @Model.Hostings.Count()</p>
+                <p>Nombre Commentaires sur mes hébergements : @Model.TotalCommentCountHosting</p>
+                <p>Moyenne Total sur mes hébergements : @Model.TotalAverageHosting</p>
+                <p>@this.ViewBag.average</p>
+            </div>
+
+        </div>
+    </div>
+

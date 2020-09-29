@@ -1,0 +1,83 @@
+﻿@model Totallydays.ViewsModel.FormHostingViewModel;
+@{
+    ViewData["Title"] = "CreateHosting";
+}
+
+
+    <div class="container my-5">
+        @if (Model.Hosting_id != 0)
+        {
+            <h2> Modifications d'une annonce </h2>
+        }
+        else
+        {
+            <h2> Création d'une annonce </h2>
+        }
+        <div class="form">
+            <form asp-route="hosting_create_post" enctype="multipart/form-data">
+
+                @if (Model.Hosting_id != 0)
+                {
+                    <div class="form-group">
+                        <input type="hidden" asp-for="Hosting_id" />
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="Hosting_type_id">Type de Logement</label>
+                    <select class="form-control" asp-for="Hosting_type_id" required>
+                        @foreach (Hosting_type ht in this.ViewBag.hosting_type)
+                        {
+                            <option id="option-ht-@ht.Hosting_type_id" value="@ht.Hosting_type_id"> @ht.Name </option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input type="text" class="form-control" asp-for="Title" required/>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resume"></label>
+                    <textarea asp-for="Resume" class="form-control"required>
+                    </textarea>
+                    <span asp-validation-for="Resume" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control"required>
+                    </textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price"></label>
+                    <input class="form-control" asp-for="Price" required/>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cover_image"></label>
+                    <input  class="form-control" asp-for="Cover_image" />
+                    <span asp-validation-for="Cover_image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address"></label>
+                    <input type="text"  class="form-control" asp-for="Address" required/>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Post_code"></label>
+                    <input type="text" class="form-control" asp-for="Post_code" required/>
+                    <span asp-validation-for="Post_code" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <input type="text" class="form-control" asp-for="City" required/>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-info"> Envoyé </button>
+            </form>
+        </div>
+    </div>
+
+
+

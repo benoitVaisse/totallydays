@@ -37,32 +37,50 @@ namespace Totallydays.Repositories
             return await this._context.AppUsers.FindAsync(id);
         }
 
-        ///// <summary>
-        ///// return average of all hosting by user
-        ///// </summary>
-        ///// <returns></returns>
-        //public IEnumerable<AppUser> GetTotalRatingHosting()
-        //{
-        //    //var rating = from user in this._context.AppUsers
-        //    //             join hosting in this._context.Hostings on user equals hosting.User
-        //    //             join comment in this._context.Comments on hosting equals comment.Hosting
-        //    //             group new { user, comment } by new { user.Id, comment.Comment_id } into u
-        //    //             select new { user = u, average = u.Average(c => c.comment.Rating) };
+        /// <summary>
+        /// return average of all hosting by user
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<AppUser> GetBestUser(int limit)
+        {
 
-        //    //var result = rating.AsEnumerable().Select(u => new { user = u.user, average = u.average }).ToList();
-        //    //return result;
+            return this._context.AppUsers.ToList().OrderByDescending(u => u.TotalAverageHosting).Take(limit);
 
+            //var User = (from user in this._context.AppUsers
+            //            join hosting in this._context.Hostings on user equals hosting.User
+            //            join comment in this._context.Comments on hosting equals comment.Hosting
+            //            select user).Take(limit).ToList();
 
-        //    var User = this._context.Comments.Where(c => c.User_receiver == User).GroupBy(c => c.User_receiver)
-        //                .Select(c => new { average = c.Average(t => t.Rating) });
+            //List<AppUser> Users = new List<AppUser>();
+            //foreach (var item in User)
+            //{
+            //    Users.Append(item.user);
+            //}
+            //return User;
+            //var toto = this._context.AppUsers.FromSqlRaw("SELECT * FROM dbo.AspNetUsers u " +
+            //    "LEFT JOIN dbo.Hostings h on h.userId = u.Id " +
+            //    "LEFT JOIN dbo.Comments c on c.hosting_id = h.hosting_id").ToList();
+            //return toto;
 
-        //    var Average = rating.Select(r => r.average).First();
-        //    return (float)Average;
+        }
 
-        //    return query;
+        public float GetAverageAllHosting(AppUser User)
+        {
+            try
+            {
+                var query = (float)(from u in this._context.AppUsers
+                             join h in this._context.Hostings on u.Id equals h.UserId
+                             join b in this._context.Bookings on h.Hosting_id equals b.HostingHosting_id
+                             join c in this._context.Comments on b.Booking_id equals c.BookingBooking_id
+                             select c.Rating).Average();
+                return query;
 
-
-        //}
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
 
     }
 }

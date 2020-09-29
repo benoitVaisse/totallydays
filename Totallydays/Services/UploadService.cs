@@ -37,6 +37,13 @@ namespace Totallydays.Services
             return Post;
         }
 
+        /// <summary>
+        /// upload  image from hosting
+        /// </summary>
+        /// <param name="Image"></param>
+        /// <param name="Model"></param>
+        /// <param name="Path"></param>
+        /// <returns></returns>
         public Image UploadImageHosting(Image Image, FormImageViewModel Model, string Path)
         {
             string UniqueName = null;
@@ -46,6 +53,24 @@ namespace Totallydays.Services
                 Image.File = UniqueName;
             }
             return Image;
+        }
+
+        /// <summary>
+        /// upload picture from user
+        /// </summary>
+        /// <param name="User"></param>
+        /// <param name="Model"></param>
+        /// <param name="Path"></param>
+        /// <returns></returns>
+        public AppUser UploadImagePicture(AppUser User, FormUserPictureModelView Model, string Path)
+        {
+            string UniqueName = null;
+            if (Model.picture != null)
+            {
+                UniqueName = this.SaveFile(Path, Model.picture);
+                User.Picture= UniqueName;
+            }
+            return User;
         }
 
         private string SaveFile(string PathString, IFormFile File)

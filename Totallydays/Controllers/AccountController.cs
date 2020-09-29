@@ -15,7 +15,11 @@ using Totallydays.ViewsModel;
 
 namespace Totallydays.Controllers
 {
-    public class AccountController : Controller
+
+    /// <summary>
+    /// controller allows to manage login logout and regiter
+    /// </summary>
+    public class AccountController : MyController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -82,7 +86,7 @@ namespace Totallydays.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser User = new AppUser(this.context)
+                AppUser User = new AppUser()
                 {
                     UserName = model.Email,
                     Email = model.Email,
@@ -244,7 +248,7 @@ namespace Totallydays.Controllers
                     AppUser User = await this._userManager.FindByEmailAsync(email);
                     if(User == null)
                     {
-                        User = new AppUser(this.context)
+                        User = new AppUser()
                         {
                             UserName = email,
                             Email = email,

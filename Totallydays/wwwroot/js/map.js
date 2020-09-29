@@ -11,7 +11,10 @@
 
     function onCitySearchChanged(){
         var place = autocomplete.getPlace();
-        $('.city').value = place.name;
+        $('.city').value(place.name);
 
     }
+
+    
+
 })

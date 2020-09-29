@@ -51,9 +51,29 @@ namespace Totallydays.Data
                 .WithMany(u => u.Hostings)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Booking)
+                .WithOne(b => b.Rating)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Hosting>()
                 .HasIndex(h => h.Title)
                 .IsUnique();
+
+            modelBuilder.Entity<Bedroom_Bed>()
+                .HasOne(bb => bb.Bedroom)
+                .WithMany(b => b.Bedroom_Beds)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Bedroom_Bed>()
+                .HasOne(bb => bb.Bed)
+                .WithMany(b => b.Bedroom_Beds)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Bedroom>()
+                .HasOne(b => b.Hosting)
+                .WithMany(h => h.Bedrooms)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
 

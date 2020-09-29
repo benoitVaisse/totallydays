@@ -260,7 +260,8 @@ namespace Totallydays.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Hosting_id")
+                    b.Property<int>("HostingHosting_id")
+                        .HasColumnName("Hosting_id")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -269,7 +270,7 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Bedroom_id");
 
-                    b.HasIndex("Hosting_id");
+                    b.HasIndex("HostingHosting_id");
 
                     b.ToTable("Bedrooms");
                 });
@@ -281,10 +282,10 @@ namespace Totallydays.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Bed_id")
+                    b.Property<int>("BedBed_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Bedroom_id")
+                    b.Property<int>("BedroomBedroom_id")
                         .HasColumnType("int");
 
                     b.Property<int>("Number")
@@ -292,9 +293,9 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Bedroom_Bed_id");
 
-                    b.HasIndex("Bed_id");
+                    b.HasIndex("BedBed_id");
 
-                    b.HasIndex("Bedroom_id");
+                    b.HasIndex("BedroomBedroom_id");
 
                     b.ToTable("Bedroom_Beds");
                 });
@@ -318,7 +319,7 @@ namespace Totallydays.Migrations
                     b.Property<DateTime>("End_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Hosting_id")
+                    b.Property<int>("HostingHosting_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Start_date")
@@ -332,7 +333,7 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Booking_id");
 
-                    b.HasIndex("Hosting_id");
+                    b.HasIndex("HostingHosting_id");
 
                     b.HasIndex("UserId");
 
@@ -346,15 +347,15 @@ namespace Totallydays.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BookingBooking_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("Hosting_id")
-                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -367,7 +368,8 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Comment_id");
 
-                    b.HasIndex("Hosting_id");
+                    b.HasIndex("BookingBooking_id")
+                        .IsUnique();
 
                     b.HasIndex("User_emmiterId");
 
@@ -435,6 +437,9 @@ namespace Totallydays.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -442,11 +447,11 @@ namespace Totallydays.Migrations
                     b.Property<int>("Hosting_type_id")
                         .HasColumnType("int");
 
-                    b.Property<float>("Lat")
-                        .HasColumnType("real");
+                    b.Property<string>("Lat")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Lng")
-                        .HasColumnType("real");
+                    b.Property<string>("Lng")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Modified")
                         .HasColumnType("bit");
@@ -549,7 +554,8 @@ namespace Totallydays.Migrations
                     b.Property<DateTime>("End_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Hosting_id")
+                    b.Property<int>("HostingHosting_id")
+                        .HasColumnName("hosting_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Start_date")
@@ -557,7 +563,7 @@ namespace Totallydays.Migrations
 
                     b.HasKey("Unavailable_date_id");
 
-                    b.HasIndex("Hosting_id");
+                    b.HasIndex("HostingHosting_id");
 
                     b.ToTable("Unavailable_dates");
                 });
@@ -617,8 +623,8 @@ namespace Totallydays.Migrations
                 {
                     b.HasOne("Totallydays.Models.Hosting", "Hosting")
                         .WithMany("Bedrooms")
-                        .HasForeignKey("Hosting_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("HostingHosting_id")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -626,14 +632,14 @@ namespace Totallydays.Migrations
                 {
                     b.HasOne("Totallydays.Models.Bed", "Bed")
                         .WithMany("Bedroom_Beds")
-                        .HasForeignKey("Bed_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("BedBed_id")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Totallydays.Models.Bedroom", "Bedroom")
                         .WithMany("Bedroom_Beds")
-                        .HasForeignKey("Bedroom_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("BedroomBedroom_id")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -641,7 +647,7 @@ namespace Totallydays.Migrations
                 {
                     b.HasOne("Totallydays.Models.Hosting", "Hosting")
                         .WithMany("Bookings")
-                        .HasForeignKey("Hosting_id")
+                        .HasForeignKey("HostingHosting_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -654,9 +660,11 @@ namespace Totallydays.Migrations
 
             modelBuilder.Entity("Totallydays.Models.Comment", b =>
                 {
-                    b.HasOne("Totallydays.Models.Hosting", "Hosting")
-                        .WithMany("Comments")
-                        .HasForeignKey("Hosting_id");
+                    b.HasOne("Totallydays.Models.Booking", "Booking")
+                        .WithOne("Rating")
+                        .HasForeignKey("Totallydays.Models.Comment", "BookingBooking_id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Totallydays.Models.AppUser", "User_emmiter")
                         .WithMany("Comments_emmit")
@@ -721,7 +729,7 @@ namespace Totallydays.Migrations
                 {
                     b.HasOne("Totallydays.Models.Hosting", "Hosting")
                         .WithMany("Unavailables_date")
-                        .HasForeignKey("Hosting_id")
+                        .HasForeignKey("HostingHosting_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

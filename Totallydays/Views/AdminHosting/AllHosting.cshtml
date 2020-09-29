@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Hosting>;
+@{
+    ViewData["Title"] = "AllHosting";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="container mt-4">
+
+        <h1>Tous les hébergements</h1>
+
+        <div class="all-hosting">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nombre Commentaire</th>
+                        <th scope="col">Moyenne des notes</th>
+                        <th scope="col">Date de création</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Publié</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Hosting h in Model)
+                    {
+                        <tr class="hosting @(h.Modified == true ? "modified":"")">
+                            <td>@h.Hosting_id</td>
+                            <td>@h.Title</td>
+                            <td>@h.getNumberComment()</td>
+                            <td>@h.GetAverage()</td>
+                            <td>@h.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td>@h.Active</td>
+                            <td>@h.Published</td>
+                            <td>
+                                <a href="#" class="btn btn-info">Voir</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+

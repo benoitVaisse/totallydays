@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" />
     @RenderSection("Style", required: false)
 </head>
 <body>
@@ -20,19 +21,13 @@
                 </button>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                     </ul>
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto align-items-center">
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("admin"))
                             {
-                                <li class="nav-item">
+                                <li class="nav-item ">
                                     <a class="nav-link " asp-area="" asp-route="admin_home">Admin</a>
                                 </li>
                             }
@@ -46,7 +41,7 @@
                                     <a class="dropdown-item" asp-route="my_hostings"> Mes Hébergement </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Mes Réservations</a>
-                                    <a class="dropdown-item" href="#">Mon Compte</a>
+                                    <a class="dropdown-item" asp-route="my_account">Mon Compte</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="nav-link text-dark" asp-route="logout_account"> Déconnexion </a>
                                 </div>
@@ -66,19 +61,59 @@
             </div>
         </nav>
     </header>
+    <div class="container">
+        @if (this.ViewBag.flashError != null)
+        {
+            foreach (string mess in this.ViewBag.flashError)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @mess
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+
+        }
+
+        @if (this.ViewBag.flashSuccess != null)
+        {
+            foreach (string mess in this.ViewBag.flashSuccess)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @mess
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+        }
+
+        <div id="prototype-flash">
+
+            <div class="alert alert-__status__ alert-dismissible fade show" role="alert" style="display: none">
+                __message__
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
     <div>
-        <main role="main" class="pb-3">
+
+        <main role="main" class="">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Totallydays - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/map.js" asp-append-version="true"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7qLV3juiV8GovycHrqtGzeVsD-WWEqto&libraries=places"></script>

@@ -30,6 +30,7 @@ namespace Totallydays.ViewsModel
         [Range(1, 10000, ErrorMessage = "Le prix doit être compris en {0} et {1}")]
         public float Price { get; set; }
 
+        [FilesExtensionsCustom(".jpg,.png")]
         public IFormFile Cover_image { get; set; }
 
         [Required(AllowEmptyStrings = false)]
