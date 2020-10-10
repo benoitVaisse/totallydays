@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Totallydays.Models;
 using Totallydays.Repositories;
@@ -16,6 +17,7 @@ namespace Totallydays.Controllers.FrontController
     {
         private readonly HostingRepository _hostingRepository;
         private readonly UserManager<AppUser> _usermanager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly HostingTypeRepository _hostingTypeRepo;
         private readonly EquipmentRepository _equipementRepository;
         private readonly HostingService _hostingService;
@@ -26,6 +28,7 @@ namespace Totallydays.Controllers.FrontController
 
         public HostingController(HostingRepository hostrepo,
             UserManager<AppUser> usermanager,
+            RoleManager<AppRole> roleManager,
             HostingTypeRepository hostingTypeRepo,
             EquipmentRepository equipementRepository,
             HostingService hostingService,
@@ -37,6 +40,7 @@ namespace Totallydays.Controllers.FrontController
         {
             this._hostingRepository = hostrepo;
             this._usermanager = usermanager;
+            this._roleManager = roleManager;
             this._hostingTypeRepo = hostingTypeRepo;
             this._equipementRepository = equipementRepository;
             this._hostingService = hostingService;
@@ -52,13 +56,16 @@ namespace Totallydays.Controllers.FrontController
         /// <param name="slug"></param>
         /// <returns></returns>
         [HttpGet("hebergement/{slug}", Name ="hosting_view")]
-        public IActionResult SeeHosting(string slug)
+        [Authorize]
+        public async Task<IActionResult> SeeHosting(string slug)
         {
             this.setFlash();
             
             Hosting Hosting = this._hostingRepository.FindBySlug(slug);
-            if (Hosting == null)
-                return BadRequest();
+            AppUser User = await this._usermanager.GetUserAsync(this.User);
+            bool isAdmin = await this._usermanager.IsInRoleAsync( User, "admin");
+            if (Hosting == null || ((Hosting.Published == false || Hosting.Active == false) && (!isAdmin && Hosting.User != User ) ))
+                return NotFound();
 
             this.ViewBag.hosting = Hosting;
             this.ViewBag.unavailable_date = new FormUnavailableDateViewModel()
@@ -79,6 +86,7 @@ namespace Totallydays.Controllers.FrontController
         {
             AppUser User = await this._usermanager.GetUserAsync(this.User);
             Hosting Hosting = this._hostingRepository.FindBySlug(slug);
+           
             if (Hosting == null)
                 return BadRequest();
 
@@ -111,19 +119,6 @@ namespace Totallydays.Controllers.FrontController
             return View(Hostings);
         }
 
-        public void setFlash()
-        {
-            this.ViewBag.error = null;
-            if (TempData["error"] != null)
-            {
-                this.ViewBag.flashError = TempData["error"];
-            }
 
-            ViewBag.success = null;
-            if (TempData["success"] != null)
-            {
-                this.ViewBag.flashSuccess = TempData["success"];
-            }
-        }
     }
 }

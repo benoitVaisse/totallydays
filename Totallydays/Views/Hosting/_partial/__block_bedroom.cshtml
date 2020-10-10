@@ -1,0 +1,23 @@
+﻿@model Hosting;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div id="block-bed" class="block-flex flex-start">
+        
+        @foreach (Bedroom b in Model.Bedrooms)
+        {
+            <div class="bed_hosting b-b200 bedroom-@b.Bedroom_id my-4 mr-5">
+                @b.Name
+                @foreach (Bedroom_Bed bb in b.Bedroom_Beds)
+                {
+                    if(bb.Number > 0)
+                    {
+                        <div>
+                            <img class="by2" src="~/img/bed/@bb.Bed.Image" alt="" /> <span>X @bb.Number</span>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>

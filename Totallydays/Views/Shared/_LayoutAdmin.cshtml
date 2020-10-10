@@ -47,6 +47,46 @@
             </div>
         </nav>
     </header>
+    <div class="container">
+        @if (this.ViewBag.flashError != null)
+        {
+            foreach (string mess in this.ViewBag.flashError)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @mess
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+
+        }
+
+        @if (this.ViewBag.flashSuccess != null)
+        {
+            foreach (string mess in this.ViewBag.flashSuccess)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @mess
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+        }
+        <div id="prototype-flash">
+
+            <div class="alert alert-__status__ alert-dismissible fade show" role="alert" style="display: none">
+                __message__
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div>
         <main role="main" class="pb-3">
             @RenderBody()

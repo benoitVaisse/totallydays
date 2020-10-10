@@ -1,10 +1,13 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+body{
 
+    --primaire : #17a2b8
+}
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
@@ -97,6 +100,9 @@ body {
 }
 .flex-around {
     justify-content: space-around;
+}
+.flex-start {
+    justify-content: flex-start;
 }
 
 
@@ -275,6 +281,18 @@ div.bed_hosting{
     border: 1px solid rgba(95, 95, 95, 0.80);
     border-radius:10px;
     padding:20px;
+    border-color : var(--primaire)
+}
+
+.by4{
+    width: calc(100%/4);
+}
+.by2 {
+    width: calc(100%/2);
+}
+
+.b-b200{
+    width:200px !important;
 }
 
 tr.modified {

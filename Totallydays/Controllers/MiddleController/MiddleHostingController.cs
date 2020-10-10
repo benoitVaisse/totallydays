@@ -31,6 +31,7 @@ namespace Totallydays.Controllers.MiddleController
         private readonly BedRoomService _bedrommService;
         private readonly BedRoomRepository _bedRoomRepository;
         private readonly SendMailService _mailService;
+        private readonly ControllerExtenstionServiceRazor _controllerExtenstionServiceRazor;
 
         public MiddleHostingController(HostingRepository hostrepo,
             UserManager<AppUser> usermanager,
@@ -45,7 +46,8 @@ namespace Totallydays.Controllers.MiddleController
             BedRepository bedRepo,
             BedRoomService bedrommService,
             BedRoomRepository bedRoomRepository,
-            SendMailService mailService
+            SendMailService mailService,
+            ControllerExtenstionServiceRazor ControllerExtenstionServiceRazor
             ) : base()
         {
             this._hostingRepository = hostrepo;
@@ -62,6 +64,7 @@ namespace Totallydays.Controllers.MiddleController
             this._bedrommService = bedrommService;
             this._bedRoomRepository = bedRoomRepository;
             this._mailService = mailService;
+            this._controllerExtenstionServiceRazor = ControllerExtenstionServiceRazor;
         }
         /// <summary>
         /// fonction qui liste mes hébergements
@@ -231,7 +234,7 @@ namespace Totallydays.Controllers.MiddleController
             this._hostingService.setModified(Hosting, true);
             this._successMessage.Add("l'image a bien été ajoutée");
             this._ajaxFlashessage.Add("success", this._successMessage);
-            return Json(new { view = await ControllerExtenstionService.RenderViewToStringAsync(this, "~/Views/Hosting/_partial/_liste_hosting_image.cshtml", Images), status="success", message= this._ajaxFlashessage });
+            return Json(new { view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Hosting/_partial/_liste_hosting_image.cshtml", Images), status="success", message= this._ajaxFlashessage });
         }
 
 
@@ -338,6 +341,7 @@ namespace Totallydays.Controllers.MiddleController
 
         [HttpPost("modifier-un-hebergement/bedroom/{id:int}", Name = "hosting_bed_post")]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SetBedroom(int id, IEnumerable<Bedroom> bedrooms)
         {
             AppUser User = await this._usermanager.GetUserAsync(this.User);

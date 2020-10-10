@@ -105,5 +105,20 @@ namespace Totallydays.Services
         }
 
 
+        /// <summary>
+        /// active ou pas l'hebergement
+        /// </summary>
+        /// <param name="h"></param>
+        /// <param name="active"></param>
+        /// <returns></returns>
+        public Hosting setActive(Hosting h, bool active)
+        {
+            h.Active = active;
+            h = this._hostingRepository.Update(h);
+
+            return h;
+        }
+
+
     }
 }

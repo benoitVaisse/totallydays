@@ -9,6 +9,7 @@
         <h1>Tous les hébergements</h1>
 
         <div class="all-hosting">
+            @Html.AntiForgeryToken();
             <table class="table">
                 <thead>
                     <tr>
@@ -17,9 +18,9 @@
                         <th scope="col">Nombre Commentaire</th>
                         <th scope="col">Moyenne des notes</th>
                         <th scope="col">Date de création</th>
-                        <th scope="col">Active</th>
                         <th scope="col">Publié</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Active</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,10 +32,10 @@
                             <td>@h.getNumberComment()</td>
                             <td>@h.GetAverage()</td>
                             <td>@h.CreatedAt.ToString("dd/MM/yyyy")</td>
-                            <td>@h.Active</td>
                             <td>@h.Published</td>
+                            <td> <input type="checkbox" name="active" id="active_hosting_@h.Hosting_id" class="active_hosting" @(h.Active == true ? "checked='checked'" : "") data-href="@Url.RouteUrl("admin_hosting_active", new {id=h.Hosting_id })"data-id="@h.Hosting_id" /></td>
                             <td>
-                                <a href="#" class="btn btn-info">Voir</a>
+                                <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>
                             </td>
                         </tr>
                     }
@@ -43,4 +44,8 @@
 
         </div>
     </div>
+
+@section Scripts{ 
+    <script src="~/js/Admin/hosting.js"></script>
+}
 

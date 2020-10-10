@@ -14,6 +14,19 @@
             </div>
         </div>
         <div class="container">
+            @if (Model.Active == false)
+            {
+                <div class="alert alert-danger" role="alert">
+                    Cette Hébergement n'est pas encore activé par l'administration
+                </div>
+            }
+
+            @if (Model.Published == false)
+            {
+                <div class="alert alert-danger" role="alert">
+                    Vous n'avez pas encore publié cette hébergement
+                </div>
+            }
             <h2 class="my-4">@Model.Title</h2>
             <div class="row">
                 <div class="col-md-8 mb-3">
@@ -63,10 +76,10 @@
                             }
                         </div>
                         <div class="col">
-                            <a href="#">
+                            <a class="text-info" href="#">
                                 <h3>@Model.User.Lastname @Model.User.Firstname</h3>
                             </a>
-                            <span class="badge badge-primary"> @Model.User.Hostings.Count() Annonce(s) </span>
+                            <span class="badge badge-info"> @Model.User.Hostings.Count() Annonce(s) </span>
                         </div>
                     </div>
                     @Html.Raw(User.Description != null ? User.DescriptionShow() : "")
@@ -81,6 +94,13 @@
                     @Html.Raw(Model.DescriptionShow());
                 </div>
             </div>
+            <hr />
+
+            <div id="bedrooms">
+                <h4>Chambres</h4>
+                <partial name="~/Views/Hosting/_partial/__block_bedroom.cshtml" model="@Model" />
+            </div>
+
             <hr />
             <div class="hosting-equipment-block my-3">
                 <h4>Equipements</h4>
@@ -109,7 +129,7 @@
                     <partial name="/Views/Hosting/_partial/_block_booking.cshtml" model="@this.ViewBag.bookingModel" />
                 </div>
             }
-            
+
         </div>
         
     </div>

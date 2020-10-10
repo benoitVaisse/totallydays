@@ -19,11 +19,13 @@ namespace Totallydays.Services
     {
         private readonly IEmailService _mailService;
         private readonly IConfiguration _configuration;
+        private readonly ControllerExtenstionServiceRazor _controllerExtenstionServiceRazor;
 
-        public SendMailService(IEmailService mailService, IConfiguration configuration)
+        public SendMailService(IEmailService mailService, IConfiguration configuration, ControllerExtenstionServiceRazor ControllerExtenstionServiceRazor)
         {
             this._mailService = mailService;
             this._configuration = configuration;
+            this._controllerExtenstionServiceRazor = ControllerExtenstionServiceRazor;
         }
 
         /// <summary>
@@ -47,6 +49,12 @@ namespace Totallydays.Services
             };
             string view = await ControllerExtenstionService.RenderViewToStringAsync(Controller, "~/Views/Email/SendNewHosting.cshtml", variable);
             await this._mailService.SendAsync(this._configuration["email:admin"], "Nouvelle Hébergemment", view, true);
+        }
+
+        public async Task SendMailBookingFinish(Booking b)
+        {
+            string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailBookingFinish.cshtml", b);
+            await this._mailService.SendAsync(b.User.Email, "Faite un commentaire", view, true);
         }
     }
 }

@@ -238,7 +238,7 @@ namespace Totallydays.Controllers
             var signInResult = await this._signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false, false);
             if (signInResult.Succeeded)
             {
-                return LocalRedirect(ReturnUrl);
+                return Redirect(ReturnUrl);
             }
             else
             {
@@ -266,7 +266,7 @@ namespace Totallydays.Controllers
                     await this._userManager.AddLoginAsync(User, info);
                     await this._signInManager.SignInAsync(User, false);
 
-                    return LocalRedirect(ReturnUrl);
+                    return Redirect(ReturnUrl);
                 }
                 
             }

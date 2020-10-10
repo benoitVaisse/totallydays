@@ -40,11 +40,13 @@ namespace Totallydays
                 options.SignIn.RequireConfirmedEmail = true;
 
             }).AddEntityFrameworkStores<TotallydaysContext>().AddDefaultTokenProviders();
-
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
             services.AddDbContext<TotallydaysContext>(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Totallydays"));
             });
+
+
 
             MailKitOptions mailKitOption = Configuration.GetSection("Email").Get<MailKitOptions>();
             services.AddMailKit(config => config.UseMailKit(mailKitOption));
@@ -61,6 +63,11 @@ namespace Totallydays
                 options.FormFieldName = "__RequestVerificationToken";
             });
 
+
+            // cron job
+            services.AddHostedService<TestBackgroundService>();
+            services.AddHostedService<SendMailBookingFinichBackgroundService>();
+
             services.AddControllersWithViews();
 
             // services
@@ -70,7 +77,7 @@ namespace Totallydays
             services.AddScoped<BookingService, BookingService>();
             services.AddScoped<GoogleMapService, GoogleMapService>();
             services.AddScoped<BedRoomService, BedRoomService>();
-
+            services.AddScoped<ControllerExtenstionServiceRazor, ControllerExtenstionServiceRazor>();
             // repository 
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
             services.AddScoped<EquipmentTypeRepository, EquipmentTypeRepository>();
@@ -84,8 +91,7 @@ namespace Totallydays
             services.AddScoped<BedRoomRepository, BedRoomRepository>();
 
 
-            // cron job
-            services.AddHostedService<TestBackgroundService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,13 +100,16 @@ namespace Totallydays
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseStatusCodePagesWithReExecute("/error/{0}");
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                //app.UseStatusCodePagesWithReExecute("/error/{0}");
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

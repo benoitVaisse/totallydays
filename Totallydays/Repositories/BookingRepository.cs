@@ -46,5 +46,20 @@ namespace Totallydays.Repositories
             var Bookings = await this._context.Bookings.Where(b => b.User == User).ToListAsync();
             return Bookings;
         }
+
+        /// <summary>
+        /// selectionne les reservation qui vienne de ce finir a j+1 de la fin du sejour
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Booking> FindBookingFinish()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+            DateTime Yesterday = yesterday.Date;
+            var query = this._context.Bookings.Where(b => b.End_date == Yesterday).Where(b => b.Rating == null);
+            IEnumerable<Booking> Bookings = query.ToList();
+            return Bookings;
+
+
+        }
     }
 }

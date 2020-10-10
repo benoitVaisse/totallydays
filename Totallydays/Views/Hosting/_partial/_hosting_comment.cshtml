@@ -2,6 +2,9 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@{ 
+    var User = await UserManager.GetUserAsync(this.User);
+}
 
 @if (@Model.getNumberComment() > 0)
 {
@@ -30,7 +33,14 @@
                 <div class="bg-light arrondi mt-3 pt-3 px-3">
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="" alt="" class="avatar avatar-middle mt-2 ml-4">
+                            @if (c.User_emmiter.Picture != null)
+                            {
+                                <img src="~/img/avatar/@c.User_emmiter.Id/@c.User_emmiter.Picture" class="avatar avatar-middle" />
+                            }
+                            else
+                            {
+                                <img src="~/img/avatar/homme.jpg" class="avatar avatar-middle" />
+                            }
                         </div>
                         <div class="col-md-10">
                             <strong>@c.User_emmiter.Lastname @c.User_emmiter.Firstname</strong> a dit :
