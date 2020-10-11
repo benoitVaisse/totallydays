@@ -22,6 +22,11 @@ namespace Totallydays.Repositories
             return await this._context.Unavailable_dates.ToListAsync();
         }
 
+        public async Task<Unavailable_date> FindById(int id)
+        {
+            return await this._context.Unavailable_dates.FindAsync(id);
+        }
+
         public async Task<IEnumerable<Unavailable_date>> FindByHosting(int hosting_id)
         {
             return await this._context.Unavailable_dates.Where(u => u.HostingHosting_id == hosting_id).ToListAsync();
@@ -49,6 +54,16 @@ namespace Totallydays.Repositories
             await this._context.SaveChangesAsync();
 
             return date;
+        }
+
+        /// <summary>
+        /// retourne les futur dates indisponibles pour un hébergement
+        /// </summary>
+        /// <param name="Hosting"></param>
+        /// <returns></returns>
+        public async Task< IEnumerable<Unavailable_date>> GetNextUnavailableDate(Hosting Hosting)
+        {
+            return await this._context.Unavailable_dates.Where(u=>u.HostingHosting_id == Hosting.Hosting_id).Where(u => u.Start_date > DateTime.Now).ToListAsync();
         }
 
     }

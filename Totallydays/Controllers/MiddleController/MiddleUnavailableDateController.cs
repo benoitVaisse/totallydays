@@ -8,49 +8,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Totallydays.Models;
 using Totallydays.Repositories;
+using Totallydays.Services;
 using Totallydays.ViewsModel;
 
 namespace Totallydays.Controllers.MiddleController
 {
     [Route("mon-compte")]
     [Authorize]
-    public class MiddleUnavailableDateController : MyController
+    public class MiddleUnavailableDateController : MiddleController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly UnavailableDateRepository _unDateRepo;
         private readonly HostingRepository _hostingRepo;
+        private readonly ControllerExtenstionServiceRazor _controllerExtenstionServiceRazor;
 
         public MiddleUnavailableDateController(
             UserManager<AppUser> usermanager,
             UnavailableDateRepository unavailableDateRepo,
-            HostingRepository hostingRepo
+            HostingRepository hostingRepo,
+            ControllerExtenstionServiceRazor ControllerExtenstionServiceRazor
             )
         {
             this._userManager = usermanager;
             this._unDateRepo = unavailableDateRepo;
             this._hostingRepo = hostingRepo;
+            this._controllerExtenstionServiceRazor = ControllerExtenstionServiceRazor;
         }
 
+        /// <summary>
+        /// enregistrement des date d'indisponibilités pour un hébergement
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("date-indisponible", Name = "make_unavailable_date")]
         public async Task<IActionResult> MakeUnavailableDate(FormUnavailableDateViewModel model)
         {
             AppUser User = await this._userManager.GetUserAsync(this.User);
             Hosting Hosting = this._hostingRepo.Find(model.hosting_id);
-            List<string> message = new List<string>();
+            List<string> messages = new List<string>();
 
             if (Hosting == null)
-            {
-                message.Add("impossible de trouver l'hébergement souhaité");
-                TempData["error"] = message;
-                return RedirectToRoute("my_hostings");
-            }
+                return this.NotFindObject("my_hostings", messages, "impossible de trouver l'hébergement souhaité");
 
-            if (Hosting.User != User)
-            {
-                message.Add("Error lors de l'envoie des dates d'indisponibilité");
-                TempData["error"] = message;
-                return RedirectToRoute("hosting_view", new { slug= Hosting.Slug });
-            }
+            var NotHostingToUser = this.NotHostingToUser(User, Hosting, messages, "Error lors de l'envoie des dates d'indisponibilité");
+            if (NotHostingToUser != null)
+                return NotHostingToUser;
 
             if (ModelState.IsValid)
             {
@@ -61,8 +63,8 @@ namespace Totallydays.Controllers.MiddleController
                     End_date = model.End_date
                 };
                 await this._unDateRepo.Create(date);
-                message.Add("Les dates d'indisponibilité on bien étais enregistré");
-                TempData["success"] = message;
+                messages.Add("Les dates d'indisponibilité on bien étais enregistré");
+                TempData["success"] = messages;
                 return RedirectToRoute("hosting_view", new { slug = Hosting.Slug });
             }
 
@@ -70,12 +72,38 @@ namespace Totallydays.Controllers.MiddleController
             {
                 foreach (ModelError error in modelState.Errors)
                 {
-                    message.Add(error.ErrorMessage);
+                    messages.Add(error.ErrorMessage);
                 }
             }
            
-            TempData["error"] = message;
+            TempData["error"] = messages;
             return RedirectToRoute("hosting_view", new { slug = Hosting.Slug });
+        }
+
+        [HttpPost("hosting/{slug}/date-indisponible/{id:int}/delete", Name = "middle_delete_unavailable_date")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUnavailableDate(string slug, int id)
+        {
+            AppUser User = await this._userManager.GetUserAsync(this.User);
+            Unavailable_date Unavailable_Date = await this._unDateRepo.FindById(id);
+            Hosting Hosting = this._hostingRepo.FindBySlug(slug);
+            if (Hosting == null || Unavailable_Date == null)
+                return this.NotFindObjectAjax("Erreur lors de la suppresion de ces dates"); ;
+
+            var NotHostingToUserAjax = this.NotHostingToUserAjax(User, Hosting, "Erreur lors de la suppresion de ces dates");
+            if (NotHostingToUserAjax != null)
+                return NotHostingToUserAjax;
+
+            Hosting = this._hostingRepo.FindBySlug(slug);
+            Unavailable_Date = await this._unDateRepo.Delete(Unavailable_Date);
+            IEnumerable<Unavailable_date> dates = await this._unDateRepo.FindAll();
+            return Json(new { 
+                status = "success",
+                view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Modal/_partial/_myUnavailableDateHostingModalTable.cshtml", Hosting.GetMyNextUnavailableDate()),
+                unvavalibledate= Hosting.getUnavailableDaysToArray()
+            });
+            
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Totallydays.Controllers.MiddleController
 {
     [Route("my-account")]
     [Authorize]
-    public class MiddleBookingController : MyController
+    public class MiddleBookingController : MiddleController
     {
         private readonly BookingRepository _bookinRepository;
         private readonly UserManager<AppUser> _userManager;

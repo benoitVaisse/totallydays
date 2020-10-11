@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Unavailable_date>;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<table class="table">
+    <thead>
+        <tr>
+            <th class="scoped"> Du </th>
+            <th class="scoped"> Au </th>
+            <th class="scoped"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Unavailable_date d in Model)
+        {
+            <tr>
+                <td>@d.Start_date.ToString("dd/MM/yyyy")</td>
+                <td>@d.End_date.ToString("dd/MM/yyyy")</td>
+                <td> <button type="button" data-href="@Url.RouteUrl("middle_delete_unavailable_date", new {slug = d.Hosting.Slug, id = d.Unavailable_date_id })" class="btn btn-danger deleteUnavailableDate"> <i class="fas fa-trash"></i> </button></td>
+            </tr>
+        }
+        <tr></tr>
+    </tbody>
+</table>

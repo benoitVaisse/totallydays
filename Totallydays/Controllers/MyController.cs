@@ -17,6 +17,36 @@ namespace Totallydays.Controllers
         }
 
         /// <summary>
+        /// si l'objet est null on rtour un message flash d'erreur et une redisrection
+        /// </summary>
+        /// <param name="Object"></param>
+        /// <param name="Route"></param>
+        /// <param name="messages"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public IActionResult NotFindObject(string Route, List<string> messages, string message)
+        {
+            messages.Add(message);
+            TempData["error"] = messages;
+            return RedirectToRoute(Route);
+
+        }
+
+        /// <summary>
+        /// si l'object et null on retour un message flash ajax
+        /// </summary>
+        /// <param name="Hosting"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public IActionResult NotFindObjectAjax(string message)
+        {
+            this._errorMessage.Add(message);
+            this._ajaxFlashessage.Add("error", this._errorMessage);
+            return Json(new { status = "error", messages = this._ajaxFlashessage });
+
+        }
+
+        /// <summary>
         /// on met dans une variable les erreurs de formulaire pour renvoyer au callback ajax
         /// </summary>
         public void SetErroMessageAjax()

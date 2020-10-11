@@ -2,14 +2,16 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
-<div class="modal fade Unavailable_date_hosting_modal_lg" tabindex="-1" role="dialog" aria-labelledby="Unavailable_date_hosting_modal_lg" aria-hidden="true">
+<div class="modal fade Unavailable_date_hosting_modal_lg" id="Unavailable_date_hosting_modal_lg" tabindex="-1" role="dialog" aria-labelledby="Unavailable_date_hosting_modal_lg" aria-hidden="true">
     <div class="modal-dialog modal-lg">
+        
         <div class="modal-content">
-            Mes Dates d'indisponibilité pour cette hébergement
-            <div>
-                <table></table>
+            <div class="modal-header alert alert-info">
+                <h4>Mes Dates d'indisponibilités pour cette hébergement</h4>
+            </div>
+            <div class="modal-body">
+                <partial name="~/Views/Modal/_partial/_myUnavailableDateHostingModalTable.cshtml" model="@Model" />
             </div>
         </div>
     </div>

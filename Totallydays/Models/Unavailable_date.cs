@@ -23,5 +23,6 @@ namespace Totallydays.Models
 
         [Required]
         public DateTime End_date { get; set; }
+
     }
 }

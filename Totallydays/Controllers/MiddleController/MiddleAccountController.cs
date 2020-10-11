@@ -17,7 +17,7 @@ namespace Totallydays.Controllers.MiddleController
 {
     [Route("my-account")]
     [Authorize]
-    public class MiddleAccountController : MyController
+    public class MiddleAccountController : MiddleController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly UserRepository _userRepository;

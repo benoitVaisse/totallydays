@@ -148,6 +148,24 @@ namespace Totallydays.Models
             return NotAvailabkesDays;
         }
 
+        /// <summary>
+        /// retourne les futur dates indisponibles pour un hébergement
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Unavailable_date> GetMyNextUnavailableDate()
+        {
+            return this.Unavailables_date.Where(u => u.HostingHosting_id == this.Hosting_id).Where(u => u.Start_date > DateTime.Now);
+        }
+
+        /// <summary>
+        /// retourne les futur dates indisponibles pour un hébergement sous forme de chaine de caractere dans un tableau 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> getUnavailableDaysToArray()
+        {
+            return this.getUnavailableDays().Select(d=>d.ToString("dd/MM/yyyy")).ToList();
+        }
+
 
     }
 }
