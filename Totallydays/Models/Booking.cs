@@ -32,7 +32,7 @@ namespace Totallydays.Models
 
         public string Comment { get; set; }
 
-        public bool Validated { get; set; }
+        public byte Validated { get; set; }
 
         public virtual Comment Rating { get; set; }
 
