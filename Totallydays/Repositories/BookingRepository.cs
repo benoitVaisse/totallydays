@@ -11,6 +11,9 @@ namespace Totallydays.Repositories
     public class BookingRepository
     {
         private readonly TotallydaysContext _context;
+        private const int PENDING = 0;
+        private const int VALIDATED = 1;
+        private const int CANCELLED = 2;
 
         public BookingRepository(TotallydaysContext context)
         {
@@ -41,10 +44,19 @@ namespace Totallydays.Repositories
             return await this._context.Bookings.Where(b => b.Hosting == Hosting).ToListAsync();
         }
 
-        public async Task<List<Booking>> GetMyBooking(AppUser User)
+        public async Task<List<Booking>> GetMyFuturBooking(AppUser User)
         {
-            var Bookings = await this._context.Bookings.Where(b => b.User == User).ToListAsync();
-            return Bookings;
+            return await this._context.Bookings.Where(b => b.User == User).Where(b=>b.Validated != CANCELLED ).Where(b => b.Start_date > DateTime.Now).ToListAsync();
+        }
+        public async Task<List<Booking>> GetMyBookingPassed(AppUser User)
+        {
+            return await this._context.Bookings.Where(b => b.User == User).Where(b => b.Validated == VALIDATED).Where(b => b.End_date < DateTime.Now).ToListAsync();
+           
+        }
+        public async Task<List<Booking>> GetMyBookingCancelled(AppUser User)
+        {
+            return  await this._context.Bookings.Where(b => b.User == User).Where(b => b.Validated == CANCELLED).ToListAsync();
+            
         }
 
         /// <summary>
