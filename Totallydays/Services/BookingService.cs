@@ -26,7 +26,8 @@ namespace Totallydays.Services
                 End_date = model.End_date,
                 User = User,
                 Hosting = Hosting,
-                Created_at = DateTime.Now
+                Created_at = DateTime.Now,
+                Validated = 0
             };
 
             booking.Amount = this.CalculateAmount(booking, Hosting);
