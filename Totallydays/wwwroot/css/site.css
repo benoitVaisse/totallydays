@@ -304,9 +304,15 @@ tr.modified {
 }
 
 
+/* block all booking */
+.booking-block {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* ------------------- home ------------------------*/
-.image1{
-    background-image : url("/img/home/image1.jpg");
+.image1 {
+    background-image: url("/img/home/image1.jpg");
 }
 .image2 {
     background-image: url("/img/home/image2.jpg");

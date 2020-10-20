@@ -1,55 +1,20 @@
-﻿@model IEnumerable<Booking>
-@{
-    ViewData["Title"] = "MyBookings";
+﻿@{
+    ViewData["Title"] = "Mes Réservations";
 }
 
-    <div class="container">
+<div class="booking-block my-5">
 
-        <h1>Mes Réservations</h1>
-
-        @if(Model.Count() > 0)
-        {
-            <div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Hébergement</th>
-                            <th scope="col">Date de début</th>
-                            <th scope="col">Date de fin</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (Booking b in Model)
-                        {
-                        <tr>
-                            <td>@b.Booking_id</td>
-                            <td>@b.Hosting.Title</td>
-                            <td>@b.Start_date.ToString("dd/MM/yyyy")</td>
-                            <td>@b.End_date.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                @if(DateTime.Now < b.End_date)
-                                {
-                                    <span>Vous ne pouvez pas faire encore de commentaire sur ce séjour car la date de fin de séjour n'est pas dépassé</span>
-                                }else if ( b.Rating != null)
-                                {
-                                    <span> Vous avez deja fait un COmmentaire sur ce séjour</span>
-                                }
-                                else
-                                {
-                                    <a asp-route ="make_comment_hosting" asp-route-id="@b.Booking_id" class="btn btn-info"> Laisser un commentaire </a>
-                                }
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <p>Aucune résavation effectué</p>
-        }
+    <nav>
+        <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
+</div>
 
