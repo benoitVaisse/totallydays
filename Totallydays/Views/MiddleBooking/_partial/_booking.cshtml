@@ -15,7 +15,7 @@
                 <p class="card-text"> Du @b.Start_date.ToString("dd/MM/yyyy") au @b.End_date.ToString("dd/MM/yyyy") </p>
                 @if(b.Comment == null && b.End_date < DateTime.Now && b.Validated != 2)
                 {
-                    <div> <button class="btn btn-info"> Laisser un commentaire </button></div>
+                    <div> <button class="btn btn-info booking-comment"> Laisser un commentaire </button></div>
                 }
             </div>
         </div>
