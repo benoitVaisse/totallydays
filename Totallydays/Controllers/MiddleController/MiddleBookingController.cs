@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Totallydays.Models;
 using Totallydays.Repositories;
+using Totallydays.ViewsModel;
 
 namespace Totallydays.Controllers.MiddleController
 {
@@ -32,6 +33,9 @@ namespace Totallydays.Controllers.MiddleController
             this.ViewBag.futurBooking = await this._bookinRepository.GetMyFuturBooking(User);
             this.ViewBag.PassedBooking = await this._bookinRepository.GetMyBookingPassed(User);
             this.ViewBag.CancelledBooking = await this._bookinRepository.GetMyBookingCancelled(User);
+
+            this.ViewBag.formComment = new FormBookingViewModel();
+
             return View();
         }
     }
