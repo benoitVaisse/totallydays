@@ -34,7 +34,7 @@ namespace Totallydays.Controllers.MiddleController
             this.ViewBag.PassedBooking = await this._bookinRepository.GetMyBookingPassed(User);
             this.ViewBag.CancelledBooking = await this._bookinRepository.GetMyBookingCancelled(User);
 
-            this.ViewBag.formComment = new FormBookingViewModel();
+            this.ViewBag.formComment = new FormCommentViewModel();
 
             return View();
         }

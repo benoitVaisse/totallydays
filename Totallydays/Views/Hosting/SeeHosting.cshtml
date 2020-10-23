@@ -119,7 +119,7 @@
             <partial name="/Views/Hosting/_partial/_hosting_comment.cshtml" model="@Model" />
             @if (User == Model.User)
             {
-                <div class="booking-block">
+                <div class="booking-block-hosting">
                     <partial name="/Views/Hosting/_partial/_block_unavalaible_date.cshtml" model="@this.ViewBag.unavailable_date" />
                 </div>
                 <div id="modal_unavailable_date_block">
@@ -128,7 +128,7 @@
             }
             else
             {
-                <div class="booking-block">
+                <div class="booking-block-hosting">
                     <partial name="/Views/Hosting/_partial/_block_booking.cshtml" model="@this.ViewBag.bookingModel" />
                 </div>
             }
