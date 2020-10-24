@@ -55,12 +55,13 @@ namespace Totallydays.Controllers.MiddleController
             {
                 Booking Booking = await this._bookinRepository.Find(model.BookingId);
                 // si la reservation n'existe pas ou si la réservation ne m'appartient pas 
-                if(Booking == null || Booking.User != User)
+                // ou si le séjout n'est pas fini, ou si la reservation bien été valider ou si elle a deja un commentaire
+                if(Booking == null || Booking.User != User || Booking.Rating != null || Booking.End_date > DateTime.Now || Booking.Validated != 1)
                 {
                     this._errorMessage.Add("Un Problème est survenue lors de l'envoie du commentaire");
                     this._ajaxFlashessage.Add("error", this._errorMessage);
 
-                    return Json(new { status = "error", messages = this._ajaxFlashessage });
+                    return Json(new { status = "error", message = this._ajaxFlashessage });
                 }
 
                 await this._commentService.Create(model, User);
@@ -72,7 +73,7 @@ namespace Totallydays.Controllers.MiddleController
             this.SetErroMessageAjax();
             this._ajaxFlashessage.Add("error", this._errorMessage);
 
-            return Json(new { status="error", messages = this._ajaxFlashessage });
+            return Json(new { status="error", message = this._ajaxFlashessage });
         }
     }
 }

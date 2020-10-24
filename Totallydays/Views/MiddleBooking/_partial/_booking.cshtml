@@ -7,15 +7,15 @@
     @foreach (Booking b in Model)
     {
         <div class="card card-width card-raduis mx-3">
-            <div class="image-gb card-bg" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+b.Hosting.Cover_image)'">
+            <div class="image-gb card-bg" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+b.Hosting.Cover_image)')">
 
             </div>
             <div class="card-body">
                 <h5 class="card-title">@b.Hosting.Title</h5>
                 <p class="card-text"> Du @b.Start_date.ToString("dd/MM/yyyy") au @b.End_date.ToString("dd/MM/yyyy") </p>
-                @if(b.Comment == null && b.End_date < DateTime.Now && b.Validated != 2)
+                @if(b.Rating == null && b.End_date < DateTime.Now && b.Validated != 2)
                 {
-                    <div> <button class="btn btn-info booking-comment" data-title="@b.Hosting.Title" data-id="@b.Booking_id" data-sdate="@b.Start_date.ToString("dd/MM/yyyy")" data-edate="@b.End_date.ToString("dd/MM/yyyy")"> Laisser un commentaire </button></div>
+                    <div id="submit-comment-@b.Booking_id"> <button class="btn btn-info booking-comment"  data-title="@b.Hosting.Title" data-id="@b.Booking_id" data-sdate="@b.Start_date.ToString("dd/MM/yyyy")" data-edate="@b.End_date.ToString("dd/MM/yyyy")"> Laisser un commentaire </button></div>
                 }
             </div>
         </div>
