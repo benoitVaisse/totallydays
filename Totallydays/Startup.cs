@@ -77,6 +77,7 @@ namespace Totallydays
             services.AddScoped<BookingService, BookingService>();
             services.AddScoped<GoogleMapService, GoogleMapService>();
             services.AddScoped<BedRoomService, BedRoomService>();
+            services.AddScoped<CommentService, CommentService>();
             services.AddScoped<ControllerExtenstionServiceRazor, ControllerExtenstionServiceRazor>();
             // repository 
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
@@ -89,6 +90,7 @@ namespace Totallydays
             services.AddScoped<BookingRepository, BookingRepository>();
             services.AddScoped<UnavailableDateRepository, UnavailableDateRepository>();
             services.AddScoped<BedRoomRepository, BedRoomRepository>();
+            services.AddScoped<CommentRepository, CommentRepository>();
 
 
 
