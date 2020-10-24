@@ -49,6 +49,9 @@ html {
     width: 60%;
 }
 
+.primaire {
+    color: var(--primaire)
+}
 
 .border-top {
   border-top: 1px solid #e5e5e5;

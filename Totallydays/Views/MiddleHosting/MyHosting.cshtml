@@ -25,7 +25,7 @@
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="~/img/hosting/coverImage/@h.Cover_image" alt="image @h.Title">
                                 <div class="card-body">
-                                    <h5 class="card-title">@h.Title</h5>
+                                    <h5 class="card-title">  @h.Title  <span><i class="fas fa-star primaire"> </i> @h.GetAverage() (@h.getNumberComment()) </span> </h5>
                                     <p class="card-text">@h.Resume</p>
                                     <div>
                                         <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>
