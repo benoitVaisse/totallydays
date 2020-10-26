@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,14 @@ namespace Totallydays.Models
 {
     public class Booking
     {
+        [NotMapped]
+        public const int PENDING = 0;
+        [NotMapped]
+        public const int VALIDATED = 1;
+        [NotMapped]
+        public const int CANCELLED = 2;
+
+
         [Key]
         public int Booking_id { get; set; }
 
