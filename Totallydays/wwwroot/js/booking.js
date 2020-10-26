@@ -2,6 +2,10 @@
 
     class BookingClass {
 
+        constructor() {
+            this.showModal();
+            this.submitComment();
+        }
         showModal = () => {
 
             $(".booking-comment").on("click", (e) => {
@@ -16,8 +20,33 @@
             })
         }
 
+        submitComment = () => {
+            $("#form-booking-comment").on("submit", (e) => {
+                e.preventDefault();
+                let data = $(e.currentTarget).serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: urlCommentSubmit,
+                    data: data,
+                    dataType: "json",
+                    success: (result) => {
+                        showResult(result);
+                        if (result.status == "success") {
+                            $("#submit-comment-" + $("#BookingId").val()).remove();
+                        }
+                    },
+                    error: (err) => {
+
+                    },
+                    complete: () => {
+                        $("#booking_comment_modal_lg").modal("hide");
+                    }
+                })
+            })
+        }
+
     }
 
     let BookingObject = new BookingClass();
-    BookingObject.showModal();
 })
