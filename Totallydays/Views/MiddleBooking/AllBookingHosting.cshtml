@@ -5,7 +5,48 @@
 
 <div class="booking-block">
 
-
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"> Fait par </th>
+                    <th scope="col"> Début </th>
+                    <th scope="col"> Fin </th>
+                    <th scope="col"> Montant </th>
+                    <th scope="col"> Status </th>
+                    <th scope="col"> Action </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Booking b in Model)
+                {
+                <tr>
+                    <td>@b.User.FullName</td>
+                    <td>@b.Start_date.ToString("dd/MM/yyyy")</td>
+                    <td>@b.End_date.ToString("dd/MM/yyyy")</td>
+                    <td>@b.Amount €</td>
+                    <td>
+                        @if (b.Validated == 0)
+                        {
+                            <span>En attente</span>
+                        }
+                        else if (b.Validated == 1)
+                        {
+                            <span>En Validé</span>
+                        }
+                        else
+                        {
+                            <span>Refusé</span>
+                        }
+                    </td>
+                    <td>
+                        Gérer
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
