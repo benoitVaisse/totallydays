@@ -93,7 +93,7 @@ namespace Totallydays.Controllers.MiddleController
             {
                 return NotFound();
             }
-            return View();
+            return View(Hosting.Bookings);
         }
     }
 }
