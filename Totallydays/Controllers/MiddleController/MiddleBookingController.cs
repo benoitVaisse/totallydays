@@ -18,16 +18,19 @@ namespace Totallydays.Controllers.MiddleController
     public class MiddleBookingController : MiddleController
     {
         private readonly BookingRepository _bookinRepository;
+        private readonly HostingRepository _hostingRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly CommentService _commentService;
 
         public MiddleBookingController(
             BookingRepository bookingRepo,
+            HostingRepository HostingRepository,
             UserManager<AppUser> userManager,
             CommentService commentService
             )
         {
             this._bookinRepository = bookingRepo;
+            this._hostingRepository = HostingRepository;
             this._userManager = userManager;
             this._commentService = commentService;
         }
@@ -74,6 +77,23 @@ namespace Totallydays.Controllers.MiddleController
             this._ajaxFlashessage.Add("error", this._errorMessage);
 
             return Json(new { status="error", message = this._ajaxFlashessage });
+        }
+
+
+
+        [HttpGet("hébergement/{id:int}/reservations", Name ="hosting_all_booking")]
+        [Authorize]
+        public async Task<IActionResult> AllBookingHosting(int id)
+        {
+            Hosting Hosting = await this._hostingRepository.FindAsync(id);
+            AppUser User = await this._userManager.GetUserAsync(this.User);
+
+            // si on ne trouve pas hébergement ou que lh'ebergement n'appartient pas a l'utilisateur et que cette utilisateur n'est pas admin
+            if(Hosting == null || (Hosting.User != User && await this._userManager.IsInRoleAsync(User, "admin")) )
+            {
+                return NotFound();
+            }
+            return View();
         }
     }
 }

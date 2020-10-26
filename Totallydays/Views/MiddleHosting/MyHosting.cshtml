@@ -3,7 +3,7 @@
     ViewData["Title"] = "MyHosting";
 }
 
-<div class="container">
+<div class="hosting-middle-block my-5">
 
     <h1 class="my-3">Mes Hébergements</h1>
     <div id="requessValidator">
@@ -18,31 +18,32 @@
 
             @if (Model.Count() > 0)
             {
-                <div class="my-hostings">
+                <div class="my-hostings block-flex flex-start">
                     @foreach (Hosting h in Model)
                     {
-                        <div class="single-hosting-list">
-                            <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="~/img/hosting/coverImage/@h.Cover_image" alt="image @h.Title">
-                                <div class="card-body">
-                                    <h5 class="card-title">  @h.Title  <span><i class="fas fa-star primaire"> </i> @h.GetAverage() (@h.getNumberComment()) </span> </h5>
-                                    <p class="card-text">@h.Resume</p>
-                                    <div>
-                                        <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>
-                                        <a asp-route="hosting_modified" asp-route-id="@h.Hosting_id" class="btn btn-warning">Modifier</a>
-                                        <label for="publish_hosting_@h.Hosting_id"> Publié </label>
-                                        <input data-id="@h.Hosting_id" class="input-published" type="checkbox" id="publish_hosting_@h.Hosting_id" name="publish" @(h.Published == true ? "checked = \"checked\"":"") />
+                        <div class="card card-width card-raduis mx-3 my-3">
+                            <div class="image-gb card-bg" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+h.Cover_image)')"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">  @h.Title  <span><i class="fas fa-star primaire"> </i> @h.GetAverage() (@h.getNumberComment()) </span> </h5>
+                                <p class="card-text">@h.Resume</p>
+                                <div>
+                                    <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>
+                                    <a asp-route="hosting_modified" asp-route-id="@h.Hosting_id" class="btn btn-warning">Modifier</a>
+                                    <label for="publish_hosting_@h.Hosting_id"> Publié </label>
+                                    <input data-id="@h.Hosting_id" class="input-published" type="checkbox" id="publish_hosting_@h.Hosting_id" name="publish" @(h.Published == true ? "checked = \"checked\"" : "") />
 
-                                    </div>
-                                    @if (h.Active == false)
-                                    {
-                                        <p style="color:#a90f0f">Cette hébergement n'a pas étias validé par l'admin</p>
-                                    }
+                                </div>
+                                @if (h.Active == false)
+                                {
+                                    <p style="color:#a90f0f">Cette hébergement n'a pas étias validé par l'admin</p>
+                                }
+                                <div>
+                                    <a class="btn btn-info" href="@Url.RouteUrl("hosting_all_booking", new {id=h.Hosting_id })"> Gestion des réservations </a>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                        }
+                    </div>
             }
             else
             {

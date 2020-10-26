@@ -28,6 +28,16 @@ namespace Totallydays.Repositories
         }
 
         /// <summary>
+        /// trouve un hébergement par son ID de facon asynchrone
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<Hosting> FindAsync(int Id)
+        {
+            return await this._context.Hostings.FindAsync(Id);
+        }
+
+        /// <summary>
         /// retourne tous les hébergements
         /// </summary>
         /// <returns></returns>

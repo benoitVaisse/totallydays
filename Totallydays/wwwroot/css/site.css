@@ -158,7 +158,7 @@ body {
 }
 
 .card-width {
-    width: 480px;
+    width: 460px;
     border-radius: 15px;
 }
 
@@ -338,8 +338,8 @@ tr.modified {
 }
 
 
-/* block all booking */
-.booking-block {
+/* block all booking and hosting */
+.booking-block, .hosting-middle-block {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
