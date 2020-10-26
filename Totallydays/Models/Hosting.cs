@@ -129,7 +129,7 @@ namespace Totallydays.Models
         public IEnumerable<DateTime> getUnavailableDays()
         {
             List<DateTime> NotAvailabkesDays = new List<DateTime>();
-            foreach (Booking b in this.Bookings)
+            foreach (Booking b in this.getFuturBookingDayUnavailable())
             {
                 for(DateTime date = b.Start_date; date<= b.End_date; date = date.AddDays(1))
                 {
@@ -137,7 +137,7 @@ namespace Totallydays.Models
                 }
             };
 
-            foreach(Unavailable_date d in this.Unavailables_date)
+            foreach(Unavailable_date d in this.GetMyNextUnavailableDate())
             {
                 for (DateTime date = d.Start_date; date <= d.End_date; date = date.AddDays(1))
                 {
@@ -146,6 +146,16 @@ namespace Totallydays.Models
             }
 
             return NotAvailabkesDays;
+        }
+
+
+        /// <summary>
+        /// return futur booking of this hosting not cancelled
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Booking> getFuturBookingDayUnavailable()
+        {
+            return this.Bookings.Where(b=>b.Start_date > DateTime.Now).Where(b => b.Validated != Booking.CANCELLED);
         }
 
         /// <summary>
