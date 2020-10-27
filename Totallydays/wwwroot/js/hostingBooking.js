@@ -30,6 +30,7 @@
                     data: data,
                     dataType: "json",
                     success: (result) => {
+                        showResult(result);
                     },
                     error: (err) => {
 

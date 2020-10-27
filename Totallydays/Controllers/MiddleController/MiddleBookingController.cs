@@ -99,9 +99,26 @@ namespace Totallydays.Controllers.MiddleController
         }
 
         [HttpPost("hebergement/{id:int}/reservations/validated", Name = "hosting_booking_validation_post")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> HostingBookingValidatedPost(int id, FormHostingBookingValidation model)
         {
-            return Json(new { });
+            Hosting Hosting = await this._hostingRepository.FindAsync(id);
+            AppUser User = await this._userManager.GetUserAsync(this.User);
+            // si l'hébergement m'appartient bien
+            if((Hosting.User == User || await this._userManager.IsInRoleAsync(User,"admin")) && ModelState.IsValid)
+            {
+                Booking Booking = await this._bookinRepository.Find(int.Parse(model.BookingId));
+                // si la reservation appartient bien a mon hébergement et si elle n'a pas commencé
+                if(Booking.HostingHosting_id == Hosting.Hosting_id && Booking.Start_date > DateTime.Now)
+                {
+                    return Json(new { });
+                }
+                this._errorMessage.Add("Un Problème est survenue lors de l'envoie des données.");
+            }
+            this.SetErroMessageAjax();
+            this._ajaxFlashessage.Add("error", this._errorMessage);
+            return Json(new { status = "error", message = this._ajaxFlashessage });
         }
     }
 }

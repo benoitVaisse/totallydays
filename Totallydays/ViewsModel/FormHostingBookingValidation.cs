@@ -10,11 +10,11 @@ namespace Totallydays.ViewsModel
     {
 
         [Required]
-        [RegularExpression("/d+", ErrorMessage = "Un problème est survenue lors de la gestion de la reservation")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Un problème edddst survenue lors de la gestion de la reservation")]
         public string BookingId { get; set; }
 
         [Required]
-        [RegularExpression("[1-2]", ErrorMessage = "Un problème est survenue lors de la gestion de la reservation")]
+        [RegularExpression("[1-2]", ErrorMessage = "Un problème essssst survenue lors de la gestion de la reservation")]
         public string Status { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Vous devez laissez un message")]
