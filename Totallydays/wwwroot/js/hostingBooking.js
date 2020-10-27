@@ -20,7 +20,7 @@
         }
 
         submitStatus = () => {
-            $("#form-booking-comment").on("submit", (e) => {
+            $("#form-hosting-booking-validated").on("submit", (e) => {
                 e.preventDefault();
                 let data = $(e.currentTarget).serialize();
 
@@ -30,10 +30,6 @@
                     data: data,
                     dataType: "json",
                     success: (result) => {
-                        showResult(result);
-                        if (result.status == "success") {
-                            $("#submit-comment-" + $("#BookingId").val()).remove();
-                        }
                     },
                     error: (err) => {
 
