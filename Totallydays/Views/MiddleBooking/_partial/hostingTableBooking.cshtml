@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Booking>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@foreach (Booking b in Model)
+{
+    <tr>
+        <td>@b.User.FullName</td>
+        <td>@b.Start_date.ToString("dd/MM/yyyy")</td>
+        <td>@b.End_date.ToString("dd/MM/yyyy")</td>
+        <td>@b.Amount €</td>
+        <td>
+            @if (b.Validated == Booking.PENDING)
+            {
+                <span>En attente</span>
+            }
+            else if (b.Validated == Booking.VALIDATED)
+            {
+                <span>Validé</span>
+            }
+            else
+            {
+                <span>Refusé</span>
+            }
+        </td>
+        <td>
+            <button class="btn btn-info btn-hosting-booking" data-sdate="@b.Start_date.ToString("dd/MM/yyyy")" data-edate="@b.End_date.ToString("dd/MM/yyyy")" data-id="@b.Booking_id" >Gérer</button>
+        </td>
+    </tr>
+}

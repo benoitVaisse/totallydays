@@ -1,12 +1,12 @@
-﻿@model IEnumerable<Booking>;
+﻿@model Hosting;
 @{
     ViewData["Title"] = "AllBookingHosting";
 }
 
-<div class="booking-block">
+<div class="booking-block my-5">
 
     <div>
-        <table class="table">
+        <table class="table" id="hosting-all-booking">
             <thead>
                 <tr>
                     <th scope="col"> Fait par </th>
@@ -18,35 +18,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Booking b in Model)
-                {
-                <tr>
-                    <td>@b.User.FullName</td>
-                    <td>@b.Start_date.ToString("dd/MM/yyyy")</td>
-                    <td>@b.End_date.ToString("dd/MM/yyyy")</td>
-                    <td>@b.Amount €</td>
-                    <td>
-                        @if (b.Validated == 0)
-                        {
-                            <span>En attente</span>
-                        }
-                        else if (b.Validated == 1)
-                        {
-                            <span>En Validé</span>
-                        }
-                        else
-                        {
-                            <span>Refusé</span>
-                        }
-                    </td>
-                    <td>
-                        Gérer
-                    </td>
-                </tr>
-                }
+                <partial name="~/Views/MiddleBooking/_partial/hostingTableBooking.cshtml" model="@Model.Bookings" />
             </tbody>
         </table>
     </div>
 
 </div>
 
+
+<div id="modal_hosting_booking">
+    <partial name="/Views/Modal/hostingBookingModal.cshtml" model="@this.ViewBag.bookingvalidation" />
+</div>
+
+
+
+@section Scripts{
+    <script>
+        let urlHostingBooking = '@Url.RouteUrl("hosting_booking_validation_post", new { id= Model.Hosting_id})';
+    </script>
+    <script src="~/js/hostingBooking.js"></script>
+}

@@ -1,0 +1,39 @@
+﻿@model Totallydays.ViewsModel.FormHostingBookingValidation;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="modal fade hosting-booking-validation-lg" id="hosting-booking-validation-lg" tabindex="-1" role="dialog" aria-labelledby="hosting-booking-validation-lg" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="modal-booking-date"></h5>
+                <form id="form-hosting-booking-validated" method="POST">
+                    <div>
+                        <input type="hidden" asp-for="BookingId" />
+                    </div>
+                    <div class="form-group">
+                        <select asp-for="Status" class="form-control">
+                            <option value="@Booking.VALIDATED"> Valider </option>
+                            <option value="@Booking.CANCELLED"> Refuser</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Comment"></label>
+                        <textarea asp-for="Comment" class="form-control">
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info">Valider</button>
+                    </div>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

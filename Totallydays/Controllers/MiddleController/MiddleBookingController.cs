@@ -81,7 +81,7 @@ namespace Totallydays.Controllers.MiddleController
 
 
 
-        [HttpGet("hébergement/{id:int}/reservations", Name ="hosting_all_booking")]
+        [HttpGet("hebergement/{id:int}/reservations", Name ="hosting_all_booking")]
         [Authorize]
         public async Task<IActionResult> AllBookingHosting(int id)
         {
@@ -93,7 +93,15 @@ namespace Totallydays.Controllers.MiddleController
             {
                 return NotFound();
             }
-            return View(Hosting.Bookings);
+
+            this.ViewBag.bookingvalidation = new FormHostingBookingValidation();
+            return View(Hosting);
+        }
+
+        [HttpPost("hebergement/{id:int}/reservations/validated", Name = "hosting_booking_validation_post")]
+        public async Task<IActionResult> HostingBookingValidatedPost(int id, FormHostingBookingValidation model)
+        {
+            return Json(new { });
         }
     }
 }
