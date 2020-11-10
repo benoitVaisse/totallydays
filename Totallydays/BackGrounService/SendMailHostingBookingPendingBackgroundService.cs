@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NCrontab;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NCrontab;
 using Totallydays.Models;
 using Totallydays.Repositories;
 using Totallydays.Services;
@@ -16,17 +14,17 @@ using Totallydays.Services;
 namespace Totallydays.BackGrounService
 {
     /// <summary>
-    /// envoie un email au personne dt le séjour viens de finir
+    /// envoie un mail pour chaque utilisateur qui a des reservation en attente sur ses hébergement
     /// </summary>
-    public class SendMailBookingFinichBackgroundService : BackgroundService
+    public class SendMailHostingBookingPendingBackgroundService : BackgroundService
     {
         private CrontabSchedule _schedule;
         private DateTime _nextRun;
         private readonly IServiceProvider _service;
         private string Schedule = "* * */2 * * *";
-        private ILogger<SendMailBookingFinichBackgroundService> _logger;
+        private ILogger<SendMailHostingBookingPendingBackgroundService> _logger;
 
-        public SendMailBookingFinichBackgroundService(ILogger<SendMailBookingFinichBackgroundService> logger, IServiceProvider service)
+        public SendMailHostingBookingPendingBackgroundService(ILogger<SendMailHostingBookingPendingBackgroundService> logger, IServiceProvider service)
         {
             this._logger = logger;
             _schedule = CrontabSchedule.Parse(Schedule, new CrontabSchedule.ParseOptions { IncludingSeconds = true });
@@ -36,7 +34,7 @@ namespace Totallydays.BackGrounService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var scope = _service.CreateScope();
-            BookingRepository BookingRepository = scope.ServiceProvider.GetRequiredService<BookingRepository>();
+            UserRepository UserRepository = scope.ServiceProvider.GetRequiredService<UserRepository>();
             SendMailService SendMailService = scope.ServiceProvider.GetRequiredService<SendMailService>();
             do
             {
@@ -44,23 +42,27 @@ namespace Totallydays.BackGrounService
                 var nextrun = _schedule.GetNextOccurrence(now);
                 if (now > _nextRun)
                 {
-                    await this.SendMailToBookingFinish(BookingRepository, SendMailService);
+                    await this.SendMailToBookingFinish(UserRepository, SendMailService);
                     _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
                 }
-                // en milliseconde
+                // en millisenconde
+                // 1h
                 await Task.Delay(3600000, stoppingToken);
             }
             while (!stoppingToken.IsCancellationRequested);
         }
 
-        private async Task SendMailToBookingFinish(BookingRepository BookingRepository, SendMailService SendMailService)
+        private async Task SendMailToBookingFinish(UserRepository UserRepository, SendMailService SendMailService)
         {
-            IEnumerable<Booking> Bookings = BookingRepository.FindBookingFinish();
-            foreach(Booking b in Bookings)
+            IEnumerable<AppUser> Users = await UserRepository.GetUserWithHosting();
+            foreach (AppUser user in Users)
             {
-                await SendMailService.SendMailBookingFinish(b);
+                if (user.GetNumberHostingWithBookingPending() > 0)
+                {
+                    await SendMailService.SendMailUserHostingBookingPending(user);
+                }
             }
-            Console.WriteLine("hello world" + DateTime.Now.ToString("F"));
         }
     }
 }
+

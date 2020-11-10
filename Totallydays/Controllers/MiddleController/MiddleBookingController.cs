@@ -21,18 +21,24 @@ namespace Totallydays.Controllers.MiddleController
         private readonly HostingRepository _hostingRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly CommentService _commentService;
+        private readonly BookingService _bookingService;
+        private readonly SendMailService _sendMailService;
 
         public MiddleBookingController(
             BookingRepository bookingRepo,
             HostingRepository HostingRepository,
             UserManager<AppUser> userManager,
-            CommentService commentService
+            CommentService commentService,
+            BookingService bookingService,
+            SendMailService sendMailService
             )
         {
             this._bookinRepository = bookingRepo;
             this._hostingRepository = HostingRepository;
             this._userManager = userManager;
             this._commentService = commentService;
+            this._bookingService = bookingService;
+            this._sendMailService = sendMailService;
         }
         [HttpGet("mes-reservations", Name ="my_bookings")]
         public async Task<IActionResult> MyBookings()
@@ -112,7 +118,12 @@ namespace Totallydays.Controllers.MiddleController
                 // si la reservation appartient bien a mon hébergement et si elle n'a pas commencé
                 if(Booking.HostingHosting_id == Hosting.Hosting_id && Booking.Start_date > DateTime.Now)
                 {
-                    return Json(new { });
+                    Booking.Validated = byte.Parse(model.Status);
+                    await this._bookinRepository.SaveChange();
+                    this._sendMailService.SendMailChangeStatusBooking(model, Booking);
+                    this._successMessage.Add("Le changement de status a bien été pris en compte");
+                    this._ajaxFlashessage.Add("success", this._successMessage);
+                    return Json(new { status="success" , message = this._ajaxFlashessage});
                 }
                 this._errorMessage.Add("Un Problème est survenue lors de l'envoie des données.");
             }

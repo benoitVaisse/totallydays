@@ -1,0 +1,18 @@
+﻿@model AppUser;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<h3>Bonjour @Model.FullName</h3>
+<div>
+    Vous avez actuellement des reservations en attente
+
+    @foreach (Hosting hosting in Model.Hostings)
+    {
+        if (hosting.getNumberBookingPending() > 0)
+        {
+            <div>
+                <p>@hosting.Title : @hosting.getNumberBookingPending() en attente(s)</p>
+            </div>
+        }
+    }
+</div>

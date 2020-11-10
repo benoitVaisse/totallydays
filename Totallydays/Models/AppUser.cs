@@ -54,5 +54,22 @@ namespace Totallydays.Models
 
         [NotMapped]
         public int TotalCommentCountHosting { get; set; }
+
+
+        /// <summary>
+        /// retorune le nombre d'hebergement qui on des reservation en attente
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumberHostingWithBookingPending()
+        {
+            if(this.Hostings.Count() > 0)
+            {
+                return this.Hostings.Where(h => h.getNumberBookingPending() > 0).Count();
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -39,5 +39,6 @@ namespace Totallydays.Services
         {
             return (float)((booking.End_date - booking.Start_date).TotalDays) * Hosting.Price;
         }
+
     }
 }

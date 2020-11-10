@@ -67,6 +67,8 @@ namespace Totallydays
             // cron job
             services.AddHostedService<TestBackgroundService>();
             services.AddHostedService<SendMailBookingFinichBackgroundService>();
+            services.AddHostedService<SendMailHostingBookingPendingBackgroundService>();
+            services.AddHostedService<SendMailBookingBeginBackgroundService>();
 
             services.AddControllersWithViews();
 

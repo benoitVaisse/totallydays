@@ -82,5 +82,15 @@ namespace Totallydays.Repositories
             }
         }
 
+
+        /// <summary>
+        /// retourn al liste des utilisateur qui on au moins un hébergement et qui on des reservation en attente
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<AppUser>> GetUserWithHosting()
+        {
+            return await this._context.Users.Where(u => u.Hostings.Count() > 0).ToListAsync();
+        }
+
     }
 }

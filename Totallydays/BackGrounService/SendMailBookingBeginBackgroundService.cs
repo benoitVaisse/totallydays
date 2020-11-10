@@ -15,18 +15,15 @@ using Totallydays.Services;
 
 namespace Totallydays.BackGrounService
 {
-    /// <summary>
-    /// envoie un email au personne dt le séjour viens de finir
-    /// </summary>
-    public class SendMailBookingFinichBackgroundService : BackgroundService
+    public class SendMailBookingBeginBackgroundService : BackgroundService
     {
         private CrontabSchedule _schedule;
         private DateTime _nextRun;
         private readonly IServiceProvider _service;
-        private string Schedule = "* * */2 * * *";
-        private ILogger<SendMailBookingFinichBackgroundService> _logger;
+        private string Schedule = "*/10 * * * * *";
+        private ILogger<SendMailBookingBeginBackgroundService> _logger;
 
-        public SendMailBookingFinichBackgroundService(ILogger<SendMailBookingFinichBackgroundService> logger, IServiceProvider service)
+        public SendMailBookingBeginBackgroundService(ILogger<SendMailBookingBeginBackgroundService> logger, IServiceProvider service)
         {
             this._logger = logger;
             _schedule = CrontabSchedule.Parse(Schedule, new CrontabSchedule.ParseOptions { IncludingSeconds = true });
@@ -44,23 +41,22 @@ namespace Totallydays.BackGrounService
                 var nextrun = _schedule.GetNextOccurrence(now);
                 if (now > _nextRun)
                 {
-                    await this.SendMailToBookingFinish(BookingRepository, SendMailService);
+                    await this.SendMailToBookingStarting(BookingRepository, SendMailService);
                     _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
                 }
                 // en milliseconde
-                await Task.Delay(3600000, stoppingToken);
+                await Task.Delay(1000, stoppingToken);
             }
             while (!stoppingToken.IsCancellationRequested);
         }
 
-        private async Task SendMailToBookingFinish(BookingRepository BookingRepository, SendMailService SendMailService)
+        private async Task SendMailToBookingStarting(BookingRepository BookingRepository, SendMailService SendMailService)
         {
-            IEnumerable<Booking> Bookings = BookingRepository.FindBookingFinish();
+            IEnumerable<Booking> Bookings = BookingRepository.FindBookingByDayModifier(+1);
             foreach(Booking b in Bookings)
             {
-                await SendMailService.SendMailBookingFinish(b);
+                await SendMailService.SendMailToBookingStarting(b);
             }
-            Console.WriteLine("hello world" + DateTime.Now.ToString("F"));
         }
     }
 }

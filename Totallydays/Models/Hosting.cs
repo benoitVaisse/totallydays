@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace Totallydays.Models
@@ -176,6 +177,13 @@ namespace Totallydays.Models
             return this.getUnavailableDays().Select(d=>d.ToString("dd/MM/yyyy")).ToList();
         }
 
-
+        /// <summary>
+        /// retourne le nombre de reservation en attente
+        /// </summary>
+        /// <returns></returns>
+        public int getNumberBookingPending()
+        {
+            return this.Bookings.Where(b => b.Validated == Booking.PENDING).Count();
+        }
     }
 }

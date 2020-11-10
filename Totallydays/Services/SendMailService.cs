@@ -56,5 +56,45 @@ namespace Totallydays.Services
             string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailBookingFinish.cshtml", b);
             await this._mailService.SendAsync(b.User.Email, "Faite un commentaire", view, true);
         }
+
+        public async Task SendMailChangeStatusBooking(FormHostingBookingValidation model, Booking b)
+        {
+            FormHostingBookingValidationModel variable = new FormHostingBookingValidationModel()
+            {
+                Booking = b,
+                Comment = model.Comment
+            };
+            string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailBookingStatusChange.cshtml", variable);
+            await this._mailService.SendAsync(b.User.Email, "Status Réservation", view, true);
+        }
+
+        public async Task SendMailUserHostingBookingPending(AppUser user)
+        {
+            try
+            {
+                string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailUserHostingBookingPending.cshtml", user);
+                await this._mailService.SendAsync(user.Email, "Réservation en attente", view, true);
+
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public async Task SendMailToBookingStarting(Booking b)
+        {
+            try
+            {
+                string viewBookeur = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailToBookingStartingBookeur.cshtml", b);
+                string viewOwner = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailToBookingStartingOwner.cshtml", b);
+                this._mailService.SendAsync(b.User.Email, "Votre séjour vous attend", viewBookeur, true);
+                this._mailService.SendAsync(b.Hosting.User.Email, "Une réservation commence demain", viewOwner, true);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

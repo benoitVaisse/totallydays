@@ -1,0 +1,14 @@
+﻿@model Totallydays.ViewsModel.FormHostingBookingValidationModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ 
+    string s = Booking.VALIDATED.ToString();
+    string status = (Model.Booking.Validated == Booking.VALIDATED) ? "Validé" : "Refusé";
+}
+
+<div>
+    <h3>Bonjour @Model.Booking.User.FullName </h3>
+    <p> Votre réservation pour l'hébergement @Model.Booking.Hosting.Title  du @Model.Booking.Start_date.ToString("dd/MM/yyyy") au @Model.Booking.End_date.ToString("dd/MM/yyyy") a été @status</p>
+    <p>@Model.Comment</p>
+</div>

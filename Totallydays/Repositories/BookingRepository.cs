@@ -70,5 +70,24 @@ namespace Totallydays.Repositories
 
 
         }
+
+        /// <summary>
+        /// selectionne les reservations dont le jour commence au jour modifier d'aujourdhui
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Booking> FindBookingByDayModifier(int modifier)
+        {
+            DateTime TheDate = DateTime.Now.AddDays(modifier);
+            DateTime theDate = TheDate.Date;
+            var query = this._context.Bookings.Where(b => b.Start_date == theDate).Where(b => b.Rating == null);
+            IEnumerable<Booking> Bookings = query.ToList();
+            return Bookings;
+
+        }
+
+        public async Task SaveChange()
+        {
+            await this._context.SaveChangesAsync();
+        }
     }
 }
