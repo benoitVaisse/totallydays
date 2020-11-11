@@ -297,13 +297,34 @@ namespace Totallydays.Controllers
 
         [HttpPost("set-new-password", Name = "set-new-password-post")]
         [AllowAnonymous]
-        public IActionResult ForgotPassword(FormForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword(FormForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
+                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                if(User != null && await this._userManager.IsEmailConfirmedAsync(User))
+                {
+                    var token = await this._userManager.GeneratePasswordResetTokenAsync(User);
+                    var PasswordLinkToken = Url.RouteUrl("reset_forgot_password", new { Email = User.Email, Token = token }, Request.Scheme, Request.Host.ToString());
+                    this._mailService.SendEmailForgotPassword(User, PasswordLinkToken);
+                }
 
+                return RedirectToRoute("forgot_password_send_email");
             }
             return View(model);
+        }
+
+        [HttpGet("password-oublié", Name= "forgot_password_send_email")]
+        public IActionResult ForgotPasswordSendEmail()
+        {
+            return View();
+        }
+
+
+        [HttpGet("reset_forgot_password", Name = "reset_forgot_password")]
+        public async Task<IActionResult> resetForgotPassword(string Email, string Token)
+        {
+            return View();
         }
     }
 
