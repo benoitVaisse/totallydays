@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MailKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -284,6 +285,25 @@ namespace Totallydays.Controllers
         {
             await this._signInManager.SignOutAsync();
             return RedirectToRoute("home");
+        }
+
+        [HttpGet("set-new-password", Name = "set-new-password")]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            FormForgotPasswordViewModel model = new FormForgotPasswordViewModel();
+            return View(model);
+        }
+
+        [HttpPost("set-new-password", Name = "set-new-password-post")]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword(FormForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View(model);
         }
     }
 
