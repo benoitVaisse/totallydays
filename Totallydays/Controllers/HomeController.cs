@@ -24,6 +24,7 @@ namespace Totallydays.Controllers
         [HttpGet("/", Name ="home")]
         public IActionResult Index()
         {
+            this.setFlash();
             IEnumerable<AppUser> Users= this._userRepository.GetBestUser(3);
             return View(Users);
         }

@@ -321,10 +321,38 @@ namespace Totallydays.Controllers
         }
 
 
-        [HttpGet("reset_forgot_password", Name = "reset_forgot_password")]
+        [HttpGet("reset-forgot-password", Name = "reset_forgot_password")]
+        [AllowAnonymous]
         public async Task<IActionResult> resetForgotPassword(string Email, string Token)
         {
             return View();
+        }
+
+        [HttpPost("reset-forgot-password", Name = "reset_forgot_password_submit")]
+        [AllowAnonymous]
+        public async Task<IActionResult> resetForgotPassword(FormResetPasswordToken model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                if (User != null)
+                {
+                    var result = await this._userManager.ResetPasswordAsync(User, model.Token, model.Password);
+                    if (result.Succeeded)
+                    {
+                        List<string> message = new List<string>();
+                        message.Add("Le mot de passe a bien été changé");
+                        TempData["success"] = message;
+                        return RedirectToRoute("home");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "une erreur est survenu lors du reset du mot de passe");
+            }
+            return View(model);
         }
     }
 
