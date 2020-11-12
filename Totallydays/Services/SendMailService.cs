@@ -56,5 +56,16 @@ namespace Totallydays.Services
             string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailBookingFinish.cshtml", b);
             await this._mailService.SendAsync(b.User.Email, "Faite un commentaire", view, true);
         }
+
+        public async Task SendEmailForgotPassword(AppUser User, string Url)
+        {
+            ForgotPasswordEmailViewModel model = new ForgotPasswordEmailViewModel()
+            {
+                User = User,
+                Url = Url
+            };
+            string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendEmailForgotPassword.cshtml", model);
+            this._mailService.SendAsync(User.Email, "Reset de password", view, true);
+        }
     }
 }
