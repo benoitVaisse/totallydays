@@ -1,12 +1,12 @@
-﻿$(document).ready(() => {
+﻿
 
-    class accountClass{
+export default class accountClass {
 
-        init= () => {
+        constructor(){
             this.changePicture();
         }
 
-        changePicture = () => {
+        changePicture() {
             $("div#picture-account input[name=picture]").on("change", (e) => {
                 let $el = $(e.currentTarget)[0];
                 let files = $el.files
@@ -44,7 +44,3 @@
             })
         }
     }
-
-    accountObject = new accountClass();
-    accountObject.init();
-})

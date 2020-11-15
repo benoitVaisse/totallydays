@@ -9,6 +9,21 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./wwwroot/source/account.js":
+/*!***********************************!*\
+  !*** ./wwwroot/source/account.js ***!
+  \***********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* binding */ accountClass; }\n/* harmony export */ });\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nvar accountClass = /*#__PURE__*/function () {\n  function accountClass() {\n    _classCallCheck(this, accountClass);\n\n    this.changePicture();\n  }\n\n  _createClass(accountClass, [{\n    key: \"changePicture\",\n    value: function changePicture() {\n      var _this = this;\n\n      $(\"div#picture-account input[name=picture]\").on(\"change\", function (e) {\n        var $el = $(e.currentTarget)[0];\n        var files = $el.files;\n        var formData = new FormData();\n\n        for (var i = 0; i != files.length; i++) {\n          formData.append(\"picture\", files[i]);\n        }\n\n        formData.append(\"__RequestVerificationToken\", $(\"input[name=\\\"__RequestVerificationToken\\\"]\").val());\n        $.ajax({\n          type: \"POST\",\n          url: url,\n          data: formData,\n          processData: false,\n          contentType: false,\n          dataType: \"json\",\n          success: function success(result) {\n            $(\"#status-picture\").removeClass();\n\n            if (result.status == \"error\") {\n              $(\"#status-picture\").addClass(\"alert alert-danger\");\n            } else {\n              $(\"#status-picture\").addClass(\"alert alert-success\");\n              $(\"#picture-block\").html(result.view);\n\n              _this.changePicture();\n            }\n\n            $(\"#status-picture\").html(result.message);\n          },\n          error: function error(err) {\n            alert(\"une erreur est survenu, veuillez réessayer ultérieurement\");\n          }\n        });\n      });\n    }\n  }]);\n\n  return accountClass;\n}();\n\n\n\n//# sourceURL=webpack://totallydays/./wwwroot/source/account.js?");
+
+/***/ }),
+
 /***/ "./wwwroot/source/app.js":
 /*!*******************************!*\
   !*** ./wwwroot/source/app.js ***!
@@ -19,7 +34,7 @@
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map.js */ \"./wwwroot/source/map.js\");\n/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./site.js */ \"./wwwroot/source/site.js\");\n;\n\nwindow.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_0___default());\n\n\n$(document).ready(function () {\n  var mapAutocomplete = new _map_js__WEBPACK_IMPORTED_MODULE_2__.default();\n});\n\n//# sourceURL=webpack://totallydays/./wwwroot/source/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map.js */ \"./wwwroot/source/map.js\");\n/* harmony import */ var _account_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./account.js */ \"./wwwroot/source/account.js\");\n/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./site.js */ \"./wwwroot/source/site.js\");\n;\n\nwindow.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_0___default());\n\n\n\n$(document).ready(function () {\n  var mapAutocomplete = new _map_js__WEBPACK_IMPORTED_MODULE_2__.default();\n  var accountObject = new _account_js__WEBPACK_IMPORTED_MODULE_3__.default();\n});\n\n//# sourceURL=webpack://totallydays/./wwwroot/source/app.js?");
 
 /***/ }),
 
