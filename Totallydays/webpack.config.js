@@ -1,8 +1,8 @@
 ﻿const path = require('path');
 
-module.exports = {
+module.exports = (env, agrs) => ({
     entry: __dirname + "/wwwroot/source/app.js",
-    mode: "development",
+    mode: agrs.mode || "development",
     output: {
         path: path.resolve(__dirname, 'wwwroot/dist'),
         filename: "bundle.js"
@@ -28,4 +28,4 @@ module.exports = {
             }
         ]
     },
-}
+})
