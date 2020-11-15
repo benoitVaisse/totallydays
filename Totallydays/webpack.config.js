@@ -7,6 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, 'wwwroot/dist'),
         filename: "bundle.js"
     },
+    target: ['web', 'es5'],
     module: {
         rules: [
             {
