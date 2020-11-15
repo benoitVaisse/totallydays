@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="webpack.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="webpack.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.45" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.7" />
