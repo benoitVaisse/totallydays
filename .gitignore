@@ -7,3 +7,4 @@
 *.json
 /Totallydays/obj
 /Totallydays/wwwroot/img/hosting
+/Totallydays/node_modules
