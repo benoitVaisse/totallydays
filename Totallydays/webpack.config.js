@@ -7,6 +7,7 @@ module.exports = (env, agrs) => ({
         path: path.resolve(__dirname, 'wwwroot/dist'),
         filename: "bundle.js"
     },
+    devtool:"source-map",
     target: ['web', 'es5'],
     module: {
         rules: [

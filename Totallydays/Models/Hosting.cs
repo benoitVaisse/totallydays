@@ -11,6 +11,16 @@ namespace Totallydays.Models
 {
     public class Hosting
     {
+        //google map lat et lng center france
+        [NotMapped]
+        public const double lat = 46.603354;
+        [NotMapped]
+        public const double lng = 1.8883335;
+        [NotMapped]
+        public const double zoom = 6.5;
+        [NotMapped]
+        public const double zoomCity = 13;
+
         public Hosting()
         {
             this.Average = 0;

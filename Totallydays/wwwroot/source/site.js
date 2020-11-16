@@ -1,5 +1,5 @@
 ﻿
-let showResult = (result) => {
+export function showResult(result){
     let $prototype = $("#prototype-flash")[0];
     let $prototypehtml = $($prototype).html();
     let message = "";
@@ -11,5 +11,3 @@ let showResult = (result) => {
 
     }
 }
-
-export default showResult;

@@ -13,7 +13,7 @@
             <div class="card-body">
                 <h5 class="card-title">@b.Hosting.Title</h5>
                 <p class="card-text"> Du @b.Start_date.ToString("dd/MM/yyyy") au @b.End_date.ToString("dd/MM/yyyy") </p>
-                @if(b.Rating == null && b.End_date < DateTime.Now && b.Validated != 2)
+                @if(b.Rating == null && b.End_date < DateTime.Now && b.Validated != Booking.CANCELLED)
                 {
                     <div id="submit-comment-@b.Booking_id"> <button class="btn btn-info booking-comment"  data-title="@b.Hosting.Title" data-id="@b.Booking_id" data-sdate="@b.Start_date.ToString("dd/MM/yyyy")" data-edate="@b.End_date.ToString("dd/MM/yyyy")"> Laisser un commentaire </button></div>
                 }

@@ -163,22 +163,6 @@
 
             setCalendarUnavalableDate(jsDateUnavailable);
 
-            let lat = +"@Model.Lat";
-            let lng = +"@Model.Lng";
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
-                center: { lat: lat, lng: lng }
-            });
-
-            $(".coordinate-hosting").each((i, e) => {
-                let lat_hosting = $(e).data("lat");
-                let lng_hosting = $(e).data("lng");
-                var marker = new google.maps.Marker({
-                    position: { lat: lat_hosting, lng: lng_hosting },
-                    map: map,
-                    title: "@Model.Title"
-                })
-            })
         });
 
         addEventDatePicker = () => {
