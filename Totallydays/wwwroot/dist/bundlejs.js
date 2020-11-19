@@ -1,10 +1,10 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./wwwroot/source/account.js":
-/*!***********************************!*\
-  !*** ./wwwroot/source/account.js ***!
-  \***********************************/
+/***/ "./wwwroot/source/js/account.js":
+/*!**************************************!*\
+  !*** ./wwwroot/source/js/account.js ***!
+  \**************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -80,10 +80,10 @@ var accountClass = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./wwwroot/source/app.js":
-/*!*******************************!*\
-  !*** ./wwwroot/source/app.js ***!
-  \*******************************/
+/***/ "./wwwroot/source/js/app.js":
+/*!**********************************!*\
+  !*** ./wwwroot/source/js/app.js ***!
+  \**********************************/
 /*! namespace exports */
 /*! exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
@@ -95,14 +95,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/site.js");
-/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map.js */ "./wwwroot/source/map.js");
-/* harmony import */ var _account_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./account.js */ "./wwwroot/source/account.js");
-/* harmony import */ var _booking_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./booking.js */ "./wwwroot/source/booking.js");
-/* harmony import */ var _hosting_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./hosting.js */ "./wwwroot/source/hosting.js");
+/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/js/site.js");
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map.js */ "./wwwroot/source/js/map.js");
+/* harmony import */ var _account_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./account.js */ "./wwwroot/source/js/account.js");
+/* harmony import */ var _booking_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./booking.js */ "./wwwroot/source/js/booking.js");
+/* harmony import */ var _hosting_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./hosting.js */ "./wwwroot/source/js/hosting.js");
+/* harmony import */ var _dateBooking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./dateBooking */ "./wwwroot/source/js/dateBooking.js");
 ;
 
 window.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_0___default());
+
 
 
 
@@ -113,14 +115,15 @@ $(document).ready(function () {
   var accountObject = new _account_js__WEBPACK_IMPORTED_MODULE_4__.default();
   var bookingObject = new _booking_js__WEBPACK_IMPORTED_MODULE_5__.default();
   var MyHostingObject = new _hosting_js__WEBPACK_IMPORTED_MODULE_6__.default();
+  var DateBookingObject = new _dateBooking__WEBPACK_IMPORTED_MODULE_7__.DateBooking(jsDateUnavailable, amount);
 });
 
 /***/ }),
 
-/***/ "./wwwroot/source/booking.js":
-/*!***********************************!*\
-  !*** ./wwwroot/source/booking.js ***!
-  \***********************************/
+/***/ "./wwwroot/source/js/booking.js":
+/*!**************************************!*\
+  !*** ./wwwroot/source/js/booking.js ***!
+  \**************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -132,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ BookingClass; }
 /* harmony export */ });
-/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/site.js");
+/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/js/site.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -196,10 +199,134 @@ var BookingClass = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./wwwroot/source/hosting.js":
-/*!***********************************!*\
-  !*** ./wwwroot/source/hosting.js ***!
-  \***********************************/
+/***/ "./wwwroot/source/js/dateBooking.js":
+/*!******************************************!*\
+  !*** ./wwwroot/source/js/dateBooking.js ***!
+  \******************************************/
+/*! namespace exports */
+/*! export DateBooking [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DateBooking": function() { return /* binding */ DateBooking; }
+/* harmony export */ });
+/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/js/site.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var DateBooking = /*#__PURE__*/function () {
+  function DateBooking(dates, amount) {
+    _classCallCheck(this, DateBooking);
+
+    this.jsDateUnavailable = dates;
+    this.amount = amount;
+
+    if (this.jsDateUnavailable) {
+      this.setCalendarUnavalableDate(this.jsDateUnavailable);
+      this.addEventDatePicke();
+      this.showModal();
+      this.deleteUnavailableDate();
+    }
+  }
+
+  _createClass(DateBooking, [{
+    key: "setCalendarUnavalableDate",
+    value: function setCalendarUnavalableDate(dates) {
+      $("#booking_startDate, #booking_endDate").datepicker({
+        format: "dd/mm/yyyy",
+        datesDisabled: dates,
+        startDate: new Date()
+      });
+    }
+  }, {
+    key: "addEventDatePicke",
+    value: function addEventDatePicke() {
+      $("#booking_startDate, #booking_endDate").on("changeDate", function (e) {
+        var DAYS_TIME = 24 * 60 * 60 * 1000;
+        var startDate = $("#booking_startDate td.day.active").data("date");
+        var endDate = $("#booking_endDate td.day.active").data("date");
+        var DateStart = new Date(startDate);
+        var Dateend = new Date(endDate);
+
+        if (DateStart instanceof Date) {
+          $("input#Start_date").val((0,_site_js__WEBPACK_IMPORTED_MODULE_0__.transformDate)(DateStart));
+        }
+
+        if (Dateend instanceof Date) {
+          $("input#End_date").val((0,_site_js__WEBPACK_IMPORTED_MODULE_0__.transformDate)(Dateend));
+        }
+
+        var days = (endDate - startDate) / DAYS_TIME;
+        amount = days * this.amount;
+
+        if (startDate && endDate && startDate < endDate) {
+          $("#days").text(days);
+          $("#amount").text(amount);
+          $("#error").hide();
+          $("#make_booking").removeAttr("disabled");
+        } else if (!startDate < endDate && startDate && endDate) {
+          $("#days").text("...");
+          $("#amount").text("0");
+          $("#error").show();
+          $("#make_booking").attr("disabled", "disabled");
+        }
+      });
+    }
+  }, {
+    key: "showModal",
+    value: function showModal() {
+      $("#modal_unavailable_date").on("click", function (e) {
+        var $id_modal = $(e.currentTarget).data("target");
+        $($id_modal).modal('show', function (e) {});
+      });
+    }
+  }, {
+    key: "deleteUnavailableDate",
+    value: function deleteUnavailableDate() {
+      var _this = this;
+
+      $(".deleteUnavailableDate").on("click", function (e) {
+        $.ajax({
+          type: "POST",
+          url: $(e.currentTarget).data("href"),
+          data: {
+            __RequestVerificationToken: $("input[name=__RequestVerificationToken]").val()
+          },
+          dataType: "json",
+          success: function success(result) {
+            if (result.status == "success") {
+              var body = $("#modal_unavailable_date_block").find(".modal-body")[0];
+              $(body).html(result.view);
+              $("#booking_startDate, #booking_endDate").datepicker("destroy");
+
+              _this.setCalendarUnavalableDate(result.unvavalibledate);
+
+              _this.addEventDatePicker();
+            }
+          },
+          error: function error(err, result, message) {}
+        });
+      });
+    }
+  }]);
+
+  return DateBooking;
+}();
+
+/***/ }),
+
+/***/ "./wwwroot/source/js/hosting.js":
+/*!**************************************!*\
+  !*** ./wwwroot/source/js/hosting.js ***!
+  \**************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -211,7 +338,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ MyHostingClass; }
 /* harmony export */ });
-/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/site.js");
+/* harmony import */ var _site_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./site.js */ "./wwwroot/source/js/site.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -397,10 +524,10 @@ var MyHostingClass = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./wwwroot/source/map.js":
-/*!*******************************!*\
-  !*** ./wwwroot/source/map.js ***!
-  \*******************************/
+/***/ "./wwwroot/source/js/map.js":
+/*!**********************************!*\
+  !*** ./wwwroot/source/js/map.js ***!
+  \**********************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -505,12 +632,13 @@ var MapClass = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./wwwroot/source/site.js":
-/*!********************************!*\
-  !*** ./wwwroot/source/site.js ***!
-  \********************************/
+/***/ "./wwwroot/source/js/site.js":
+/*!***********************************!*\
+  !*** ./wwwroot/source/js/site.js ***!
+  \***********************************/
 /*! namespace exports */
 /*! export showResult [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export transformDate [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -518,7 +646,8 @@ var MapClass = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "showResult": function() { return /* binding */ showResult; }
+/* harmony export */   "showResult": function() { return /* binding */ showResult; },
+/* harmony export */   "transformDate": function() { return /* binding */ transformDate; }
 /* harmony export */ });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -552,6 +681,14 @@ function showResult(result) {
     _loop();
   }
 }
+function transformDate(date) {
+  var day = date.getDate();
+  day = day.length < 2 ? "0" + day : day;
+  var month = date.getMonth() + 1;
+  month = month.length < 2 ? "0" + month : month;
+  var year = date.getFullYear();
+  return [year, month, day].join("-");
+}
 
 /***/ }),
 
@@ -561,6 +698,8 @@ function showResult(result) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_exports__, top-level-this-exports, __webpack_require__ */
+/*! CommonJS bailout: this is used directly at 10:2-6 */
+/*! CommonJS bailout: exports is used directly at 7:73-80 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /*!
@@ -4990,6 +5129,9 @@ function showResult(result) {
   \********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, top-level-this-exports, __webpack_exports__ */
+/*! CommonJS bailout: this is used directly at 40:46-50 */
+/*! CommonJS bailout: module.exports is used directly at 18:43-57 */
+/*! CommonJS bailout: module.exports is used directly at 27:2-16 */
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -18582,8 +18724,8 @@ Popper.Defaults = Defaults;
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
-/******/ 	__webpack_require__("./wwwroot/source/app.js");
+/******/ 	__webpack_require__("./wwwroot/source/js/app.js");
 /******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=bundlejs.js.map

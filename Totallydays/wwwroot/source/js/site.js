@@ -11,3 +11,13 @@ export function showResult(result){
 
     }
 }
+
+export function transformDate(date){
+    let day = date.getDate();
+    day = day.length < 2 ? "0" + day : day;
+    let month = date.getMonth() + 1;
+    month = month.length < 2 ? "0" + month : month;
+    let year = date.getFullYear();
+
+    return [year, month, day].join("-");
+}
