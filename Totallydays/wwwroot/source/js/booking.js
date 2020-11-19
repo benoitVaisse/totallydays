@@ -1,12 +1,12 @@
-﻿$(document).ready(() => {
+﻿import { showResult } from "./site.js";
 
-    class BookingClass {
+export default class BookingClass {
 
         constructor() {
             this.showModal();
             this.submitComment();
         }
-        showModal = () => {
+        showModal(){
 
             $(".booking-comment").on("click", (e) => {
                 let $title = $(e.currentTarget).data("title");
@@ -20,7 +20,7 @@
             })
         }
 
-        submitComment = () => {
+        submitComment(){
             $("#form-booking-comment").on("submit", (e) => {
                 e.preventDefault();
                 let data = $(e.currentTarget).serialize();
@@ -47,6 +47,3 @@
         }
 
     }
-
-    let BookingObject = new BookingClass();
-})

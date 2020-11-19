@@ -1,8 +1,5 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-showResult = (result) => {
+﻿
+export function showResult(result){
     let $prototype = $("#prototype-flash")[0];
     let $prototypehtml = $($prototype).html();
     let message = "";
@@ -13,4 +10,14 @@ showResult = (result) => {
         })
 
     }
+}
+
+export function transformDate(date){
+    let day = date.getDate();
+    day = day.length < 2 ? "0" + day : day;
+    let month = date.getMonth() + 1;
+    month = month.length < 2 ? "0" + month : month;
+    let year = date.getFullYear();
+
+    return [year, month, day].join("-");
 }

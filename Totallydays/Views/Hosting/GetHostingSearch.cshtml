@@ -17,7 +17,7 @@
             {
                 <div class="block-hosting coordinate-hosting" data-lng="@h.Lng" data-lat="@h.Lat" data-title="@h.Title">
                     <div class="block-flex">
-                        <div class="image-gb w-50" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+h.Cover_image)')">
+                        <div class="image-gb w-50" style="background-image: url('@Url.Content("~/img/hosting/coverImage/" + h.Cover_image)')">
                         </div>
                         <div class="pl-4">
                             <p>@h.Hosting_type.Name à @h.City</p>
@@ -31,33 +31,7 @@
             }
         </div>
     </div>
-    <div id="map" class="full-map hvh-90 w-60"></div>
+    <div id="map" data-lat="@Hosting.lat" data-lng="@Hosting.lng" data-zoom="@Hosting.zoom" class="full-map hvh-90 w-60"></div>
 </div>
-
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            let lat = 46.603354;
-            let lng = 1.8883335;
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 6.5,
-                center: { lat: lat, lng: lng }
-            });
-
-            $(".coordinate-hosting").each((i, e) => {
-                let lat_hosting = $(e).data("lat");
-                let lng_hosting = $(e).data("lng");
-                let title = $(e).data("title");
-                var marker = new google.maps.Marker({
-                    position: { lat: lat_hosting, lng: lng_hosting },
-                    map: map,
-                    title: title
-                })
-            })
-        })
-
-    </script>
-}
 
 

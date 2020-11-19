@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MailKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -284,6 +285,74 @@ namespace Totallydays.Controllers
         {
             await this._signInManager.SignOutAsync();
             return RedirectToRoute("home");
+        }
+
+        [HttpGet("set-new-password", Name = "set-new-password")]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            FormForgotPasswordViewModel model = new FormForgotPasswordViewModel();
+            return View(model);
+        }
+
+        [HttpPost("set-new-password", Name = "set-new-password-post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(FormForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                if(User != null && await this._userManager.IsEmailConfirmedAsync(User))
+                {
+                    var token = await this._userManager.GeneratePasswordResetTokenAsync(User);
+                    var PasswordLinkToken = Url.RouteUrl("reset_forgot_password", new { Email = User.Email, Token = token }, Request.Scheme, Request.Host.ToString());
+                    this._mailService.SendEmailForgotPassword(User, PasswordLinkToken);
+                }
+
+                return RedirectToRoute("forgot_password_send_email");
+            }
+            return View(model);
+        }
+
+        [HttpGet("password-oublié", Name= "forgot_password_send_email")]
+        public IActionResult ForgotPasswordSendEmail()
+        {
+            return View();
+        }
+
+
+        [HttpGet("reset-forgot-password", Name = "reset_forgot_password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> resetForgotPassword(string Email, string Token)
+        {
+            return View();
+        }
+
+        [HttpPost("reset-forgot-password", Name = "reset_forgot_password_submit")]
+        [AllowAnonymous]
+        public async Task<IActionResult> resetForgotPassword(FormResetPasswordToken model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                if (User != null)
+                {
+                    var result = await this._userManager.ResetPasswordAsync(User, model.Token, model.Password);
+                    if (result.Succeeded)
+                    {
+                        List<string> message = new List<string>();
+                        message.Add("Le mot de passe a bien été changé");
+                        TempData["success"] = message;
+                        return RedirectToRoute("home");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "une erreur est survenu lors du reset du mot de passe");
+            }
+            return View(model);
         }
     }
 
