@@ -1,4 +1,6 @@
 ﻿@model Totallydays.ViewsModel.FormLoginViewModel;
+@using Microsoft.Extensions.Options;
+@inject IOptions<Totallydays.ViewsModel.ReCaptchaSetting> googleRecaptcha
 @{
     ViewData["Title"] = "Login";
 }
@@ -7,13 +9,19 @@
     <h2 class="text-center">Connectez-vous à votre compte</h2>
     <hr />
     <div class="block-flex flex-column-reverse align-item-center">
+        <div>
+            <div id="g-recaptcha"></div>
 
+        </div>
         <div class="col-md-6 col-sm-12">
             <form asp-route="login_account_post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input asp-for="Email" class="form-control" required placeholder="Email*" />
                     <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="hidden" asp-for="TokenCaptcha"/>
                 </div>
                 <div class="form-group">
                     <input asp-for="Password" class="form-control" required placeholder="Password*" />
@@ -31,7 +39,7 @@
         @if (Model.ExternalLogings.Count > 0)
         {
             <div class="my-5">
-                <form asp-route="login_extern_account_post" asp-route-returnUrl =" @Model.ReturnUrl">
+                <form asp-route="login_extern_account_post" asp-route-returnUrl=" @Model.ReturnUrl">
                     <div>
                         @foreach (var provider in Model.ExternalLogings)
                         {
@@ -48,7 +56,29 @@
         }
 
 
+
+
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
+    <script>
+        var onloadCallback = function () {
+
+            grecaptcha.render('g-recaptcha', {
+                'sitekey': '@googleRecaptcha.Value.ReCAPTCHA_Site_key',
+                'callback': verifyCallback,
+                'theme': 'light'
+            });
+        }
+        verifyCallback = function (response) {
+            $("#TokenCaptcha").val(response);
+        }
+
+    </script>
+}
 
 

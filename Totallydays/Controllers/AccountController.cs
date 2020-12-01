@@ -28,13 +28,15 @@ namespace Totallydays.Controllers
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SendMailService _mailService;
         private readonly TotallydaysContext context;
+        private readonly ReCaptchaService _reCaptchaService;
 
         public AccountController(UserManager<AppUser> UserManager, 
             SignInManager<AppUser> SignInManager, 
             IWebHostEnvironment host, 
             RoleManager<AppRole> RoleManager, 
             SendMailService mailService,
-            TotallydaysContext context)
+            TotallydaysContext context,
+            ReCaptchaService reCaptchaService)
         {
             this._userManager = UserManager;
             this._signInManager = SignInManager;
@@ -42,6 +44,7 @@ namespace Totallydays.Controllers
             this._roleManager = RoleManager;
             this._mailService = mailService;
             this.context = context;
+            this._reCaptchaService = reCaptchaService;
         }
 
         /// <summary>
@@ -82,29 +85,46 @@ namespace Totallydays.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("resgiter-post", Name = "account_register_post")]
+        [HttpPost("resgiter", Name = "account_register_post")]
         public async Task<IActionResult> Register(FormRegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var responseCaptcha = await this._reCaptchaService.VerifyResponse(model.TokenCaptcha);
+            if(responseCaptcha.success == true)
             {
-                AppUser User = new AppUser()
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Firstname = model.Firstname,
-                    Lastname = model.Lastname
-                };
 
-                var result = await this._userManager.CreateAsync(User, model.Password);
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    await this._userManager.AddToRoleAsync(User, "user");
-                    var token = await this._userManager.GenerateEmailConfirmationTokenAsync(User);
-                    var url = Url.RouteUrl("email_verify_account", new { id = User.Id, token = token }, Request.Scheme, Request.Host.ToString());
+                    AppUser User = new AppUser()
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        Firstname = model.Firstname,
+                        Lastname = model.Lastname
+                    };
 
-                    await this._mailService.sendVeridyEmail(User, url);
-                    return RedirectToRoute("email_verify_view_account");
+                    var result = await this._userManager.CreateAsync(User, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await this._userManager.AddToRoleAsync(User, "user");
+                        var token = await this._userManager.GenerateEmailConfirmationTokenAsync(User);
+                        var url = Url.RouteUrl("email_verify_account", new { id = User.Id, token = token }, Request.Scheme, Request.Host.ToString());
+
+                        await this._mailService.sendVeridyEmail(User, url);
+                        return RedirectToRoute("email_verify_view_account");
+                    }
+                    else
+                    {
+                        foreach(var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "ReCaptcha Invalid");
+                model.TokenCaptcha = "";
             }
             return View(model);
         }
@@ -161,31 +181,41 @@ namespace Totallydays.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("ligin-post", Name = "login_account_post")]
+        [HttpPost("login", Name = "login_account_post")]
         public async Task<IActionResult> Login(FormLoginViewModel model)
         {
-            if (ModelState.IsValid)
+            model.ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var responseCaptcha = await this._reCaptchaService.VerifyResponse(model.TokenCaptcha);
+            if(responseCaptcha.success == true)
             {
-                AppUser User = await this._userManager.FindByEmailAsync(model.Email);
-                if(User != null)
-                {
-                    var PasswordConfirm = await this._userManager.CheckPasswordAsync(User, model.Password);
-                    // si l'email n'est pas confirmé
-                    if(PasswordConfirm && !User.EmailConfirmed)
-                    {
-                        ModelState.AddModelError(string.Empty, "Email non confirmé");
-                        return View(model);
-                    }
 
-                    var result = await this._signInManager.PasswordSignInAsync(User, model.Password, false, false);
-                    if (result.Succeeded)
+                if (ModelState.IsValid)
+                {
+                    AppUser User = await this._userManager.FindByEmailAsync(model.Email);
+                    if(User != null)
                     {
-                        return RedirectToRoute("home");
+                        var PasswordConfirm = await this._userManager.CheckPasswordAsync(User, model.Password);
+                        // si l'email n'est pas confirmé
+                        if(PasswordConfirm && !User.EmailConfirmed)
+                        {
+                            ModelState.AddModelError(string.Empty, "Email non confirmé");
+                            return View(model);
+                        }
+
+                        var result = await this._signInManager.PasswordSignInAsync(User, model.Password, false, false);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToRoute("home");
+                        }
                     }
                 }
-            }
 
-            ModelState.AddModelError(string.Empty, "Email ou password érroné");
+                ModelState.AddModelError(string.Empty, "Email ou password érroné");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "ReCaptcha Invalid");
+            }
             return View(model);
         }
 
