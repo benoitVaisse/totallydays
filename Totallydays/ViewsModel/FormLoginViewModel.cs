@@ -20,6 +20,9 @@ namespace Totallydays.ViewsModel
 
         public string ReturnUrl { get; set; }
 
+        [Required]
+        public string TokenCaptcha { get; set; } 
+
         public IList<AuthenticationScheme> ExternalLogings { get; set; }
     }
 }

@@ -18,6 +18,7 @@ using Totallydays.Data;
 using Totallydays.Models;
 using Totallydays.Repositories;
 using Totallydays.Services;
+using Totallydays.ViewsModel;
 
 namespace Totallydays
 {
@@ -63,7 +64,8 @@ namespace Totallydays
                 options.FormFieldName = "__RequestVerificationToken";
             });
 
-
+            // recaptcha
+            services.Configure<ReCaptchaSetting>(this.Configuration.GetSection("googleReCaptcha"));
             // cron job
             services.AddHostedService<TestBackgroundService>();
             services.AddHostedService<SendMailBookingFinichBackgroundService>();
@@ -74,6 +76,7 @@ namespace Totallydays
 
             // services
             services.AddScoped<SendMailService, SendMailService>();
+            services.AddScoped<ReCaptchaService, ReCaptchaService>();
             services.AddScoped<HostingService, HostingService>();
             services.AddScoped<UploadService, UploadService>();
             services.AddScoped<BookingService, BookingService>();

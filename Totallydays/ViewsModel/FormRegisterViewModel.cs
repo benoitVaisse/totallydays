@@ -31,5 +31,8 @@ namespace Totallydays.ViewsModel
         [Display(Name = "Confirmer le mot de passe")]
         [Compare("Password", ErrorMessage = "Les mots de passe douvent être identique")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string TokenCaptcha { get; set; }
     }
 }

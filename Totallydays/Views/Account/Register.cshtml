@@ -1,41 +1,72 @@
 ﻿@model Totallydays.ViewsModel.FormRegisterViewModel;
+@using Microsoft.Extensions.Options;
+@inject IOptions<Totallydays.ViewsModel.ReCaptchaSetting> googleRecaptcha
 @{
     ViewData["Title"] = "Regiter";
 }
 
 <div class="container my-3">
 
-    <h1 class="text-center">Inscription</h1>  
+    <h1 class="text-center">Inscription</h1>
     <hr />
     <div class="block-flex flex-column align-item-center">
         <div class="col-md-6">
             <form asp-route="account_register_post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="Firstname" class="form-control" required placeholder="Prénom*"/>
+                    <input asp-for="Firstname" class="form-control" required placeholder="Prénom*" />
                     <span asp-validation-for="Firstname" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="Lastname" class="form-control" required placeholder="Nom*"/>
+                    <input asp-for="Lastname" class="form-control" required placeholder="Nom*" />
                     <span asp-validation-for="Lastname" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="Email" class="form-control" required placeholder="Email*"/>
+                    <input asp-for="Email" class="form-control" required placeholder="Email*" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="Password" class="form-control" required placeholder="password*"/>
+                    <input asp-for="Password" class="form-control" required placeholder="password*" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="ConfirmPassword" class="form-control" required placeholder="password*"/>
+                    <input asp-for="ConfirmPassword" class="form-control" required placeholder="password*" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
+                <div>
+                    <input type="hidden" asp-for="TokenCaptcha" />
+                </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-danger btn-lg btn-block" > S'enregistrer </button>
+                    <button type="submit" class="btn btn-danger btn-lg btn-block"> S'enregistrer </button>
                 </div>
             </form>
         </div>
+        <div>
+            <div id="g-recaptcha"></div>
+
+        </div>
     </div>
 </div>
+
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
+    <script>
+        var onloadCallback = function () {
+
+            grecaptcha.render('g-recaptcha', {
+                'sitekey': '@googleRecaptcha.Value.ReCAPTCHA_Site_key',
+                'callback': verifyCallback,
+                'theme': 'light'
+            });
+        }
+        verifyCallback = function (response) {
+            $("#TokenCaptcha").val(response);
+        }
+
+    </script>
+}
+
 
