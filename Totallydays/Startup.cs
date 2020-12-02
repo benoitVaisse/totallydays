@@ -41,7 +41,10 @@ namespace Totallydays
                 options.SignIn.RequireConfirmedEmail = true;
 
             }).AddEntityFrameworkStores<TotallydaysContext>().AddDefaultTokenProviders();
+
+            // redirection sur la page de connextion si je dois etre connecter pour eter sur une page
             services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
+
             services.AddDbContext<TotallydaysContext>(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Totallydays"));
