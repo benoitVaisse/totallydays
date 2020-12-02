@@ -21,12 +21,14 @@ namespace Totallydays.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// page d'accueil
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/", Name ="home")]
         public IActionResult Index()
         {
-            this.setFlash();
-            IEnumerable<AppUser> Users= this._userRepository.GetBestUser(3);
-            return View(Users);
+            return View();
         }
 
         public IActionResult Privacy()

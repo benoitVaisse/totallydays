@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,5 +35,7 @@ namespace Totallydays.ViewsModel
 
         [Required]
         public string TokenCaptcha { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogings { get; set; }
     }
 }
