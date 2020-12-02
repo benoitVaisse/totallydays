@@ -46,6 +46,27 @@
 
         </div>
     </div>
+    <div class="block-flex flex-column align-item-center">
+
+        @if (Model.ExternalLogings.Count > 0)
+        {
+            <div class="my-5">
+                <form asp-route="login_extern_account_post">
+                    <div>
+                        @foreach (var provider in Model.ExternalLogings)
+                        {
+                            <div class="connexion-external">
+                                <button type="submit" title="@provider.DisplayName" class="btn" name="provider" value="@provider.Name">
+                                    <img src="~/img/connexion_extern/@(provider.DisplayName.ToLower()).png" alt="" class="connexion-external-img" />
+                                    Continuer avec @provider.DisplayName
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
 </div>
 
 

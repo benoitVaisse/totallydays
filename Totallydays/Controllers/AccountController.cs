@@ -74,9 +74,12 @@ namespace Totallydays.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("register", Name = "account_register")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            FormRegisterViewModel model = new FormRegisterViewModel();
+            FormRegisterViewModel model = new FormRegisterViewModel()
+            {
+                ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
             return View(model);
         }
 
@@ -91,7 +94,7 @@ namespace Totallydays.Controllers
             var responseCaptcha = await this._reCaptchaService.VerifyResponse(model.TokenCaptcha);
             if(responseCaptcha.success == true)
             {
-
+                //si le formulaire est valide
                 if (ModelState.IsValid)
                 {
                     AppUser User = new AppUser()
@@ -103,6 +106,7 @@ namespace Totallydays.Controllers
                     };
 
                     var result = await this._userManager.CreateAsync(User, model.Password);
+                    // si l'enregistrement a reussi
                     if (result.Succeeded)
                     {
                         await this._userManager.AddToRoleAsync(User, "user");
@@ -114,6 +118,7 @@ namespace Totallydays.Controllers
                     }
                     else
                     {
+                        // si echoué, envoie des erreurs en front pour avertir l'utilisateur
                         foreach(var error in result.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
@@ -126,6 +131,7 @@ namespace Totallydays.Controllers
                 ModelState.AddModelError(string.Empty, "ReCaptcha Invalid");
                 model.TokenCaptcha = "";
             }
+            model.ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 

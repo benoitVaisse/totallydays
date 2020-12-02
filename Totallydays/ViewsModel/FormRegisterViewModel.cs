@@ -10,24 +10,24 @@ namespace Totallydays.ViewsModel
     public class FormRegisterViewModel
     {
 
-        [Required]
+        [Required(AllowEmptyStrings =false)]
         [Display(Name = "Prénom")]
         public string Firstname { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         [Display(Name = "Nom")]
         public string Lastname { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         [DataType(DataType.Password)]
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         [DataType(DataType.Password)]
         [Display(Name = "Confirmer le mot de passe")]
         [Compare("Password", ErrorMessage = "Les mots de passe douvent être identique")]
