@@ -21,7 +21,7 @@ namespace Totallydays.Services
         }
 
         /// <summary>
-        /// fonction qui verifie sir le captcha a bien été envoyé
+        /// fonction qui verifie si le captcha a bien été envoyé et si il est valide ou pas
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
