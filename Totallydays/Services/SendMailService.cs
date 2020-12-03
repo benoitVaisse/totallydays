@@ -36,7 +36,13 @@ namespace Totallydays.Services
         /// <returns></returns>
         public async Task sendVeridyEmail(AppUser User, string Link)
         {
-            await this._mailService.SendAsync(User.Email, "Email Verification", $"<a href=\"{Link}\">click to verify </a>", true);
+            SendMailValidationEmail model = new SendMailValidationEmail()
+            {
+                User = User,
+                url = Link
+            };
+            string view = await this._controllerExtenstionServiceRazor.RenderViewToStringAsync("~/Views/Email/SendMailValidateEmail.cshtml", model);
+            await this._mailService.SendAsync(User.Email, "Email Verification", view, true);
         }
 
 
