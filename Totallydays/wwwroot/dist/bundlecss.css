@@ -10233,6 +10233,10 @@ div.ad_title {
   height: 400px;
 }
 
+p.hosting-not-validate {
+  color: #a90f0f;
+}
+
 div.ad_title h1, div.ad_title p {
   color: white;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);

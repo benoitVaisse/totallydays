@@ -35,7 +35,7 @@
                                 </div>
                                 @if (h.Active == false)
                                 {
-                                    <p style="color:#a90f0f">Cette hébergement n'a pas étias validé par l'admin</p>
+                                    <p class="hosting-not-validate">Cette hébergement n'a pas été validé par l'administration</p>
                                 }
                                 <div>
                                     <a class="btn btn-info" href="@Url.RouteUrl("hosting_all_booking", new {id=h.Hosting_id })"> Gestion des réservations </a>
