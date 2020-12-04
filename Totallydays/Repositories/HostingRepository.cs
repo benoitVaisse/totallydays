@@ -47,7 +47,7 @@ namespace Totallydays.Repositories
         }
 
         /// <summary>
-        /// selectionne les hosting d'un utilisateur
+        /// selectionne les hébergements d'un utilisateur
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>

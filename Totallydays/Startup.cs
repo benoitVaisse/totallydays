@@ -42,7 +42,7 @@ namespace Totallydays
 
             }).AddEntityFrameworkStores<TotallydaysContext>().AddDefaultTokenProviders();
 
-            // redirection sur la page de connextion si je dois etre connecter pour eter sur une page
+            // redirection sur la page de connextion si je dois etre connecter pour accéder à une page
             services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
 
             services.AddDbContext<TotallydaysContext>(options =>
