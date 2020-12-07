@@ -113,7 +113,7 @@ namespace Totallydays.Controllers.MiddleController
 
 
         /// <summary>
-        /// creer ou met a jour un hebergement
+        ///route qui créer un hébergement ou met à jour un hébergement
         /// </summary>
         /// <param name="Model"></param>
         /// <returns></returns>
@@ -366,7 +366,7 @@ namespace Totallydays.Controllers.MiddleController
             this._ajaxFlashessage.Add("error", this._errorMessage);
             this._ajaxFlashessage.Add("success", this._successMessage);
 
-            return Json(new { bedrooms, status="success" , message = this._ajaxFlashessage});
+            return Json(new { status="success" , message = this._ajaxFlashessage});
         }
 
     }

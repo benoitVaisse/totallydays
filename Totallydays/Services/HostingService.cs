@@ -22,6 +22,11 @@ namespace Totallydays.Services
             this._uploadService = upServ;
         }
 
+        /// <summary>
+        /// creér le formulaire de creation ou modification d'un hébergement et le renvoie
+        /// </summary>
+        /// <param name="hosting"></param>
+        /// <returns></returns>
         public FormHostingViewModel HostingToFormModel(Hosting hosting)
         {
             FormHostingViewModel model = new FormHostingViewModel()
