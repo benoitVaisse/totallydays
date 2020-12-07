@@ -113,7 +113,7 @@ namespace Totallydays.Controllers.MiddleController
 
 
         /// <summary>
-        ///route qui créer un hébergement ou met à jour un hébergement
+        /// route qui créer ou met à jour un hébergement
         /// </summary>
         /// <param name="Model"></param>
         /// <returns></returns>
@@ -154,7 +154,7 @@ namespace Totallydays.Controllers.MiddleController
                 }
 
                 Hosting = this._googleMapService.setLngLgt(Hosting);
-                return RedirectToRoute("hosting_images", new { id = Hosting.Hosting_id });
+                return RedirectToRoute("hosting_options", new { id = Hosting.Hosting_id });
 
             }
 
@@ -169,13 +169,13 @@ namespace Totallydays.Controllers.MiddleController
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("modifier-un-hebergement/images/{id:int}", Name = "hosting_images")]
+        [HttpGet("modifier-un-hebergement/options/{id:int}", Name = "hosting_options")]
         [Authorize]
         public async Task<IActionResult> InsertImage(int id)
         {
             AppUser User = await this._usermanager.GetUserAsync(this.User);
             Hosting Hosting = this._hostingRepository.Find(id);
-            if (Hosting.User != User)
+            if (Hosting != null || Hosting.User != User)
             {
                 return BadRequest();
             }

@@ -78,7 +78,7 @@ namespace Totallydays.Repositories
         }
 
         /// <summary>
-        /// creer un hebergement
+        /// créer un hebergement
         /// </summary>
         /// <param name="hosting"></param>
         /// <returns></returns>
@@ -90,7 +90,7 @@ namespace Totallydays.Repositories
         }
 
         /// <summary>
-        /// met a jour un hebergemment
+        /// met à jour un hebergemment
         /// </summary>
         /// <param name="hosting"></param>
         /// <returns></returns>
