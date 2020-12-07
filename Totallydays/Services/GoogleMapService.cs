@@ -53,6 +53,12 @@ namespace Totallydays.Services
             this._config = configuration;
             this._hostingRepository = hostingRepo;
         }
+
+        /// <summary>
+        /// rentre en base de donnée la latitude et longitude de l'hébergement
+        /// </summary>
+        /// <param name="Hosting"></param>
+        /// <returns></returns>
         public Hosting setLngLgt(Hosting Hosting)
         {
             string adress = Hosting.Address + '+' + Hosting.Post_code + '+' + Hosting.City;
