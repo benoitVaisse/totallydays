@@ -459,8 +459,12 @@ var MyHostingClass = /*#__PURE__*/function () {
           },
           url: urlPublished,
           dataType: "json",
-          success: function success(result) {},
-          error: function error(err) {}
+          success: function success(result) {
+            (0,_site_js__WEBPACK_IMPORTED_MODULE_0__.showResult)(result);
+          },
+          error: function error(err) {
+            alert("une erreur est survenue");
+          }
         });
       });
     }
@@ -698,8 +702,6 @@ function transformDate(date) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_exports__, top-level-this-exports, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 10:2-6 */
-/*! CommonJS bailout: exports is used directly at 7:73-80 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /*!
@@ -5129,9 +5131,6 @@ function transformDate(date) {
   \********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, top-level-this-exports, __webpack_exports__ */
-/*! CommonJS bailout: this is used directly at 40:46-50 */
-/*! CommonJS bailout: module.exports is used directly at 18:43-57 */
-/*! CommonJS bailout: module.exports is used directly at 27:2-16 */
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

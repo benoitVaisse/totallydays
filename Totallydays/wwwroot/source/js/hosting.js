@@ -113,9 +113,11 @@ export default class MyHostingClass {
                     },
                     url: urlPublished,
                     dataType: "json",
-                    success : (result) => {
+                    success: (result) => {
+                        showResult(result);
                     },
                     error: (err) => {
+                        alert("une erreur est survenue");
                     }
                 })
             })

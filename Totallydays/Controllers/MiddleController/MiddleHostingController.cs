@@ -81,7 +81,7 @@ namespace Totallydays.Controllers.MiddleController
 
 
         /// <summary>
-        /// fonction qui med'afficher la page de creation ou modification d'un hebergements
+        /// M'affiche la page de création ou modification d'un hébergement
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -118,6 +118,7 @@ namespace Totallydays.Controllers.MiddleController
         /// <param name="Model"></param>
         /// <returns></returns>
         [HttpPost("creer-un-hebergement", Name = "hosting_create_post")]
+        [HttpPost("modifier-un-hebergement/{id:int}", Name = "hosting_modified")]
         [Authorize]
         public async Task<IActionResult> CreateHosting(FormHostingViewModel Model)
         {
@@ -164,7 +165,7 @@ namespace Totallydays.Controllers.MiddleController
         }
 
         /// <summary>
-        /// affiche a page pour ajouter des image et des equipements a une annonce
+        /// affiche a page pour ajouter des images, chambres et des equipements a une annonce
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -319,12 +320,13 @@ namespace Totallydays.Controllers.MiddleController
 
 
         /// <summary>
-        /// allow to hosting's user to published hosting
+        /// permet de publié ou pas un hébergement coté utilisateur
         /// </summary>
         /// <param name="id"></param>
         /// <param name="publish"></param>
         /// <returns></returns>
         [HttpPost("modifier-un-hebergement/publish", Name ="hosting_publish_post")]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> PublishHosting(int id, bool publish)
         {
@@ -332,11 +334,15 @@ namespace Totallydays.Controllers.MiddleController
             Hosting Hosting = this._hostingRepository.Find(id);
             if(Hosting == null || Hosting.User != User)
             {
-                return Json(new { status = "error", Message = "Erreur Lors de la modification de l'annonce" });
+                this._errorMessage.Add("Erreur Lors de la modification de l'annonce");
+                this._ajaxFlashessage.Add("error", this._errorMessage);
+                return Json(new { status = "error", Message = this._ajaxFlashessage });
             }
-            Hosting = this._hostingRepository.setPublish(Hosting, publish);
 
-            return Json(new { status="success", Message = "le status publié a bien été changé", Hosting});
+            Hosting = this._hostingRepository.setPublish(Hosting, publish);
+            this._successMessage.Add("le status de publication a bien été changé");
+            this._ajaxFlashessage.Add("success", this._successMessage);
+            return Json(new { status="success", Message = this._ajaxFlashessage});
         }
 
         [HttpPost("modifier-un-hebergement/bedroom/{id:int}", Name = "hosting_bed_post")]
