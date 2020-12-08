@@ -253,7 +253,7 @@ namespace Totallydays.Controllers.MiddleController
             AppUser User = await this._usermanager.GetUserAsync(this.User);
             Image image = await this._imageRepository.Find(idImage);
             Hosting Hosting = this._hostingRepository.Find(id);
-            if (image.Hosting != Hosting || Hosting.User != User)
+            if (Hosting == null || image.Hosting != Hosting || Hosting.User != User)
             {
                 this._errorMessage.Add("Erreur lors de la supression de l'image");
                 this._ajaxFlashessage.Add("error", this._errorMessage);
