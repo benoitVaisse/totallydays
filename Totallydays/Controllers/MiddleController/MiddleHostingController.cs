@@ -175,7 +175,7 @@ namespace Totallydays.Controllers.MiddleController
         {
             AppUser User = await this._usermanager.GetUserAsync(this.User);
             Hosting Hosting = this._hostingRepository.Find(id);
-            if (Hosting != null || Hosting.User != User)
+            if (Hosting == null || Hosting.User != User)
             {
                 return BadRequest();
             }
