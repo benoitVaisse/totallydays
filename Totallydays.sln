@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Totallydays", "Totallydays\Totallydays.csproj", "{D30D4B3E-24E5-4856-81F5-CF23B9254092}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestUnitaire", "TestUnitaire", "{4BA04CE8-49E1-4726-9841-60AD217F6BFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTotallydaysWebUi", "TestTotallydaysWebUi\TestTotallydaysWebUi.csproj", "{3D029D7E-481C-41D5-BDBC-72A0B329F780}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{D30D4B3E-24E5-4856-81F5-CF23B9254092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D30D4B3E-24E5-4856-81F5-CF23B9254092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D30D4B3E-24E5-4856-81F5-CF23B9254092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D029D7E-481C-41D5-BDBC-72A0B329F780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D029D7E-481C-41D5-BDBC-72A0B329F780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D029D7E-481C-41D5-BDBC-72A0B329F780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D029D7E-481C-41D5-BDBC-72A0B329F780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D029D7E-481C-41D5-BDBC-72A0B329F780} = {4BA04CE8-49E1-4726-9841-60AD217F6BFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7776979C-F549-42B6-B6C2-08C776B50BB2}
