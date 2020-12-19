@@ -24,6 +24,7 @@ namespace Totallydays.ViewsModel
         public string Resume { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [RegularExpression(@"^[0-9a-zA-Z;,.:!\s-]+")]
         public string Description { get; set; }
 
         [Required]

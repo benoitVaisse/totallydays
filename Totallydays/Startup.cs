@@ -61,6 +61,8 @@ namespace Totallydays
                 options.ClientSecret = this.Configuration["apis:google:secret"];
             });
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            // csrf
             services.AddAntiforgery(options =>
             {
                 // Set Cookie properties using CookieBuilder properties†.

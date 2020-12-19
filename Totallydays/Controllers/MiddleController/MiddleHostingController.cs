@@ -119,6 +119,7 @@ namespace Totallydays.Controllers.MiddleController
         /// <returns></returns>
         [HttpPost("creer-un-hebergement", Name = "hosting_create_post")]
         [HttpPost("modifier-un-hebergement/{id:int}", Name = "hosting_modified")]
+        [AutoValidateAntiforgeryToken]
         [Authorize]
         public async Task<IActionResult> CreateHosting(FormHostingViewModel Model)
         {
