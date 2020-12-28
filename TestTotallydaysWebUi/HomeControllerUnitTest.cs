@@ -16,9 +16,12 @@ namespace TestTotallydaysWebUi
     {
 
  
-
+        /// <summary>
+        /// test function Index of homeController
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
-        public async Task TestIndexIsOk()
+        public void TestIndexIsOk()
         {
             this.getVariable();
             var Ilogger = (new Mock<ILogger<HomeController>>(MockBehavior.Strict)).Object;
@@ -37,8 +40,13 @@ namespace TestTotallydaysWebUi
             Assert.IsTrue(view.ViewData["title"].ToString() == "Bienvenue");
         }
 
+
+        /// <summary>
+        /// test function Privacy of homeController
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
-        public async Task Privacy__ReturnsAViewResult()
+        public void Privacy__ReturnsAViewResult()
         {
             this.getVariable();
             var Ilogger = (new Mock<ILogger<HomeController>>(MockBehavior.Strict)).Object;
