@@ -27,23 +27,20 @@ namespace Totallydays.Controllers
         private readonly IWebHostEnvironment _host;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SendMailService _mailService;
-        private readonly TotallydaysContext context;
         private readonly ReCaptchaService _reCaptchaService;
 
         public AccountController(UserManager<AppUser> UserManager, 
             SignInManager<AppUser> SignInManager, 
             IWebHostEnvironment host, 
-            RoleManager<AppRole> RoleManager, 
+            //RoleManager<AppRole> RoleManager, 
             SendMailService mailService,
-            TotallydaysContext context,
             ReCaptchaService reCaptchaService)
         {
             this._userManager = UserManager;
             this._signInManager = SignInManager;
             this._host = host;
-            this._roleManager = RoleManager;
+            //this._roleManager = RoleManager;
             this._mailService = mailService;
-            this.context = context;
             this._reCaptchaService = reCaptchaService;
         }
 
@@ -92,7 +89,7 @@ namespace Totallydays.Controllers
         public async Task<IActionResult> Register(FormRegisterViewModel model)
         {
             var responseCaptcha = await this._reCaptchaService.VerifyResponse(model.TokenCaptcha);
-            if(responseCaptcha.success == true)
+            if(responseCaptcha == true)
             {
                 //si le formulaire est valide
                 if (ModelState.IsValid)
@@ -192,7 +189,7 @@ namespace Totallydays.Controllers
         {
             model.ExternalLogings = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             var responseCaptcha = await this._reCaptchaService.VerifyResponse(model.TokenCaptcha);
-            if(responseCaptcha.success == true)
+            if(responseCaptcha == true)
             {
 
                 if (ModelState.IsValid)

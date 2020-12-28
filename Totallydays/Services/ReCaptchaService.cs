@@ -25,7 +25,7 @@ namespace Totallydays.Services
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<GoogleResponse> VerifyResponse(string token)
+        public virtual async Task<bool> VerifyResponse(string token)
         {
             var client = new HttpClient();
             GoogleReCaptchaData googleData = new GoogleReCaptchaData()
@@ -37,7 +37,7 @@ namespace Totallydays.Services
             var url = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret={googleData.secret}&response={googleData.response}");
             var response = JsonConvert.DeserializeObject<GoogleResponse>(url);
 
-            return response;
+            return response.success;
 
         }
     }
