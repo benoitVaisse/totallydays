@@ -22,7 +22,11 @@ namespace TestTotallydaysWebUi
     public class AccountControllerUnitTest : TestVariable
     {
 
-
+        /// <summary>
+        /// test la fonction Resgiter en method GET
+        /// si on a bien une instance de type Vieuw result avec un model de type FormRegisterViewModel
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task Register_ReturnsAViewResult()
         {
