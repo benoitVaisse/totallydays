@@ -14,7 +14,6 @@ using Totallydays.ViewsModel;
 namespace Totallydays.Controllers.MiddleController
 {
     [Route("mon-compte")]
-    [Authorize]
     public class MiddleHostingController : MiddleController
     {
         private readonly HostingRepository _hostingRepository;
