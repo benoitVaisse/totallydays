@@ -38,10 +38,19 @@ namespace TestTotallydaysWebUi
             var result = await controller.Register();
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
+
+            var View = result as ViewResult;
+
+            Assert.IsInstanceOfType(View.ViewData.Model, typeof(FormRegisterViewModel));
         }
 
+        /// <summary>
+        /// test la fonction register de AccountController
+        /// verifie si on a bien une redirection si la création de compte ce passe bien
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
-        public async Task Register_ReturnsARedirection_isModelStatiteValid()
+        public async Task Register_ReturnsARedirection_isModelStateIsValid()
         {
             this.getVariable();
 
@@ -78,8 +87,7 @@ namespace TestTotallydaysWebUi
                 .Setup(x => x.RouteUrl(It.IsAny<UrlRouteContext>()))
                 .Returns(locationUrl);
 
-            AccountController controller = new AccountController(
-                this._userManagerMock.Object, 
+            AccountController controller = new AccountController(this._userManagerMock.Object, 
                 this._signInManagerMock.Object, 
                 this._IWebHostEnvironment, 
                 this._mailService.Object, 
@@ -91,6 +99,55 @@ namespace TestTotallydaysWebUi
             Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
         }
 
+        /// <summary>
+        /// test si la vue retournée est bien de type ViewResult
+        /// avec un model  de type FormRegisterViewModel
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task Register_ReturnsAViewModel_isModelStateIsInValid()
+        {
+            // Arrange
+            this.getVariable();
+
+            FormRegisterViewModel model = new FormRegisterViewModel()
+            {
+                Firstname = "",
+                Lastname = "vaisse",
+                Email = "benoit.toto@toto.fr",
+                Password = "password",
+                ConfirmPassword = "password",
+            };
+
+            this._recaptchaService.
+                Setup(s => s.VerifyResponse(model.TokenCaptcha))
+                .Returns(Task.FromResult(true));
+
+            AccountController controller = new AccountController(
+                this._userManagerMock.Object,
+                this._signInManagerMock.Object,
+                this._IWebHostEnvironment,
+                this._mailService.Object,
+                this._recaptchaService.Object);
+
+            controller.ModelState.AddModelError("fakeError", "fakeError");
+
+            // Act
+            var result = await controller.Register(model);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            var View = result as ViewResult;
+
+            Assert.IsInstanceOfType(View.ViewData.Model, typeof(FormRegisterViewModel));
+
+        }
+
+        /// <summary>
+        /// si le recaptcha est invalide, test si on a une vue de type view result
+        /// avec yb model de type FormRegisterViewModel
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task Register_ReturnsAViewResult_isRepcatchaInvalid()
         {
@@ -120,6 +177,10 @@ namespace TestTotallydaysWebUi
             var result = await controller.Register(model);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            var View = result as ViewResult;
+
+            Assert.IsInstanceOfType(View.ViewData.Model, typeof(FormRegisterViewModel));
         }
     }
 }
