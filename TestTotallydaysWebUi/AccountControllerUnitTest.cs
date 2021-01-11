@@ -49,7 +49,7 @@ namespace TestTotallydaysWebUi
         }
 
         /// <summary>
-        /// test la fonction register de AccountController
+        /// test la fonction register de AccountController method POST
         /// verifie si on a bien une redirection si la création de compte ce passe bien
         /// </summary>
         /// <returns></returns>
@@ -60,20 +60,14 @@ namespace TestTotallydaysWebUi
 
             FormRegisterViewModel model = new FormRegisterViewModel()
             {
-                Firstname= "benoit",
-                Lastname = "vaisse", 
-                Email="benoit.toto@toto.fr", 
-                Password="password", 
-                ConfirmPassword="password", 
-                TokenCaptcha="fdsfsdfsdfdsfdsf"
+                Firstname= "benoit",  Lastname = "vaisse", Email="benoit.toto@toto.fr", 
+                Password="password",  ConfirmPassword="password",  TokenCaptcha="fdsfsdfsdfdsfdsf"
             };
 
             AppUser User = new AppUser()
             {
-                UserName = model.Email,
-                Email = model.Email,
-                Firstname = model.Firstname,
-                Lastname = model.Lastname
+                UserName = model.Email,  Email = model.Email,
+                Firstname = model.Firstname, Lastname = model.Lastname
             };
 
             _userManagerMock
@@ -91,11 +85,8 @@ namespace TestTotallydaysWebUi
                 .Setup(x => x.RouteUrl(It.IsAny<UrlRouteContext>()))
                 .Returns(locationUrl);
 
-            AccountController controller = new AccountController(this._userManagerMock.Object, 
-                this._signInManagerMock.Object, 
-                this._IWebHostEnvironment, 
-                this._mailService.Object, 
-                this._recaptchaService.Object);
+            AccountController controller = new AccountController(this._userManagerMock.Object,  this._signInManagerMock.Object, 
+                this._IWebHostEnvironment,  this._mailService.Object, this._recaptchaService.Object);
 
 
             var result = await controller.Register(model);
