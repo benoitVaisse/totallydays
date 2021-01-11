@@ -28,6 +28,7 @@ namespace Totallydays.Controllers
         [HttpGet("/", Name ="home")]
         public IActionResult Index()
         {
+            ViewData["Title"] = "Bienvenue";
             return View();
         }
 
