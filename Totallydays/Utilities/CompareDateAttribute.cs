@@ -19,7 +19,7 @@ namespace Totallydays.Utilities
         }
 
         /// <summary>
-        /// compare 2 date and return if condition
+        /// compare 2 date
         /// </summary>
         /// <param name="value"></param>
         /// <param name="ValidationContext"></param>
