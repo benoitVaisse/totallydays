@@ -113,10 +113,16 @@ namespace Totallydays.Controllers.FrontController
         }
 
         [HttpGet("hosting", Name ="hostings-search")]
-        public IActionResult GetHostingSearch(string City)
+        public async Task<IActionResult> GetHostingSearch([FromQuery] FormSearchHostingViewModel model)
         {
-            IEnumerable<Hosting> Hostings = this._hostingRepository.FindAll();
-            return View(Hostings);
+            if (ModelState.IsValid)
+            {
+                IEnumerable<Hosting> Hostings = await this._hostingRepository.SearchHosting(model);
+
+                return View(Hostings);
+            }
+            this.TempData["error"] ="Erreur lors de la recherche d'un hébergement";
+            return RedirectToRoute("home");
         }
 
 

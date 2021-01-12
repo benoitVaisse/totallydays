@@ -115,7 +115,7 @@ namespace Totallydays.Models
                 }
             }
 
-            return (float)(total / comment);
+            return (float)Math.Round((total / comment),2);
         }
 
         public int getNumberComment()

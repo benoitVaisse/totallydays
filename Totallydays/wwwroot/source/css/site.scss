@@ -346,7 +346,10 @@ tr.modified {
     margin-right: auto;
 }
 /* ------------------- home ------------------------*/
-
+a.hosting-search, a.hosting-search:visited, a.hosting-search:visited {
+    color: $gray-dark;
+    text-decoration: none
+}
 
 .image-gb {
     padding: 3em;

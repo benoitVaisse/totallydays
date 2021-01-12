@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Totallydays.Data;
 
 namespace Totallydays.Migrations
 {
     [DbContext(typeof(TotallydaysContext))]
-    partial class TotallydaysContextModelSnapshot : ModelSnapshot
+    [Migration("20210112094100_add-spSearchHosting")]
+    partial class addspSearchHosting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

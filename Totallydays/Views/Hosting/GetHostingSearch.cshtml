@@ -16,16 +16,23 @@
             @foreach (Hosting h in Model)
             {
                 <div class="block-hosting coordinate-hosting" data-lng="@h.Lng" data-lat="@h.Lat" data-title="@h.Title">
-                    <div class="block-flex">
-                        <div class="image-gb w-50" style="background-image: url('@Url.Content("~/img/hosting/coverImage/" + h.Cover_image)')">
+                    <a href="@Url.RouteUrl("hosting_view", new { slug = h.Slug })" class="hosting-search">
+                        <div class="block-flex">
+                            <div class="image-gb w-50" style="background-image: url('@Url.Content("~/img/hosting/coverImage/" + h.Cover_image)')">
+                            </div>
+                            <div class="pl-4">
+                                <p>@h.Hosting_type.Name à @h.City</p>
+                                <p>@h.Title</p>
+                                <p>
+                                    <i class="fas fa-star"></i>
+                                    @h.GetAverage()
+                                    (@h.getNumberComment())
+                                </p>
+                                <span>_______</span>
+                                <p>@h.Bedrooms.Count() nombre de chambres</p>
+                            </div>
                         </div>
-                        <div class="pl-4">
-                            <p>@h.Hosting_type.Name à @h.City</p>
-                            <p>@h.Title</p>
-                            <span>_______</span>
-                            <p>@h.Bedrooms.Count() nombre de chambres</p>
-                        </div>
-                    </div>
+                    </a>
                     <hr />
                 </div>
             }

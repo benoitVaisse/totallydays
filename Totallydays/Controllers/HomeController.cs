@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Totallydays.Models;
 using Totallydays.Repositories;
+using Totallydays.ViewsModel;
 
 namespace Totallydays.Controllers
 {
@@ -28,9 +29,15 @@ namespace Totallydays.Controllers
         [HttpGet("/", Name ="home")]
         public IActionResult Index()
         {
+            FormSearchHostingViewModel model = new FormSearchHostingViewModel();
             ViewData["Title"] = "Bienvenue";
-            return View();
+            if (TempData["error"] != null)
+            {
+                ModelState.AddModelError(string.Empty, TempData["error"].ToString());
+            }
+            return View(model);
         }
+
 
         public IActionResult Privacy()
         {

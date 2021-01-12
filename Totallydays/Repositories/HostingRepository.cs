@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Totallydays.Data;
 using Totallydays.Models;
+using Totallydays.ViewsModel;
 
 namespace Totallydays.Repositories
 {
@@ -141,6 +142,12 @@ namespace Totallydays.Repositories
             this._context.Hostings.Update(h);
             this._context.SaveChanges();
             return h;
+        }
+
+
+        public async Task<IEnumerable<Hosting>> SearchHosting(FormSearchHostingViewModel model)
+        {
+            return await this._context.Hostings.FromSqlRaw<Hosting>("EXECUTE spSearchHosting {0}, {1}, {2}, {3}", model.City, model.Start_Date, model.End_Date, model.Number_personn).ToListAsync();
         }
     }
 }
