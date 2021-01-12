@@ -111,7 +111,11 @@ namespace Totallydays.Controllers.FrontController
             };
             return View(Hosting);
         }
-
+        /// <summary>
+        ///  route qui affiche une liste d'hébergements selon les critères demandés
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpGet("hosting", Name ="hostings-search")]
         public async Task<IActionResult> GetHostingSearch([FromQuery] FormSearchHostingViewModel model)
         {

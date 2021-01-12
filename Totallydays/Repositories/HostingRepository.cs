@@ -145,9 +145,19 @@ namespace Totallydays.Repositories
         }
 
 
+        /// <summary>
+        /// return liste of hostings
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Hosting>> SearchHosting(FormSearchHostingViewModel model)
         {
-            return await this._context.Hostings.FromSqlRaw<Hosting>("EXECUTE spSearchHosting {0}, {1}, {2}, {3}", model.City, model.Start_Date, model.End_Date, model.Number_personn).ToListAsync();
+            return await this._context.Hostings.FromSqlRaw<Hosting>("EXECUTE spSearchHosting {0}, {1}, {2}, {3}",
+                model.City, 
+                model.Start_Date, 
+                model.End_Date, 
+                model.Number_personn)
+                .ToListAsync();
         }
     }
 }
