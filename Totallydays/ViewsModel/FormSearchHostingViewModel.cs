@@ -11,6 +11,7 @@ namespace Totallydays.ViewsModel
     {
 
         [Required(AllowEmptyStrings = false)]
+        [RegularExpression("(^[a-zA-Z,éèà ]+$)")]
         public string City { get; set; }
 
         [CompareDate("End_Date", "<", ErrorMessage = "La date de début de séjour doit être inferieur à celle de fin")]

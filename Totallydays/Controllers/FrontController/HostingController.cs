@@ -111,6 +111,9 @@ namespace Totallydays.Controllers.FrontController
             };
             return View(Hosting);
         }
+
+
+
         /// <summary>
         ///  route qui affiche une liste d'hébergements selon les critères demandés
         /// </summary>

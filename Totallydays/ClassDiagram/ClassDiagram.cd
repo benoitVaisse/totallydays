@@ -1,4 +1,124 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminBedController">
+    <Position X="7.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAABABA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminBedController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminController">
+    <Position X="11.25" Y="3.5" Width="1.5" />
+    <InheritanceLine Type="Totallydays.Controllers.MyController" FixedToPoint="true">
+      <Path>
+        <Point X="17.5" Y="2.191" />
+        <Point X="17.5" Y="3.125" />
+        <Point X="12.125" Y="3.125" />
+        <Point X="12.125" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminEquipmentController">
+    <Position X="13.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACQAAABABAAAAAAAAAAACAAAAAAAABAAAAAAAAgA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminEquipmentController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminHomeController">
+    <Position X="15.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminHomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminHostingController">
+    <Position X="9" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABBAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAEAAA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminHostingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AdminControllers.AdminUserController">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminControllers\AdminUserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.FrontController.HostingController">
+    <Position X="26.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAABAQIAAAAAABSAAAABAAgAAAAAAACACAAAAAEAAA=</HashCode>
+      <FileName>Controllers\FrontController\HostingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MiddleController.MiddleAccountController">
+    <Position X="22.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAQgCAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MiddleController\MiddleAccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MiddleController.MiddleBookingController">
+    <Position X="18.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAADAAABAAAAAASAAAEIAAAAAAgAAADAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MiddleController\MiddleBookingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MiddleController.MiddleController">
+    <Position X="21.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAQAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Controllers\MiddleController\MiddleController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MiddleController.MiddleHostingController">
+    <Position X="20.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAFAQAACAAAQhSEBAABAAA4AIAAAACAAAAAYAEAAA=</HashCode>
+      <FileName>Controllers\MiddleController\MiddleHostingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MiddleController.MiddleUnavailableDateController">
+    <Position X="24.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABQAAACAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAI=</HashCode>
+      <FileName>Controllers\MiddleController\MiddleUnavailableDateController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.AccountController">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgABAABAAAAAAAAAABQBgIgIABBAAAAAAARBQAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.ErrorController" Collapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ErrorController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.HomeController">
+    <Position X="16.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAQAAAAAAAAAAIAAAAQAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Totallydays.Controllers.MyController" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAAAAAAAAAAAAAABQAGAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Controllers\MyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

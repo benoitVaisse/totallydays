@@ -71,6 +71,7 @@ namespace Totallydays.Models
         public string Lng { get; set; }
 
         public string Lat { get; set; }
+
         public bool Published { get; set; }
 
         public bool Active { get; set; }
@@ -86,6 +87,7 @@ namespace Totallydays.Models
         public virtual IEnumerable<Image> Images { get; set; }
 
         public virtual IEnumerable<Booking> Bookings { get; set; }
+
         public virtual IEnumerable<Unavailable_date> Unavailables_date { get; set; }
 
         public virtual IEnumerable<Hosting_Equipment> Hosting_Equipment { get; set; }
@@ -94,6 +96,7 @@ namespace Totallydays.Models
 
         [NotMapped]
         public float Average { get; set; }
+
 
         /// <summary>
         /// return average of hosting
@@ -195,5 +198,12 @@ namespace Totallydays.Models
         {
             return this.Bookings.Where(b => b.Validated == Booking.PENDING).Count();
         }
+
+
+        [NotMapped]
+        public double Note { get; set; }
+
+        [NotMapped]
+        public int NbComment { get; set; }
     }
 }

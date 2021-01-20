@@ -23,7 +23,7 @@ namespace Totallydays.BackGrounService
         private CrontabSchedule _schedule;
         private DateTime _nextRun;
         private readonly IServiceProvider _service;
-        private string Schedule = "* * */2 * * *";
+        private string Schedule = "* 0 8 * * *";
         private ILogger<SendMailBookingFinichBackgroundService> _logger;
 
         public SendMailBookingFinichBackgroundService(ILogger<SendMailBookingFinichBackgroundService> logger, IServiceProvider service)

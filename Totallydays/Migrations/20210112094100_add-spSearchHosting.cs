@@ -11,11 +11,9 @@ namespace Totallydays.Migrations
 									@date_start datetime,
 									@date_end datetime,
 									@nbUser int
-
 								as
 								Begin
 									declare @hosting_ids varchar
-									declare @table_ids as table(ids varchar)
 									set @hosting_ids =(
 										select distinct  STRING_AGG(h.Hosting_id,',') as id from Hostings h
 										LEFT JOIN Bookings b ON b.HostingHosting_id = h.Hosting_id
@@ -33,7 +31,6 @@ namespace Totallydays.Migrations
 											)
 										group by h.Hosting_id
 									)
-	
 										SELECT DISTINCT h.* ,COUNT(DISTINCT b.Bedroom_id) as rr from Hostings h
 										LEFT JOIN Bedrooms b ON b.Hosting_id = h.Hosting_id
 										WHERE h.City like '%'+@city+'%'  
@@ -45,7 +42,6 @@ namespace Totallydays.Migrations
 										h.Lat, h.Lng, h.Modified, h.Post_code, h.Price, h.Published, 
 										h.Published, h.Resume, h.Slug, h.Title, h.UserId
 										HAVING COUNT(b.Bedroom_id) >= @nbUser
-	
 								End";
 
 			migrationBuilder.Sql(procedure);

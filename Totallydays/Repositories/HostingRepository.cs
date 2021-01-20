@@ -54,7 +54,10 @@ namespace Totallydays.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Hosting>> FindByUser(AppUser user)
         {
-            var query = await this._context.Hostings.Where(h => h.User == user).ToListAsync();
+            var query = await this._context.Hostings
+                .Include(h => h.Bookings)
+                    .ThenInclude(b=> b.Rating)
+                .Where(h => h.User == user).ToListAsync();
             return query;
         }
 

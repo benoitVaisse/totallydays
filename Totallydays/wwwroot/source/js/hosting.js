@@ -11,7 +11,10 @@ export default class MyHostingClass {
             this.changeStatusPublished();
             this.addBedRomm();
             this.submitBedroom();
-        }
+    }
+        /**
+         * enregistre une image
+         */
         submitImage(){
             $("form#form-image input#Image").on("change", (e) => {
                 let $el = $(e.currentTarget)[0];
@@ -46,6 +49,9 @@ export default class MyHostingClass {
             })
         }
 
+        /**
+         * remove image
+         */
         deleteImage(){
             $("div.remove-image").on("click", (e) => {
                 let $el = $(e.currentTarget)[0];

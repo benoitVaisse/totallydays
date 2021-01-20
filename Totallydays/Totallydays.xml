@@ -1,0 +1,756 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Totallydays</name>
+    </assembly>
+    <members>
+        <member name="T:Totallydays.BackGrounService.SendMailBookingFinichBackgroundService">
+            <summary>
+            envoie un email au personne dt le séjour viens de finir
+            </summary>
+        </member>
+        <member name="T:Totallydays.BackGrounService.SendMailHostingBookingPendingBackgroundService">
+            <summary>
+            envoie un mail pour chaque utilisateur qui a des reservation en attente sur ses hébergement
+            </summary>
+        </member>
+        <member name="T:Totallydays.Controllers.AccountController">
+            <summary>
+            controller allows to manage login logout and regiter
+            </summary>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.CreateRoleBase">
+            <summary>
+            route pour creer de base les 2 role principal
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.Register">
+            <summary>
+            route pour aller sur le formulaire d'inscription
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.Register(Totallydays.ViewsModel.FormRegisterViewModel)">
+            <summary>
+            route qui recois le formulaire d'inscription et le traite pour creer un nouvelle utilisateur
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.EmailVerifyView">
+            <summary>
+            fonction qui affiche la page qui dis de consulter ses emails
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.EmailVerify(System.String,System.String)">
+            <summary>
+            fonction qui verifie l'email grace au token 
+            </summary>
+            <param name="id"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.Login(System.String)">
+            <summary>
+            action qui affiche la page de login
+            </summary>
+            <param name="ReturnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.Login(Totallydays.ViewsModel.FormLoginViewModel)">
+            <summary>
+            action pour ce logguer manuellement
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.ExternalLogin(System.String,System.String)">
+            <summary>
+            action qui nous permet de nous autehtifier avec google ou un autre identifier extern
+            </summary>
+            <param name="provider"></param>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.ExternalLoginCallback(System.String,System.String)">
+            <summary>
+            action effectuer apres la login via un provider extern
+            si on connais deja le user on le log , si on le connais pas on rentre c'est info extern en base
+            </summary>
+            <param name="provider"></param>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AccountController.Logout">
+            <summary>
+            action pour ce deconnecter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AdminControllers.AdminEquipmentController.Equipments">
+            <summary>
+            page admin des equipement 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AdminControllers.AdminEquipmentController.CreateEquipmentType(Totallydays.Models.Equipment_type)">
+            <summary>
+            create de type d'equipement
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AdminControllers.AdminEquipmentController.EditEquipmentType(System.Int32)">
+            <summary>
+            selectionne un type d'equipement
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AdminControllers.AdminEquipmentController.CreateUpdateEquipment(Totallydays.Models.Equipment)">
+            <summary>
+            creer ou update un equipoement
+            </summary>
+            <param name="Equipment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.AdminControllers.AdminEquipmentController.EditEquipment(System.Int32)">
+            <summary>
+            selectionne un equipement
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.FrontController.HostingController.SeeHosting(System.String)">
+            <summary>
+            To see a hosting
+            </summary>
+            <param name="slug"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.FrontController.HostingController.GetHostingSearch(Totallydays.ViewsModel.FormSearchHostingViewModel)">
+            <summary>
+             route qui affiche une liste d'hébergements selon les critères demandés
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.HomeController.Index">
+            <summary>
+            page d'accueil
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleAccountController.ChangePIcture(Totallydays.ViewsModel.FormUserPictureModelView)">
+            <summary>
+            save avatar from user
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleController.NotHostingToUser(Totallydays.Models.AppUser,Totallydays.Models.Hosting,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            retour sur la page d'un hebergement 
+            </summary>
+            <param name="User"></param>
+            <param name="Hosting"></param>
+            <param name="messages"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleController.NotHostingToUserAjax(Totallydays.Models.AppUser,Totallydays.Models.Hosting,System.String)">
+            <summary>
+            on verifie si l'hébergement appartient bien a l'utilisateur
+            </summary>
+            <param name="User"></param>
+            <param name="Hosting"></param>
+            <param name="messages"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.MyHosting">
+            <summary>
+            fonction qui liste mes hébergements
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.CreateHosting(System.Int32)">
+            <summary>
+            M'affiche la page de création ou modification d'un hébergement
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.CreateHosting(Totallydays.ViewsModel.FormHostingViewModel)">
+            <summary>
+            route qui créer ou met à jour un hébergement
+            </summary>
+            <param name="Model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.InsertImage(System.Int32)">
+            <summary>
+            affiche a page pour ajouter des images, chambres et des equipements a une annonce
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.InsertImage(System.Int32,Totallydays.ViewsModel.FormImageViewModel)">
+            <summary>
+            add image to hosting
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.deleteImage(System.Int32,System.Int32)">
+            <summary>
+            delete image to hosting
+            </summary>
+            <param name="id"></param>
+            <param name="idImage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.LinkHostingEquipment(System.Int32,System.String[])">
+            <summary>
+            link equipment to hosting
+            </summary>
+            <param name="id"></param>
+            <param name="equipments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleHostingController.PublishHosting(System.Int32,System.Boolean)">
+            <summary>
+            permet de publié ou pas un hébergement coté utilisateur
+            </summary>
+            <param name="id"></param>
+            <param name="publish"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MiddleController.MiddleUnavailableDateController.MakeUnavailableDate(Totallydays.ViewsModel.FormUnavailableDateViewModel)">
+            <summary>
+            enregistrement des date d'indisponibilités pour un hébergement
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MyController.NotFindObject(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            si l'objet est null on rtour un message flash d'erreur et une redisrection
+            </summary>
+            <param name="Object"></param>
+            <param name="Route"></param>
+            <param name="messages"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MyController.NotFindObjectAjax(System.String)">
+            <summary>
+            si l'object et null on retour un message flash ajax
+            </summary>
+            <param name="Hosting"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Controllers.MyController.SetErroMessageAjax">
+            <summary>
+            on met dans une variable les erreurs de formulaire pour renvoyer au callback ajax
+            </summary>
+        </member>
+        <member name="M:Totallydays.Controllers.MyController.setFlash">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Totallydays.Models.AppUser.GetNumberHostingWithBookingPending">
+            <summary>
+            retorune le nombre d'hebergement qui on des reservation en attente
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Booking.GetDate">
+            <summary>
+            return list of string begin by start date en finich by end date
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Booking.IsBookingableDate">
+            <summary>
+            llok if date of booking is bookingable before add booking in datebase
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.GetAverage">
+            <summary>
+            return average of hosting
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.getUnavailableDays">
+            <summary>
+            list all booking Date of hosting
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.getFuturBookingDayUnavailable">
+            <summary>
+            return futur booking of this hosting not cancelled
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.GetMyNextUnavailableDate">
+            <summary>
+            retourne les futur dates indisponibles pour un hébergement
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.getUnavailableDaysToArray">
+            <summary>
+            retourne les futur dates indisponibles pour un hébergement sous forme de chaine de caractere dans un tableau 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Models.Hosting.getNumberBookingPending">
+            <summary>
+            retourne le nombre de reservation en attente
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.BookingRepository.FindBookingFinish">
+            <summary>
+            selectionne les reservation qui vienne de ce finir a j+1 de la fin du sejour
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.BookingRepository.FindBookingByDayModifier(System.Int32)">
+            <summary>
+            selectionne les reservations dont le jour commence au jour modifier d'aujourdhui
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentRepository.FindAll">
+            <summary>
+            retourn tous les equipments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentRepository.FindOneById(System.Int32)">
+            <summary>
+            retourne un equipement par son id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentRepository.Create(Totallydays.Models.Equipment)">
+            <summary>
+            créer un equipement
+            </summary>
+            <param name="Equipment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentRepository.Update(Totallydays.Models.Equipment)">
+            <summary>
+            met a jour un equipement
+            </summary>
+            <param name="equipment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentTypeRepository.FindAll">
+            <summary>
+            retourne tous les types d'quipements
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentTypeRepository.FindOne(System.Int32)">
+            <summary>
+            cherche un equiment_type by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentTypeRepository.create(Totallydays.Models.Equipment_type)">
+            <summary>
+            create a equipment type
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.EquipmentTypeRepository.Update(Totallydays.Models.Equipment_type)">
+            <summary>
+            update a equipment type
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.Find(System.Int32)">
+            <summary>
+            trouve un hébergement par son ID
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.FindAsync(System.Int32)">
+            <summary>
+            trouve un hébergement par son ID de facon asynchrone
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.FindAll">
+            <summary>
+            retourne tous les hébergements
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.FindByUser(Totallydays.Models.AppUser)">
+            <summary>
+            selectionne les hébergements d'un utilisateur
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.FindByTitle(System.String)">
+            <summary>
+            search hosting by title
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.FindBySlug(System.String)">
+            <summary>
+            get hosting by slug
+            </summary>
+            <param name="Slug"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.Create(Totallydays.Models.Hosting)">
+            <summary>
+            créer un hebergement
+            </summary>
+            <param name="hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.Update(Totallydays.Models.Hosting)">
+            <summary>
+            met à jour un hebergemment
+            </summary>
+            <param name="hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.CreateHostingEquipment(Totallydays.Models.Hosting_Equipment)">
+            <summary>
+            rajoute une ligne dans la table hosting_equipment
+            </summary>
+            <param name="HE"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.DeleteHostingEquipmentByHosting(Totallydays.Models.Hosting)">
+            <summary>
+            supprime de la table les hosting_equipment by hosting
+            </summary>
+            <param name="Hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.setPublish(Totallydays.Models.Hosting,System.Boolean)">
+            <summary>
+            set publish true or false to hosting
+            </summary>
+            <param name="h"></param>
+            <param name="publish"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.HostingRepository.SearchHosting(Totallydays.ViewsModel.FormSearchHostingViewModel)">
+            <summary>
+            return liste of hostings
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.ImageRepository.Find(System.Int32)">
+            <summary>
+            trouve une image par id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.ImageRepository.FindImageToHosting(Totallydays.Models.Hosting)">
+            <summary>
+            trouve les images d'un hébergement
+            </summary>
+            <param name="Hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.ImageRepository.Create(Totallydays.Models.Image)">
+            <summary>
+            ajout d'une image
+            </summary>
+            <param name="Image"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.ImageRepository.Delete(Totallydays.Models.Image)">
+            <summary>
+            supression d'une image
+            </summary>
+            <param name="Image"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.UnavailableDateRepository.GetNextUnavailableDate(Totallydays.Models.Hosting)">
+            <summary>
+            retourne les futur dates indisponibles pour un hébergement
+            </summary>
+            <param name="Hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.UserRepository.FindAll">
+            <summary>
+            get all user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.UserRepository.FindById(System.Int32)">
+            <summary>
+            get user by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.UserRepository.GetBestUser(System.Int32)">
+            <summary>
+            return average of all hosting by user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Repositories.UserRepository.GetUserWithHosting">
+            <summary>
+            retourn al liste des utilisateur qui on au moins un hébergement et qui on des reservation en attente
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.ControllerExtenstionServiceRazor.RenderViewToStringAsync``1(System.String,``0)">
+            <summary>
+            Render a partial view to string.
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="controller"></param>
+            <param name="viewNamePath"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.ControllerExtenstionServiceRazor.RenderViewToStringAsync(System.String)">
+            <summary>
+            Render a partial view to string, without a model present.
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="controller"></param>
+            <param name="viewNamePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.ControllerExtenstionService.RenderViewToStringAsync``1(Microsoft.AspNetCore.Mvc.Controller,System.String,``0)">
+            <summary>
+            Render a partial view to string.
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="controller"></param>
+            <param name="viewNamePath"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.ControllerExtenstionService.RenderViewToStringAsync(Microsoft.AspNetCore.Mvc.Controller,System.String)">
+            <summary>
+            Render a partial view to string, without a model present.
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="controller"></param>
+            <param name="viewNamePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.GoogleMapService.setLngLgt(Totallydays.Models.Hosting)">
+            <summary>
+            rentre en base de donnée la latitude et longitude de l'hébergement
+            </summary>
+            <param name="Hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.HostingService.HostingToFormModel(Totallydays.Models.Hosting)">
+            <summary>
+            creér le formulaire de creation ou modification d'un hébergement et le renvoie
+            </summary>
+            <param name="hosting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.HostingService.setModified(Totallydays.Models.Hosting,System.Boolean)">
+            <summary>
+            set modified in hosting
+            </summary>
+            <param name="Hosting"></param>
+            <param name="modified"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.HostingService.SetSlug(Totallydays.Models.Hosting,System.String)">
+            <summary>
+            set slug in hosting
+            </summary>
+            <param name="Hosting"></param>
+            <param name="Slug"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.HostingService.Replace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="String"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.HostingService.setActive(Totallydays.Models.Hosting,System.Boolean)">
+            <summary>
+            active ou pas l'hebergement
+            </summary>
+            <param name="h"></param>
+            <param name="active"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Totallydays.Services.ReCaptchaService">
+            <summary>
+            service captcha
+            </summary>
+        </member>
+        <member name="M:Totallydays.Services.ReCaptchaService.VerifyResponse(System.String)">
+            <summary>
+            fonction qui verifie si le captcha a bien été envoyé et si il est valide ou pas
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Totallydays.Services.SendMailService">
+            <summary>
+            classe qui gere les envoie de mail
+            </summary>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.sendVeridyEmail(Totallydays.Models.AppUser,System.String)">
+            <summary>
+            envoie un mail de verification du compte
+            </summary>
+            <param name="User"></param>
+            <param name="Link"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendEmailNewHosting(Totallydays.Models.Hosting,Microsoft.AspNetCore.Mvc.Controller)">
+            <summary>
+            envoie un maila l'admin pour avertir qu'un hébergement a été créé
+            </summary>
+            <param name="Hosting"></param>
+            <param name="Controller"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendMailBookingFinish(Totallydays.Models.Booking)">
+            <summary>
+            envoie un mail le lendemin de la fin du séjour pour proposé de de laisser un commentaire
+            </summary>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendMailChangeStatusBooking(Totallydays.ViewsModel.FormHostingBookingValidation,Totallydays.Models.Booking)">
+            <summary>
+            envoie un mail ppour dire que la réservation a été validé ou réfusé
+            </summary>
+            <param name="model"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendMailUserHostingBookingPending(Totallydays.Models.AppUser)">
+            <summary>
+            envoie un mail pour avertir un utilisateur qui'il a des reservation en attente sur ses hébergements
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendMailToBookingStarting(Totallydays.Models.Booking)">
+            <summary>
+            envoie de mail la veuille d'un séjour a lhébergeur et au client pour les avertir que le séjour commence le lendemain
+            </summary>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.SendMailService.SendEmailForgotPassword(Totallydays.Models.AppUser,System.String)">
+            <summary>
+            envoie de mail pour le mot de passe oublé
+            </summary>
+            <param name="User"></param>
+            <param name="Url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.UploadService.UploadHostingCoverImage(Totallydays.Models.Hosting,Totallydays.ViewsModel.FormHostingViewModel,System.String)">
+            <summary>
+            sauvegarde et upload l'image de couverture d'une annonce
+            </summary>
+            <param name="Post"></param>
+            <param name="Model"></param>
+            <param name="Path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.UploadService.UploadImageHosting(Totallydays.Models.Image,Totallydays.ViewsModel.FormImageViewModel,System.String)">
+            <summary>
+            upload  image from hosting
+            </summary>
+            <param name="Image"></param>
+            <param name="Model"></param>
+            <param name="Path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Services.UploadService.UploadImagePicture(Totallydays.Models.AppUser,Totallydays.ViewsModel.FormUserPictureModelView,System.String)">
+            <summary>
+            upload picture from user
+            </summary>
+            <param name="User"></param>
+            <param name="Model"></param>
+            <param name="Path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Utilities.CompareDateAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            compare 2 date
+            </summary>
+            <param name="value"></param>
+            <param name="ValidationContext"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Totallydays.Utilities.DateLessGreaterThanAttribute.#ctor(System.String,System.String)" -->
+        <member name="T:Totallydays.Utilities.FilesExtensionsCustomAttribute">
+            <summary>
+            classe qui va vérifer si l'extension du fichier est conforme aux extensions souhaitées
+            </summary>
+        </member>
+        <member name="M:Totallydays.Utilities.FilesExtensionsCustomAttribute.#ctor(System.String)">
+            <summary>
+            construction
+            </summary>
+            <param name="fileExtensions"></param>
+        </member>
+        <member name="M:Totallydays.Utilities.FilesExtensionsCustomAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            methode de verification
+            </summary>
+            <param name="value"></param>
+            <param name="ValidationContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Utilities.NumeriqueRatingValueAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            look if rating is a number range 0,5
+            </summary>
+            <param name="value"></param>
+            <param name="ValidationContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Totallydays.Utilities.UniqueTitleValueAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            if exist hosting with same Title , set error
+            </summary>
+            <param name="value"></param>
+            <param name="ValidationContext"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
