@@ -24,7 +24,7 @@
                         <div class="card card-width card-raduis mx-3 my-3">
                             <div class="image-gb card-bg" style="background-image: url('@Url.Content("~/img/hosting/coverImage/"+h.Cover_image)')"></div>
                             <div class="card-body">
-                                <h5 class="card-title">  @h.Title  <span><i class="fas fa-star primaire"> </i> @h.GetAverage() (@h.getNumberComment()) </span> </h5>
+                                <h5 class="card-title">  @h.Title  <span><i class="fas fa-star primaire"> </i> @h.Note (@h.NbComment) </span> </h5>
                                 <p class="card-text">@h.Resume</p>
                                 <div>
                                     <a asp-route="hosting_view" asp-route-slug="@h.Slug" class="btn btn-info">Voir</a>

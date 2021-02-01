@@ -196,14 +196,43 @@ namespace Totallydays.Models
         /// <returns></returns>
         public int getNumberBookingPending()
         {
-            return this.Bookings.Where(b => b.Validated == Booking.PENDING).Count();
+            return this.Bookings.Where(b => b.Validated == Booking.PENDING).Where(b => b.Start_date < DateTime.Now ).Count();
         }
 
 
         [NotMapped]
-        public double Note { get; set; }
+        public double Note { 
+            get{
+                if(!this.Bookings.Any()){
+                    return 0;
+                }
+                else
+                {
+                    var query = (from b in this.Bookings
+                                 where b.Rating != null
+                                 select b.Rating.Rating).Average();
+
+                    var quer2 = this.Bookings.Where(b => b.Rating != null).ToList().Average(b => b.Rating.Rating);
+                    return Math.Round(query, 2);
+                }
+                
+            } set { } }
 
         [NotMapped]
-        public int NbComment { get; set; }
+        public int NbComment
+        {
+            get
+            {
+                if (this.Bookings.Count() == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return this.Bookings.Where(b => b.Rating != null).Count();
+                }
+            }
+            set { }
+        }
     }
 }

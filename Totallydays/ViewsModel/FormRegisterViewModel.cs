@@ -12,10 +12,12 @@ namespace Totallydays.ViewsModel
 
         [Required(AllowEmptyStrings =false)]
         [Display(Name = "Prénom")]
+        [MaxLength(30, ErrorMessage = "Votre prénom doit faire moins de 30 caractères")]
         public string Firstname { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [Display(Name = "Nom")]
+        [MaxLength(30, ErrorMessage = "Votre nom doit faire moins de 30 caractères")]
         public string Lastname { get; set; }
 
         [Required(AllowEmptyStrings = false)]

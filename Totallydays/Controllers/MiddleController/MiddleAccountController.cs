@@ -22,16 +22,19 @@ namespace Totallydays.Controllers.MiddleController
         private readonly UserManager<AppUser> _userManager;
         private readonly UserRepository _userRepository;
         private readonly UploadService _uploadService;
+        private readonly HostingRepository _hostingRepo;
 
         public MiddleAccountController(
             UserManager<AppUser> userManager,
             UserRepository userRepo,
-            UploadService uploadService
+            UploadService uploadService,
+            HostingRepository hostingRepo
             )
         {
             this._userManager = userManager;
             this._userRepository = userRepo;
             this._uploadService = uploadService;
+            this._hostingRepo = hostingRepo;
         }
 
         [HttpGet("", Name ="my_account")]
@@ -39,6 +42,7 @@ namespace Totallydays.Controllers.MiddleController
         {
             this.setFlash();
             AppUser User = await this._userManager.GetUserAsync(this.User);
+            User.Hostings = await this._hostingRepo.FindByUser(User);
             this.ViewBag.average = this._userRepository.GetAverageAllHosting(User);
             return View(User);
         }

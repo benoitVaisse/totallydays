@@ -27,7 +27,6 @@ namespace Totallydays.Data
         public DbSet<Bedroom_Bed> Bedroom_Beds { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Unavailable_date> Unavailable_dates { get; set; }
-         
         public DbSet<Hosting_Equipment> Hosting_Equipment { get; set; }
 
 

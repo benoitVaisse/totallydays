@@ -9,14 +9,6 @@ namespace Totallydays.Models
 {
     public class Booking
     {
-        [NotMapped]
-        public const int PENDING = 0;
-        [NotMapped]
-        public const int VALIDATED = 1;
-        [NotMapped]
-        public const int CANCELLED = 2;
-
-
         [Key]
         public int Booking_id { get; set; }
 

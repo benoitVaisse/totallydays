@@ -138,7 +138,7 @@ namespace Totallydays.Controllers.MiddleController
                     
                     Hosting = this._hostingService.FormModelToHosting(Hosting, Model, User);
                     Hosting = this._hostingService.SetSlug(Hosting, Slug);
-                    this._hostingRepository.Update(Hosting);
+                    Hosting = this._hostingService.setModified(Hosting, true);
 
                 }
                 else

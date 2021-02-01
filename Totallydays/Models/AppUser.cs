@@ -16,11 +16,6 @@ namespace Totallydays.Models
 {
     public class AppUser : IdentityUser<int>
     {
-        public AppUser()
-        {
-            //var Average = rating.First();
-            //this.TotalAverageHosting = (float)Average;
-        }
         [Required]
         public string Firstname { get; set; }
 
@@ -50,10 +45,22 @@ namespace Totallydays.Models
         public string FullName { get { return this.Firstname + " " + this.Lastname; } }
 
         [NotMapped]
-        public float TotalAverageHosting { get; set; }
+        public float TotalAverageHosting { get {
+
+                if (!this.Hostings.Any())
+                {
+                    return 0;
+                }
+                return (float)this.Hostings.Where(h => h.Note != 0).Select(h => h.Note).Average();
+                
+                
+            } }
 
         [NotMapped]
-        public int TotalCommentCountHosting { get; set; }
+        public int TotalCommentCountHosting { get {
+
+                return this.Hostings.Select(h => h.NbComment).Count();
+            } }
 
 
         /// <summary>
