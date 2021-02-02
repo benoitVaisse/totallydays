@@ -4,6 +4,7 @@ export class DateBooking {
     constructor(dates,amount) {
         this.jsDateUnavailable = dates
         this.amount = amount
+        console.log("dsqdsdq " + this.amount);
         if (this.jsDateUnavailable) {
             this.setCalendarUnavalableDate(this.jsDateUnavailable);
             this.addEventDatePicke();
@@ -39,10 +40,10 @@ export class DateBooking {
                 $("input#End_date").val(transformDate(Dateend));
             }
             let days = (endDate - startDate) / DAYS_TIME;
-            amount = days * this.amount;
+            let totalamount = days * amount;
             if (startDate && endDate && startDate < endDate) {
                 $("#days").text(days);
-                $("#amount").text(amount);
+                $("#amount").text(totalamount);
                 $("#error").hide();
                 $("#make_booking").removeAttr("disabled");
             }
